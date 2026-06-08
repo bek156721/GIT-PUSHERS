@@ -12,6 +12,7 @@
     height: 350px;
     background-color: #97B8FE;
     margin: 0 auto;
+    border-radius: 10%;
     
 }
 h2, h3
@@ -25,7 +26,15 @@ h2, h3
     padding-left: 100px;
 }
 
-#loging
+#login
 {
     padding: 20px;
+}
+p
+{
+    font-size: smaller;
+}
+#ayuda
+{
+    color: blue;
 }
