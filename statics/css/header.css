@@ -1,0 +1,32 @@
+
+header
+{
+    background-color: #2A3958;
+    padding: 15px;
+    display: flex;
+    gap: 20px;
+    position:fixed;
+    top:0%;
+    left:0%;
+    width: 100%;
+    z-index: 1000%;
+}
+
+.logo-header
+{
+    height: 100px;
+}
+
+#titulo-plataforma
+{
+
+    color: white;
+}
+#eslogan
+{
+    color: white;
+    text-align: right;
+    position: fixed;
+    right: 10px;
+    
+}

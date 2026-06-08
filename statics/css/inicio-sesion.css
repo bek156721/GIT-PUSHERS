@@ -1,0 +1,31 @@
+#contenedor-principal
+{
+    min-height: calc(100vh - 150px); /*Ocupa toda la pantalla menos el header*/
+    background-color: #CEDEFE;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+#tarjeta-loging
+{
+    width: 300px;
+    height: 350px;
+    background-color: #97B8FE;
+    margin: 0 auto;
+    
+}
+h2, h3
+{
+    text-align: center;
+}
+
+#icono-perfil
+{
+    height: 100px;
+    padding-left: 100px;
+}
+
+#loging
+{
+    padding: 20px;
+}
