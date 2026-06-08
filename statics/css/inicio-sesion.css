@@ -1,34 +1,48 @@
-#contenedor-principal
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+main
 {
-    min-height: calc(100vh - 150px); /*Ocupa toda la pantalla menos el header*/
     background-color: #CEDEFE;
-    padding: 20px;
-    margin-top: 100px;
+    padding: 5%;
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #tarjeta-loging
 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 300px;
     height: 350px;
     background-color: #97B8FE;
-    margin: 0 auto;
     border-radius: 10%;
     
 }
 h2, h3
 {
     text-align: center;
+    color: black;
 }
 
 #icono-perfil
 {
     height: 100px;
-    padding-left: 100px;
 }
 
-#login
+form
 {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 p
 {
@@ -37,4 +51,20 @@ p
 #ayuda
 {
     color: blue;
+    
+}
+#usuario, #contraseña
+{
+    border-radius: 20%;
+    background-color: #CEDEFE;
+}
+#boton-inicio-sesion
+{
+    border-radius: 20%;
+    background-color: #2A3958;
+    color: white;
+}
+#ayuda:visited
+{
+    color:purple;
 }
