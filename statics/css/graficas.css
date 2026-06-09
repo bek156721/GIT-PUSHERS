@@ -1,0 +1,131 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+img /*Regula tamaño de imagenes, se puede modificar despues*/
+{
+    width: 75px;
+    height: 75px;
+}
+body
+{
+    background-color: rgb(196, 218, 250);
+}
+nav
+{
+    position: fixed;
+    left: 0;
+    height: 100%;
+    width: 15%;
+    background-color: rgb(77, 130, 188);
+    z-index: 100;
+
+
+}    
+header
+{
+    position: fixed;
+    top: 0;
+    left: 15%;
+    width: 85%;
+    height: 12%;
+    
+    background-color: rgb(42, 57, 88);
+}
+footer
+{
+    position: fixed;
+    bottom: 0;
+    left: 15%;
+    width: 85%;
+    height: 14%;
+    
+    background-color: rgb(42, 57, 88);
+}
+h1
+{
+    font-size:200%;
+    display: block;
+}
+
+/*Contiene el contenido principal de todas las páginas de consulta
+==================================================================
+*/
+.contenido-principal
+{   
+    display:scroll;
+    position: fixed;
+    top:15%;
+    left: 25%;
+    /*border: solid 1px black;   Se utiliza para comprobar el tamaño del contenedor*/
+    width: 70%;
+}
+.barra-busqueda
+{
+    display:inline;
+    
+}
+#sesion
+{
+    position:absolute;
+    right: 0;
+    top:0;
+}
+#sesion>a>img
+{
+    border-radius: 100%;
+
+}
+figure
+{
+    display: flex;
+    position:sticky;
+    width: 70%;
+    height: 10%;
+    background-color:rgb(151, 184, 254);
+    padding:1%;
+}
+.graficas
+{
+    width: 140px;
+    height: 140px;
+    margin-right: 25%;
+}
+.descripcion-graficas
+{
+    font-size: 150%;
+}
+
+.cambio-página
+{
+    display: flex;
+    color: black;
+}
+
+.cambio-página>a
+{
+    margin-left: 20%;
+    color: black;
+    font-size: 150%;
+    text-decoration: none;
+    padding: 1% 2%;
+    
+}
+#cambio-formulario
+{
+   
+    background-color:rgb(249, 239, 186);
+}
+#cambio-actividades
+{
+    background-color:rgb(191, 249, 186);
+}
+
+#form-grupo
+{ 
+    background-color:rgb(151, 184, 254); 
+    display: inline;
+    padding: 1% 0 1% 0;
+}
