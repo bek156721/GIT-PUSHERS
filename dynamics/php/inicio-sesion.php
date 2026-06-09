@@ -18,9 +18,9 @@
             <img id="icono-perfil" src="/GIT-PUSHERS/statics/media/img/perfil.png" alt="imagen perfil">
             <form>
                 <label for="usuario">Nombre de Usuario:</label>
-                <input id="usuario" name="usuario" type="text">
+                <input id="usuario" name="usuario" type="text" placeholder="Ingresa tu número de cuenta">
                 <label for="contraseña"><br>Contraseña<br></label>
-                <input id="contraseña" name="contraseña" type="pasword">
+                <input id="contraseña" name="contraseña" type="password" placeholder="Ingresa tu contraseña">
                 <p>¿Tienes problemas para iniciar sesión?<br></p>
                 <a id="ayuda" href="Equipo_7.php"> Ayuda<br></a>
                 <input id="boton-inicio-sesion" type="submit" value="Iniciar Sesión">

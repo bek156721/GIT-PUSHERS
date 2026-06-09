@@ -6,7 +6,7 @@
 main
 {
     background-color: #CEDEFE;
-    padding: 5%;
+    padding: 3%;
     margin-top: 20vh;
     display: flex;
     flex-direction: column;
@@ -20,7 +20,7 @@ main
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
+    width: 25%;
     height: 350px;
     background-color: #97B8FE;
     border-radius: 10%;
@@ -43,6 +43,7 @@ form
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 60%;
 }
 p
 {
@@ -55,7 +56,9 @@ p
 }
 #usuario, #contraseña
 {
-    border-radius: 20%;
+    height: 25px;
+    width: 75%;
+    border-radius: 25%;
     background-color: #CEDEFE;
 }
 #boton-inicio-sesion
@@ -67,4 +70,8 @@ p
 #ayuda:visited
 {
     color:purple;
+}
+::placeholder
+{
+    font-size: xx-small;
 }
