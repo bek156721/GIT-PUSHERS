@@ -2,9 +2,52 @@ body
 {
     background-color: #C4DAFA;
 }
+.menu
+{
+    position: fixed;
+    background-color: #4D82BC;
+    color: white;
+    border-right: none;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+}
+.boton-menu
+{
+    background-color: #2A395885;
+    color: white;
+    padding: 10px;
+}
+.boton-menu:hover
+{
+    background-color: #2A3958;
+}
 .boton
 {
     background-color: #2A3958;
     color: white;
     font-size: 1em;
+}
+.boton-edicion-datos
+{
+    background-color: #97B8FE;     
+    padding: 15px;
+    border-radius: 8px;
+}
+.desplegable 
+{
+    background-color: #B5CDFE;
+}
+.foto-perfil
+{
+    width: 20em;
+    height: auto;
+    align-self: flex-end;
+}
+.contenido-principal
+{
+    margin-left: 200px;
+    margin-top: 85px;
+    align-items: flex-end;
 }
