@@ -54,11 +54,11 @@ Para mantener el orden y que nadie se pierda, respetaremos estrictamente el prop
 * **Idiomas y Caracteres:** Todo el codigo y archivos se escriben en español, pero **SIN caracteres especiales, NI acentos, NI la letra "ñ"** (Ej: usar `anio` o `contrasenia`). 
 * **Todo en Minusculas:** No se usaran mayusculas en nombres de variables, clases, ids o archivos. 
 
-### Nomenclatura: `kebab-case` 
+### Nomenclatura: 
 En este equipo adoptamos `kebab-case` (palabras-separadas-por-guiones) como el estandar absoluto. Se aplicara obligatoriamente en:
-* Nombres de archivos (Ej: `formulario-inicio-sesion.php`, `estilos-principales.css`).
-* IDs y Clases de CSS (Ej: `#contenedor-principal`, `.tarjeta-perfil`).
-* Variables y funciones (Ej: `$id-usuario`, `function obtener-datos()`).
+* Nombres de archivos, ID's y Clases de CSS: `kebab-case` (palabras-separadas-por-guiones) -> Ej: `formulario-inicio-sesion.php`, `#contenedor-principal`, `.tarjeta-perfil`.
+* Variables y funciones: `camelCase` (primeraPalabraIniciaEnMinusculaYLasDemasInicianEnMayuscula) -> Ej: `$idUsuario`, `function obtenerDatos()`.
+* Tablas DB: `snake_case` (todas_las_palabras_en_minusculas_separadas_por_guiones_bajos) -> Ej: `alumno`, `tipo_pregunta`.
 
 ---
 
