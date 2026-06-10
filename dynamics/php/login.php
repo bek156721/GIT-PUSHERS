@@ -37,6 +37,8 @@
             exit();
         }
 
+        //Ver si es un alumno
+
         $sql = "SELECT * FROM alumno WHERE id_alumno = '$usuario' AND contra_alumno = '$contrasenia'";
         $result = mysqli_query($conexion, $sql);
         
@@ -45,13 +47,30 @@
             $row = mysqli_fetch_assoc($result);
                 $_SESSION['id_alumno'] = $row['id_alumno']; //Guardar datos en servidor
                 $_SESSION['nombre_alumno'] = $row['nombre_alumno'];
-                header("Location: hola.php");
+                $_SESSION['rol']='alumno';
+                header("Location: hola_alumno.php");
+                exit();
+        }
+
+        // Ver si es Porfesor
+        
+        $sql = "SELECT * FROM profesor WHERE id_profesor= '$usuario' AND contra_profesor = '$contrasenia'";
+        $result = mysqli_query($conexion, $sql);
+
+        if (mysqli_num_rows($result)=== 1)//verifica que solo exista 1 resultado
+        {
+            $row = mysqli_fetch_assoc($result);
+                $_SESSION['id_profesor'] = $row['id_profesor']; //Guardar datos en servidor
+                $_SESSION['nombre_profesor'] = $row['nombre_profesor'];
+                $_SESSION['rol']='profesor';
+                header("Location: hola_profesor.php");
                 exit();
         }else
         {
-            header("Location: inicio-sesion.php?error=El usuario o contraseña son incorrectos");
+            header("Location: inicio-sesion.php?error=Usuario o contraseña incorrectos");
             exit();
         }
+
     }else
     {
         header("Location: inicio-sesion.php");

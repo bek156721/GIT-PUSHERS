@@ -1,13 +1,11 @@
 <?php
     session_start();
 
-    if(!isset($_SESSION['id_alumno']))
+    if ($_SESSION['rol'] != "alumno")
     {
         header("Location: inicio-sesion.php");
-        exit();
     }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
