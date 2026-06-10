@@ -65,6 +65,20 @@
                 $_SESSION['rol']='profesor';
                 header("Location: hola_profesor.php");
                 exit();
+        }
+        // Ver si es Porfesor
+        
+        $sql = "SELECT * FROM administrador WHERE id_administrador = '$usuario' AND contra_administrador = '$contrasenia'";
+        $result = mysqli_query($conexion, $sql);
+
+        if (mysqli_num_rows($result)=== 1)//verifica que solo exista 1 resultado
+        {
+            $row = mysqli_fetch_assoc($result);
+                $_SESSION['id_administrador'] = $row['id_administrador']; //Guardar datos en servidor
+                $_SESSION['nombre_administrador'] = $row['nombre_administrador'];
+                $_SESSION['rol']='administrador';
+                header("Location: hola_administrador.php");
+                exit();
         }else
         {
             header("Location: inicio-sesion.php?error=Usuario o contraseña incorrectos");
