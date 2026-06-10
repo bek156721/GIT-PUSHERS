@@ -1,5 +1,11 @@
 <?php
     session_start();
+
+    if(!isset($_SESSION['id_alumno']))
+    {
+        header("Location: inicio-sesion.php");
+        exit();
+    }
 ?>
 
 
@@ -11,6 +17,9 @@
     <title>HOLA</title>
 </head>
 <body>
-    <h1>Hola<h1>
+    <h1>Hola <?php echo $_SESSION['nombre_alumno'] ?><h1>
+    <form action="cerrar-sesion.php" method="POST">
+        <button type="submit">Cerrar sesión</button>
+    </form>
 </body>
 </html>
