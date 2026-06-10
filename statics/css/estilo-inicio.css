@@ -1,0 +1,160 @@
+@font-face
+{
+    font-family: "inter";
+    src: url("./../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face 
+{
+    font-family: "inria-serif";
+    src: url("./../fonts/InriaSerif-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+header
+{
+    width: 100%;
+    height: 104px;
+    background-color: #2A3958;
+    padding-left: 40px;
+    color: white;
+    position: fixed;
+    
+}
+* 
+{
+    font-family: "inter", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    background-color: #C4DAFA;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1 
+{
+    margin-top: 110px;
+    font-size: 70px;
+
+}
+.contenedor-grande
+{
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin : 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+#imagen
+{
+}
+#menu
+{
+    background-color: #4D82BC;
+    border-radius: 5px;
+}
+h2
+{
+    color: black;
+    font-family: "inter", sans-serif;
+    font-size: 45px;
+}
+#botones
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.boton-menu
+{
+    display: inline-flex;
+    width: 200px;
+    height: 260px;
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    color: white;
+    font-family: "inter", sans-serif;
+    background-color: #2A3958;
+    text-decoration: none;
+}
+.boton-menu:hover
+{
+    background-color: white;
+    color: black;
+}
+h3
+{
+    font-size: 45px;
+    font-family: "inter", sans-serif;
+}
+#novedades
+{
+    border-radius: 5px;
+    background-color: #97B8FE;
+}
+.anuncio
+{
+    background-color: #B5CDFE;
+    margin: 5px;
+    width: 100%;
+    font-size: 20px;
+}
+#arriba
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+#fecha-publicacion
+{
+    margin: 5px;
+    font-family: cursive;
+}
+
+#titulo-novedad
+{
+    display: inline;
+    font-size: 25px;
+}
+#abajo
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+#ver-mas
+{   
+    background-color: #cadcff;
+    color: black;
+    border: 1px solid gray;
+    font-family: "inter", sans-serif;
+    margin: 5px;
+    padding: 3px;
+    padding-bottom: 0px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+#ver-mas:hover
+{
+    background-color: white;
+}
+footer
+{
+    width: 100%;
+    height: 104px;
+    background-color: #2A3958;
+    padding-left: 40px;
+    color: white;
+}

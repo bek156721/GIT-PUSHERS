@@ -1,0 +1,162 @@
+@font-face
+{
+    font-family: "inter";
+    src: url("./../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face 
+{
+    font-family: "inria-serif";
+    src: url("./../fonts/InriaSerif-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+header
+{
+    width: 100%;
+    height: 104px;
+    background-color: #2A3958;
+    padding-left: 40px;
+    color: white;
+    position: fixed;
+    
+}
+* 
+{
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    background-color: #C4DAFA;
+    display: flex;
+    flex-direction: column;
+}
+h1 
+{
+    display: block;
+    justify-items: flex-start;
+    margin-top: 110px;
+    font-size: 70px;
+    font-family: "inria-serif";
+
+}
+#gran-contenedor
+{
+    flex-direction: column;
+    width: 90%;
+    margin : 10px;
+    margin-left: 5%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: #97B8FE;
+}
+#parte-arriba
+{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+#desc-btn-forms
+{
+    justify-content: center;
+    align-items: center;
+    margin: 1vh;
+    padding: 1vh;
+    font-family: "inter";
+    font-size: 3vh;
+}
+#btn-crear
+{
+    width: 6vh;
+    height: 6vh;
+    border-radius: 100%;
+    background-color: #4D82BC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#btn-crear:hover
+{
+    background-color: white;
+}
+#simbolo-subir-form
+{
+    width: 4vh;
+}
+summary
+{
+    padding: 1%;
+    margin-right: 1%;
+}
+summary:hover
+{
+    background-color: white;
+}
+.modulo
+{
+    width: 100%;
+    font-size: 45px;
+    margin: 10px;
+    font-family: "inria-serif";
+}
+.formulario
+{
+    background-color: #B5CDFE;
+    margin: 1%;
+}
+.arriba
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.fecha-publicacion
+{
+    margin: 5px;
+    font-size: 20px;
+    font-family: cursive;
+}
+.titulo-formulario
+{
+    display: inline;
+    margin: 1%;
+    font-family: "inter";
+    font-size: 30px;
+}
+.abajo
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.ver-mas
+{   
+    background-color: #cadcff;
+    color: black;
+    border: 1px solid gray;
+    font-family: "inter", sans-serif;
+    font-size: 20px;
+    margin: 5px;
+    padding: 3px;
+    padding-bottom: 0px;
+    height: 10%;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.ver-mas:hover
+{
+    background-color: white;
+}
+footer
+{
+    width: 100%;
+    height: 104px;
+    background-color: #2A3958;
+    padding-left: 40px;
+    color: white;
+}

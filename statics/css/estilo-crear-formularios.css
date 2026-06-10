@@ -1,0 +1,184 @@
+@font-face
+{
+    font-family: "inter";
+    src: url("./../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face 
+{
+    font-family: "inria-serif";
+    src: url("./../fonts/InriaSerif-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+header
+{
+    width: 100%;
+    height: 104px;
+    background-color: #2A3958;
+    padding-left: 40px;
+    color: white;
+    position: fixed;
+    
+}
+* 
+{
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    background-color: #C4DAFA;
+    display: flex;
+    flex-direction: column;
+}
+h1 
+{
+    display: block;
+    justify-items: flex-start;
+    margin-top: 110px;
+    margin-bottom: 10vh;
+    margin-left: 10vh;
+    font-size: 70px;
+    font-family: "inria-serif";
+
+}
+#creacion
+{
+    font-family: "inria-serif";
+    font-size: 4vh;
+    background-color: #97B8FE;
+    margin-left: 11vh;
+    margin-bottom: 10vh;
+    width: 90%;
+    
+}
+p
+{
+    margin-left: 7vh;
+    margin-bottom: 4vh;
+}
+.in-texto
+{
+    width: 90vh;
+    height: 4vh;
+    font-size: 3vh;
+}
+#in-modulos
+{
+    display: flex;
+}
+.r-modulo
+{
+    margin-left: 8vh;
+}
+.l-modulo
+{
+    font-size: 3vh;
+}
+#in-grupos
+{
+    display: flex;
+}
+.r-grupo
+{
+    margin-left: 32vh;
+}
+.l-grupo
+{
+    font-size: 1vh;
+}
+h2
+{
+    font-size: 5vh;
+    margin-bottom: 4vh;
+    margin-left: 3vh;
+}
+h3
+{
+    font-size: 5vh;
+    margin-bottom: 4vh;
+    margin-left: 3vh;
+}
+.respuesta-correcta
+{
+    margin-left: 6vh;
+}
+#agregar-pregunta
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+#btn-agregar
+{
+    background-color: #D9D9D9;
+    color: black;
+    margin: 5px;
+    margin-right: 40vh;
+    padding: 3px;
+    padding-bottom: 0px;
+    height: 10%;
+    font-size: 4vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-decoration: none;
+}
+#btn-agregar:hover
+{
+    background-color: white;
+}
+h4
+{
+    font-size: 5vh;
+    margin-bottom: 4vh;
+    margin-left: 3vh;
+}
+#alineacion-vista
+{
+    width: 99%;
+    display: flex;
+    justify-content: center;
+    margin-left: 1vh;
+}
+#vista-previa
+{
+    background-color: #D9D9D9;
+    width: 100%;
+    margin: 1vh;
+}
+#subir-form
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#btn-subir
+{
+    background-color: #4D82BC;
+    color: black;
+    margin: 3vh;
+    padding-bottom: 0px;
+    height: 10%;
+    font-size: 4vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-decoration: none;
+}
+#btn-subir:hover
+{
+    background-color: white;
+}
+footer
+{
+    width: 90%;
+    height: 104px;
+    background-color: #2A3958;
+    padding-left: 40px;
+    color: white;
+}
