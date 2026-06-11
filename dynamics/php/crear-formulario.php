@@ -42,37 +42,46 @@
                 <p>
                     Grupo
                     <input class="r-grupo" type="radio" name="grupo" id="g1">
-                    <label id class="l-grupo" for="g1">61B</label>
+                    <label class="l-grupo" for="g1">61B</label>
                     <input class="r-grupo" type="radio" name="grupo" id="g2">
                     <label class="l-grupo" for="g2">61D</label>
                 </p>
             </div>
-        </form>
 
         <h3>Preguntas</h3>
+            <p>Pregunta <input class="in-texto" type="text" name="pregunta" size="250"></p>
+            <div id="tipo-respuesta">
+                <p>Tipo de respuesta </p>
+                <input class="r-tipo-r" type="radio" name="tipo-pregunta" id="abierta">
+                <label class="l-tipo-r" for="abierta">Abierta</label>
+                <input class="r-tipo-r" type="radio" name="tipo-pregunta" id="opcionmultiple">
+                <label class="l-tipo-r" for="opcionmultiple">Opcion multiple</label>
+                <input class="r-tipo-r" type="radio" name="tipo-pregunta" id="opcionmultiple-2">
+                <label class="l-tipo-r" for="opcionmultiple-2">Opcion multiple (multiseleccion)</label>
 
-        <p>Pregunta</p>
-
-        <p>Tipo de pregunta</p>
-
-        <!--
-        <p>Respuesta</p>
-            <p class="respuesta-correcta">Respuesta correcta<p>
-
-        <p>Respuesta</p>
-            <p class="respuesta-correcta">Respuesta correcta<p>
-        
-        <p>Respuesta</p>
-            <p class="respuesta-correcta">Respuesta correcta<p>
-        
-        <p>Respuesta</p>
-            <p class="respuesta-correcta">Respuesta correcta<p>
-        -->
-
-        
-        <div id="agregar-pregunta">
-            <a id="btn-agregar" href="./crear-formulario.php">Agregar pregunta</a>
-        </div>
+                <div id="respuestas">
+                    <div class="respuesta">
+                        <p>Respuesta <input class="in-respuesta" type="text" name="respuesta-1" size="250"></p>
+                        <p class="respuesta-correcta">Respuesta correcta <input type="checkbox" name="respuesta-correcta" id="respeusta-1"><p>
+                    </div>
+                    <div class="respuesta">
+                        <p>Respuesta <input class="in-respuesta" type="text" name="respuesta-2" size="250"></p>
+                        <p class="respuesta-correcta">Respuesta correcta <input type="checkbox" name="respuesta-correcta" id="respeusta-2"><p>
+                    </div>
+                    <div class="respuesta">
+                        <p>Respuesta <input class="in-respuesta" type="text" name="respuesta-3" size="250"></p>
+                        <p class="respuesta-correcta">Respuesta correcta <input type="checkbox" name="respuesta-correcta" id="respeusta-3"><p>
+                    </div>
+                    <div class="respuesta">
+                        <p>Respuesta <input class="in-respuesta" type="text" name="respuesta-4" size="250"></p>
+                        <p class="respuesta-correcta">Respuesta correcta <input type="checkbox" name="respuesta-correcta" id="respeusta-4"><p>
+                    </div>
+                </div>
+            </div>  
+        </form>
+            <div id="agregar-pregunta">
+                <a id="btn-agregar" href="./crear-formulario.php">Agregar pregunta</a>
+            </div>
 
         <h4>Vista previa de las preguntas</h3>
         <div id="alineacion-vista">

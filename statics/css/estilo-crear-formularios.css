@@ -44,6 +44,11 @@ h1
     font-family: "inria-serif";
 
 }
+input[type="checkbox"], input[type="radio"]
+{
+    width: 3vh;
+    height: 3vh;
+}
 #creacion
 {
     font-family: "inria-serif";
@@ -79,15 +84,19 @@ p
 }
 #in-grupos
 {
-    display: flex;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 4vh;
 }
 .r-grupo
 {
-    margin-left: 32vh;
+    margin-left: 40vh;
 }
 .l-grupo
 {
-    font-size: 1vh;
+    font-size: 4vh;
 }
 h2
 {
@@ -101,9 +110,47 @@ h3
     margin-bottom: 4vh;
     margin-left: 3vh;
 }
+#tipo-respuesta > *:not(#respuestas)
+{
+    display: inline;
+}
+.r-tipo-r
+{
+    margin: 5vh;
+}
+.l-tipo-r
+{
+    font-size: 3vh;
+}
+#respuestas
+{
+    display: none;
+    
+}
+#opcionmultiple:checked ~ #respuestas
+{
+    display: block;
+
+}
+#opcionmultiple-2:checked ~ #respuestas
+{
+    display: block;
+}
+.respuesta
+{
+    display: flex;
+    align-items: center;
+}
+.in-respuesta
+{
+    width: 80%;
+    font-size: 3vh;
+}
 .respuesta-correcta
 {
-    margin-left: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #agregar-pregunta
 {
