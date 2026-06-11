@@ -1,5 +1,4 @@
-*
-{
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -7,23 +6,26 @@
 
 header
 {
-    top:0%;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: row;
     padding: 2rem;
     background-color: #2A3958;
     justify-content: space-between;
     position: fixed;
+    top: 0;
+    left: 0;
 }
+
 #logo
 {
     display: flex;
     flex-direction: row;
 }
+
 .logo-header
 {
-    height: 15vh;
+    height: 13vh;
     margin-right: 5px;
 }
 
@@ -32,3 +34,33 @@ header
     color: white;
 }
 
+@media (max-width: 768px)
+{
+    header
+    {
+        padding: 1rem;
+    }
+
+    
+    #eslogan
+    {
+        font-size: 0.8rem;
+    }
+
+    .logo-header
+    {
+        height: 6vh;
+        margin-right: 2px;
+    }
+    header
+    {
+        flex-direction: column;
+    }
+    #titulo-plataforma
+    {
+        display: flex;
+        justify-content: center;
+        padding: 5px;
+        font-size: 1rem;
+    }
+}

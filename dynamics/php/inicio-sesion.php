@@ -22,7 +22,7 @@
                 <input id="usuario" name="usuario" type="text" placeholder="Ingresa tu número de cuenta">
                 <label for="contraseña"><br>Contraseña<br></label>
                 <input id="contrasenia" name="contrasenia" type="password" placeholder="Ingresa tu contraseña">
-                <p>¿Tienes problemas para iniciar sesión?<br></p>
+                <p><br>¿Tienes problemas para iniciar sesión?<br></p>
                 <a id="ayuda" href="Equipo_7.php"> Ayuda<br></a>
                 <input id="boton_inicio_sesion" type="submit" value="Iniciar Sesión">
             </form>

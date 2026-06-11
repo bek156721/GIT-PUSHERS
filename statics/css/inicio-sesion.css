@@ -1,81 +1,117 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+html, body
+{
+    min-height: 100vh;
 }
+
+body
+{
+    display: flex;
+    flex-direction: column;
+    background-color: #CEDEFE;
+}
+
 main
 {
-    background-color: #CEDEFE;
-    padding: 3%;
+    flex: 1;
     margin-top: 20vh;
+    padding: 3%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-/*----------------LOGING-----------------------------------*/
+/*----------------LOGING-----------------------------------*/ 
 #tarjeta-loging
 {
+    width: 90%;
+    max-width: 460px;
+    min-height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 25%;
-    height: 350px;
-    background-color: #97B8FE;
-    border-radius: 10%;
-    
+    background-color: #97B8FE; 
+    border-radius: 10%; 
 }
 
-#icono-perfil
-{
-    height: 100px;
+#icono-perfil 
+{ 
+    width: 30%;
+    max-width: 100px;
+    min-width: 60px;
+    height: auto;
 }
 
-form
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-}
-
-/*-----------------TEXTO-----------------*/
-h2, h3
-{
-    text-align: center;
-    color: black;
-}
-p
-{
+form 
+{ 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    width: 80%; 
+} 
+/*-----------------TEXTO-----------------*/ 
+h2, h3 
+{ 
+    text-align: center; 
+    color: black; 
+} p 
+{ 
     font-size: smaller;
-}
-#ayuda
+} 
+#ayuda 
+{ 
+    color: blue; 
+} 
+#ayuda:visited 
+{ 
+    color:purple; 
+} 
+::placeholder 
+{ 
+    font-size: xx-small; 
+} 
+/*-----------------------INPUTS-------------------------*/ 
+#usuario, #contrasenia 
 {
-    color: blue;
-    
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #CEDEFE; 
 }
-#ayuda:visited
-{
-    color:purple;
+#boton_inicio_sesion 
+{ 
+    border-radius: 8px; 
+    background-color: #2A3958; 
+    color: white; 
+    padding-top: 5px;
 }
-::placeholder
+
+/*-----------------------Media queries -------*/
+
+@media (max-width: 768px)
 {
-    font-size: xx-small;
-}
-/*-----------------------INPUTS-------------------------*/
-#usuario, #contrasenia
-{
-    height: 25px;
-    width: 75%;
-    border-radius: 25%;
-    background-color: #CEDEFE;
-}
-#boton_inicio_sesion
-{
-    border-radius: 20%;
-    background-color: #2A3958;
-    color: white;
+
+    .logo-header
+    {
+        height: 40px;
+    }
+
+    #titulo-plataforma
+    {
+        font-size: 1.2rem;
+    }
+
+    #tarjeta-loging
+    {
+        width: 95%;
+    }
+
+    form
+    {
+        width: 90%;
+    }
 }
