@@ -52,35 +52,58 @@ CREATE TABLE alumno
     FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo)
 );
 
+-- 5. ASISTENCIA: Servirá para el registro de veces que los alumnos ingresan al sitio.
+CREATE TABLE asistencia(
+    id_asistencia INT NOT NULL AUTO_INCREMENT,
+    id_alumno INT NOT NULL,
+    fecha VARCHAR(10),
+    hora VARCHAR(5),
+    PRIMARY KEY (id_asistencia),
+    FOREIGN KEY (id_alumno) REFERENCES alumno(id_alumno)
+);
+
 
 -- ========================================================================== --
 --                      II. CONTENIDOS Y SEGUIMIENTO                          --
 -- ========================================================================== --
 
--- 5. ACTIVIDAD: Para las actividades que deje el profesor a cada grupo 
---               e implicitamente a cada alumno, el profesor poddrá marcar como
---               entregada cada actividad para las estadísticas.
+-- 6. ACTIVIDAD: Representa una actividad que crea el profesor por cada grupo.
+
 CREATE TABLE actividad (
     id_actividad INT NOT NULL AUTO_INCREMENT,    
-    id_alumno INT NOT NULL,
     titulo VARCHAR(50),
     descripcion TEXT NOT NULL,
     modulo INT NOT NULL CHECK (modulo BETWEEN 1 AND 5),
-    fecha VARCHAR(8),
+    fecha VARCHAR(10),
     hora VARCHAR(5),
-    entregado BOOLEAN,
+    id_grupo INT NOT NULL,
+    FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo),
     PRIMARY KEY (id_actividad),
-    FOREIGN KEY (id_alumno) REFERENCES alumno(id_alumno)
 );
 
--- 6. MATERIAL: Para recursos de apoyo (links, PDFs, etc.) compartidos a todo un 
+-- 7. ACTIVIDAD POR ALUMNO: Representa la actividad de cada alumno individualmente, es decir,
+--                          es una copia de la actividad asignada al alumno que pertenece al grupo
+--                          pero incluye el booleano para determinar si ya la entregó o no.
+
+CREATE TABLE actividad_por_alumno (
+    id_actividad_por_alumno INT NOT NULL AUTO_INCREMENT,    
+    entregado BOOL,
+    id_actividad INTEGER NOT NULL,
+    id_alumno INTEGER NOT NULL,
+    FOREIGN KEY(id_actividad) REFERENCES actividad(id_actividad),
+    FOREIGN KEY(id_alumno) REFERENCES alumno(id_alumno),
+    PRIMARY KEY (id_actividad),
+);
+
+
+-- 8. MATERIAL: Para recursos de apoyo (links, PDFs, etc.) compartidos a todo un 
 --              grupo.
 CREATE TABLE material (
     id_material INT NOT NULL AUTO_INCREMENT,
     id_grupo INT NOT NULL, 
     titulo VARCHAR(50) NOT NULL,
     descripcion TEXT NOT NULL,
-    fecha VARCHAR(8),
+    fecha VARCHAR(10),
     hora VARCHAR(5),
     modulo INT NOT NULL CHECK (modulo BETWEEN 1 AND 5),
     url TEXT,
@@ -88,26 +111,42 @@ CREATE TABLE material (
     FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo)
 );
 
--- 7. FORMULARIO: Representa un examen, encuesta o cuestionario de algún modulo para 
+-- 9. FORMULARIO: Representa un examen, encuesta o cuestionario de algún modulo para 
 --                un grupo.
 CREATE TABLE formulario (
     id_formulario INT NOT NULL AUTO_INCREMENT,
     id_grupo INT NOT NULL, 
     titulo VARCHAR(50) NOT NULL,
     descripcion TEXT NOT NULL,
-    fecha VARCHAR(8),
+    fecha VARCHAR(10),
     hora VARCHAR(5),
     modulo INT NOT NULL CHECK (modulo BETWEEN 1 AND 5),
+    rendimiento_esperado INT NOT NULL,
     PRIMARY KEY (id_formulario),
     FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo)
 );
 
+-- 10. ACTIVIDAD POR ALUMNO: Representa el formulario de cada alumno individualmente, es decir,
+--                          es una copia del formulario asignada al alumno que pertenece al grupo
+--                          pero incluye el booleano para determinar si ya la entregó o no.
+
+CREATE TABLE formulario_por_alumno(
+    id_formulario_por_alumno INTEGER NOT NULL AUTO_INCREMENT,
+    entregado BOOL,
+    calificacion INTEGER CHECK(calificacion BETWEEN 0 AND 10),
+    rendimiento_alumno INT NOT NULL,
+    id_formulario INTEGER NOT NULL,
+    id_alumno INTEGER NOT NULL,
+    FOREIGN KEY(id_formulario) REFERENCES formulario(id_formulario),
+    FOREIGN KEY(id_alumno) REFERENCES alumno(id_alumno),
+    PRIMARY KEY(id_formulario_por_alumno)
+);
 
 -- ========================================================================== --
 --                       III. ESTRUCTURA INTERNA FORMULARIOS                  --
 -- ========================================================================== --
 
--- 8. TIPO DE PREGUNTA: Enumeración que representará los tipos de pregunta que se
+-- 11. TIPO DE PREGUNTA: Enumeración que representará los tipos de pregunta que se
 --                      podrán hacer en los formularios (Ej: Abierta, Radio,
 --                      Checkbox, etc...). Esta tabla ya estará poblada.
 CREATE TABLE tipo_pregunta(
@@ -116,29 +155,32 @@ CREATE TABLE tipo_pregunta(
     PRIMARY KEY (id_tipo_pregunta)
 );
 
--- 9. PREGUNTA: Reactivos que componen un formulario, cada uno tiene un tipo_pregunta.
+-- 12. PREGUNTA: Reactivos que componen un formulario, cada uno tiene un tipo_pregunta.
 CREATE TABLE pregunta (
     id_pregunta INT NOT NULL AUTO_INCREMENT,
     id_formulario INT NOT NULL, 
     id_tipo_pregunta INT NOT NULL,
     pregunta TEXT NOT NULL,
+    puntaje_rendimiento INTEGER NOT NULL, --El profesor no asigna esto
     PRIMARY KEY (id_pregunta), 
     FOREIGN KEY (id_formulario) REFERENCES formulario(id_formulario),
     FOREIGN KEY (id_tipo_pregunta) REFERENCES tipo_pregunta(id_tipo_pregunta)
 );
 
--- 10. OPCIÓN PREGUNTA: Las posibles respuestas para una pregunta de opción múltiple.
+-- 13. OPCIÓN PREGUNTA: Las posibles respuestas para una pregunta de opción múltiple.
 --                      El campo correcta se usará para las estadísticas.
 CREATE TABLE opcion_pregunta(
     id_opcion_pregunta INT NOT NULL AUTO_INCREMENT,
     id_pregunta INT NOT NULL,
     opcion TEXT NOT NULL,
     correcta BOOLEAN,
+    puntaje_opcion INTEGER NOT NULL CHECK(puntaje_rendimiento BETWEEN 0 AND 3),
     PRIMARY KEY (id_opcion_pregunta),
     FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta)
 );
 
--- 11. RESPUESTA ALUMNO: Bitácora donde se guarda lo que respondió cada alumno en cada pregunta.
+
+-- 14. RESPUESTA ALUMNO: Bitácora donde se guarda lo que respondió cada alumno en cada pregunta.
 -- Nota: id_opcion_pregunta acepta NULL para cuando la pregunta sea de tipo abierta.
 CREATE TABLE respuesta_alumno(
     id_respuesta_alumno INT NOT NULL AUTO_INCREMENT,
@@ -146,6 +188,7 @@ CREATE TABLE respuesta_alumno(
     id_pregunta INT NOT NULL,
     id_opcion_pregunta INT NULL, 
     texto_respuesta TEXT,
+    calificacion_por_pregunta INTEGER NOT NULL,
     PRIMARY KEY (id_respuesta_alumno),
     FOREIGN KEY (id_alumno) REFERENCES alumno(id_alumno),
     FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta),
