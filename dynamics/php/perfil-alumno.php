@@ -1,18 +1,8 @@
 <?php
     session_start();
-    const DBHOST = "127.0.0.1";
-    const DBUSER = "root";
-    const PASSWORD = "";
-    const DB = "sec_ete_db";
 
-    function connect()
-    {
-        $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB); 
-        //var_dump($conexion);
-        return $conexion;
-    }
-    $con = connect();
-
+    include 'conexion.php';
+    
     function es_password_es_segura($pass)
     {
         if(strlen($pass) < 6)
@@ -35,19 +25,8 @@
         $password_hasheada = password_hash($pass, PASSWORD_DEFAULT);
         return $password_hasheada;
     }
-    
-        $password_hasheada_bd = "";
 
-    if(!isset($_SESSION["numero_cuenta_alumno"]))
-        $_SESSION["numero_cuenta_alumno"] = "10123456789";
-
-    $buscar_cuenta_alumno = $_SESSION["numero_cuenta_alumno"];
-
-    $nombre_alumno = "No encontrado";
-    $primer_apellido_alumno = "No encontrado";
-    $segundo_apellido_alumno = "No encontrado";
-    $correo_alumno = "No encontrado";
-    $numero_cuenta_alumno = "$buscar_cuenta_alumno";
+    $buscar_cuenta_alumno = $_SESSION["id_alumno"];
 
     $ruta_imagen_alumno = "../../uploads/fotos-perfil/foto-default.png";
     if(isset($_FILES["foto-perfil"]))
@@ -59,14 +38,14 @@
 
             if(move_uploaded_file($ruta_temporal_alumno, $ruta_destino_alumno))
             {
-                $querry_foto = "UPDATE alumno SET imagen_alumno = '$ruta_destino_alumno' WHERE id_alumno = '$buscar_cuenta_alumno'";
+                $querry_foto = "UPDATE alumno SET imagen_alumno = '$ruta_destino_alumno' WHERE id_alumno = $buscar_cuenta_alumno";
             }
         }
     
-    if($con)
+    if($conexion)
     {
-        $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno FROM alumno WHERE id_alumno = '$buscar_cuenta_alumno'";
-        $resultado_alumno  = mysqli_query($con, $query);
+        $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
+        $resultado_alumno  = mysqli_query($conexion, $query);
         $datos_alumno = mysqli_fetch_assoc($resultado_alumno);
         if($datos_alumno)
         {
@@ -95,18 +74,12 @@
         <meta name = "author" content ="Git Pushers">
         <meta name = "description" content = "Información acerca de tu perfil">
         <link rel="stylesheet" href="../../statics/css/perfil.css">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
 
-        <nav class = "menu">
-            <button class = "boton_menu"> MIEMBROS </button>
-            <br>
-            <button class = "boton_menu"> MATERIALES </button>
-            <br>
-            <button class = "boton_menu"> ESTADÍSTICAS GRUPALES </button>
-            <br>
-            <button class = "boton_menu"> ALUMNOS INSCRITOS </button>
-        </nav>
+        <?php include 'header.php'; ?>  
 
         <main class = "contenido_principal">
             <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
@@ -124,5 +97,6 @@
             </div>
                 <img src = "<?php echo $ruta_destino_alumno; ?>" class = "foto_perfil">
         </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
