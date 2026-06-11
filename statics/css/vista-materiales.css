@@ -32,17 +32,10 @@ a:hover
 {
     flex: 1;
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;  
+    
 }
 
-header 
-{
-    background-color: #2A3958;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: row;  
-}
 
 #cont-principal 
 {
@@ -51,21 +44,18 @@ header
     min-height: 70vh;
     background: #C4DAFA;
     box-sizing: border-box;
+    margin-top: 23vh;
 }
 
-footer 
-{
-    background-color: #2A3958;
-    color: white;
-    text-align: center;
-    padding: 10px;
-}
+
 #perfil
 {
     background-color: #4D82BC;
     flex: 1;
     border-radius:100%;
     margin-right: 1vw;
+    width: 5vw;
+    height: 5vw;
 }
 #cerrar-sesion
 {
@@ -73,6 +63,20 @@ footer
     flex: 1;
     border-radius:100%;
     margin-left: 1vw;
+    width: 5vw;
+    height: 5vw;
+    border: none;
+    
+}
+
+#cerrar-sesion:hover
+{
+    background-color: #0f5fb5;
+   
+}
+
+#img_logout{
+    width: 3vw;
 }
 #cont-circul
 {
@@ -87,6 +91,7 @@ footer
     background-color: #97B8FE;
     padding: 2vw;
     box-sizing: border-box;
+    margin: 3vh;
 }
 .menu-checkbox 
 {
@@ -94,7 +99,7 @@ footer
 }
 
     /* Barra superior (Navbar) */
-.navbar 
+/*.navbar 
 {
     background-color: #0b2564; 
     height: 5vh;
@@ -102,7 +107,7 @@ footer
     display: flex;
     align-items: center;
     color: white;
-}
+}*/
 
     /* Botón de hamburguesa */
 .btn-hamburguesa 

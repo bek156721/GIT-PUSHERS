@@ -34,7 +34,7 @@
         <h2>Menu</h2>
         <div id="botones">
             <a class="boton-menu" id="boton-miembros" href="./miembros.php">Miembros</a>
-            <a class="boton-menu" id="boton-materiales" href="./materiales.php">Materiales</a>
+            <a class="boton-menu" id="boton-materiales" href="./vista-materiales.php">Materiales</a>
             <a class="boton-menu" id="boton-cuestionarios" href="./formularios.php">Formularios</a>
             <a class="boton-menu" id="boton-actividades" href="./actividades.php">Actividades</a>
             <a class="boton-menu" id="boton-estadisticas" href="./estadisticas.php">Estadisticas</a>

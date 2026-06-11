@@ -1,6 +1,13 @@
 <?php
-$conexion = mysqli_connect("localhost", "root", "", "sec_ete_db");
-$id_grupo_usuario = 1;
+include 'conexion.php';
+
+session_start();
+
+if ($_SESSION['rol'] != "alumno")
+{
+        header("Location: inicio-sesion.php");
+}
+$id_grupo_usuario = $_SESSION['id_grupo'];
 
 $sql = "SELECT titulo, descripcion, fecha, modulo, url FROM material WHERE id_grupo = $id_grupo_usuario";
 
@@ -22,17 +29,14 @@ while ($fila = mysqli_fetch_assoc($resultado))
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../statics/css/vista-materiales.css">
+    <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+    <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     <title>Materiales</title>
 </head>
 <body>
     <div id="cont-ventana">
         <input type="checkbox" id="menu-toggle" class="menu-checkbox">
-        <header>
-            <div class="navbar">
-                <label for="menu-toggle" class="btn-hamburguesa">☰</label>
-            </div>
-            <h1>Prepa 6</h1>
-        </header>
+        <?php include 'header.php'; ?>
         <aside class="menu-lateral">
             <ul>
                 <li><a href="#">ACTIVIDADES →</a></li>
@@ -47,8 +51,10 @@ while ($fila = mysqli_fetch_assoc($resultado))
                 <aside id="perfil">
 
                 </aside>
-                <aside id="cerrar-sesion">
-
+                <aside>
+                    <form action="cerrar-sesion.php" method="POST">
+                        <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/logout.png" alt="Log Out"></button> 
+                    </form>
                 </aside>
             </div>
             <h2> MATERIALES </h2>
@@ -136,10 +142,7 @@ while ($fila = mysqli_fetch_assoc($resultado))
                 ?>
             </aside>
         </section>
-        <footer>
-            <p>ns que va aquí jsjs</p>
-        </footer>
+        <?php include 'footer.php'; ?>
     </div>
-    </footer>
 </body>
 </html>

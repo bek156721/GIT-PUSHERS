@@ -51,6 +51,7 @@
             $row = mysqli_fetch_assoc($result);
                 $_SESSION['id_alumno'] = $row['id_alumno']; //Guardar datos en servidor
                 $_SESSION['nombre_alumno'] = $row['nombre_alumno'];
+                $_SESSION['id_grupo'] = $row['id_grupo'];
                 $_SESSION['rol']='alumno';
                 header("Location: ./pagina-inicio-alumno.php");
                 exit();
