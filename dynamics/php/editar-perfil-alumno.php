@@ -1,18 +1,12 @@
 <?php
     session_start();
-    $_SESSION["numero_cuenta"] = "10123456789";
-    const DBHOST = "127.0.0.1";
-    const DBUSER = "root";
-    const PASSWORD = "";
-    const DB = "sec_ete_db";
 
-    function connect()
+    if ($_SESSION['rol'] != "alumno")
     {
-        $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB); 
-        //var_dump($conexion);
-        return $conexion;
+            header("Location: inicio-sesion.php");
     }
-    $con = connect();
+
+    include 'conexion.php';
 
     function es_password_es_segura($pass)
     {
@@ -37,22 +31,18 @@
         return $password_hasheada;
     }
     
-    if(!isset($_SESSION["numero_cuenta_alumno"]))
-        $_SESSION["numero_cuenta_alumno"] = "10123456789";
-
-    $buscar_cuenta_alumno = $_SESSION["numero_cuenta_alumno"];
+    $buscar_cuenta_alumno = $_SESSION["id_alumno"];
 
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contrasenia_actual"]) && isset($_POST["nueva_contrasenia"]) && isset($_POST["validacion_nueva_contrasenia"]))
     {
         $contra_actual = $_POST["contrasenia_actual"];
         $nueva_contra = $_POST["nueva_contrasenia"];
         $val_nueva_contra = $_POST["validacion_nueva_contrasenia"];
-        if ($con)
+        if ($conexion)
         {
-            $query_contra = "SELECT contra_alumno FROM alumno WHERE id_alumno = '$buscar_cuenta_alumno'";
+            $query_contra = "SELECT contra_alumno FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
             $res_contra = mysqli_query($con, $query_contra);
             $contra_alumno = mysqli_fetch_assoc($res_contra);
-            //var_dump ($contra_alumno);
             if($contra_alumno)
             {
                 $password_hasheada_bd = $contra_alumno["contra_alumno"];
@@ -63,11 +53,7 @@
                         if(es_password_es_segura($nueva_contra))
                         {
                             $nueva_contra_encriptada = hashea_password($nueva_contra);
-                            $query_update = "UPDATE alumno SET contra_alumno = '$nueva_contra_encriptada' WHERE id_alumno = '$buscar_cuenta_alumno'";
-                            if(!mysqli_query($con, $query_update))
-                            {
-                                $mensaje_alerta = "Error";
-                            }
+                            $query_update = "UPDATE alumno SET contra_alumno = '$nueva_contra_encriptada' WHERE id_alumno = $buscar_cuenta_alumno";
                         }
                     }   
                 }
@@ -75,10 +61,6 @@
         }
     }
 
-    $nombre_alumno = "No encontrado";
-    $primer_apellido_alumno = "No encontrado";
-    $segundo_apellido_alumno = "No encontrado";
-    $correo_alumno = "No encontrado";
     $numero_cuenta_alumno = "$buscar_cuenta_alumno";
 
     $ruta_destino_alumno = "../../uploads/fotos-perfil/foto-default.png";
@@ -87,20 +69,21 @@
     {
         $archivo = $_FILES["foto-perfil"];
         $ruta_temporal_alumno = $archivo["tmp_name"];
-        $ruta_destino_alumno = "../../uploads/fotos-perfil/foto-perfil.png" . $buscar_cuenta_alumno . ".jpg";
+        $nombre_archivo =  "foto-perfil-" . $buscar_cuenta_alumno . ".jpg";
+        $ruta_destino_alumno = "../../uploads/fotos-perfil/" . $nombre_archivo;
 
         if(move_uploaded_file($ruta_temporal_alumno, $ruta_destino_alumno))
         {
-            $querry_foto = "UPDATE alumno SET imagen_alumno = '$ruta_destino_alumno' WHERE id_alumno = '$buscar_cuenta_alumno'";
-            mysqli_query($con, $querry_foto);
+            $querry_foto = "UPDATE alumno SET imagen_alumno = '$ruta_destino_alumno' WHERE id_alumno = $buscar_cuenta_alumno";
+            mysqli_query($conexion, $querry_foto);
         }
     }
 
-        if($con)
+        if($conexion)
     {
-        $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno FROM alumno WHERE id_alumno = '$buscar_cuenta_alumno'";
-        $resultado  = mysqli_query($con, $query);
-        $datos_alumno = mysqli_fetch_assoc($resultado);
+        $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
+        $resultado_alumno  = mysqli_query($conexion, $query);
+        $datos_alumno = mysqli_fetch_assoc($resultado_alumno);
         if($datos_alumno)
         {
             $numero_cuenta_alumno = $datos_alumno["id_alumno"];
@@ -128,20 +111,12 @@
         <meta name = "author" content ="Git Pushers">
         <meta name = "description" content = "Edición de correo y foto de perfil">
         <link rel="stylesheet" href="../../statics/css/perfil.css">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
+        <?php include 'header.php'; ?> 
 
-        <nav class = "menu">
-            <button class = "boton_menu"> MIEMBROS </button>
-            <br>
-            <button class = "boton_menu"> MATERIALES </button>
-            <br>
-            <button class = "boton_menu"> ESTADÍSTICAS GRUPALES </button>
-            <br>
-            <button class = "boton_menu"> ALUMNOS INSCRITOS </button>
-        </nav>
-
-        <h1 class = "encabezado"> Sec ETE </h1>
         <main class = "contenido_principal">
         <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
         <div class = "bloqueo_datos">
@@ -188,6 +163,7 @@
         <br>
         <img src = "<?php echo $ruta_destino_alumno; ?>" class = "foto_perfil">
         </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
     
