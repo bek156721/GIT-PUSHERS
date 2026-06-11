@@ -86,18 +86,12 @@
         <meta name = "author" content ="Git Pushers">
         <meta name = "description" content = "Información acerca de tu perfil">
         <link rel="stylesheet" href="../../statics/css/perfil.css">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
 
-        <nav class = "menu">
-            <button class = "boton_menu"> MIEMBROS </button>
-            <br>
-            <button class = "boton_menu"> MATERIALES </button>
-            <br>
-            <button class = "boton_menu"> ESTADÍSTICAS GRUPALES </button>
-            <br>
-            <button class = "boton_menu"> ALUMNOS INSCRITOS </button>
-        </nav>
+        <?php include 'header.php'; ?>  
 
         <main class = "contenido_principal">
             <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
@@ -115,5 +109,6 @@
             </div>
                 <img src = "<?php echo $ruta_destino_alumno; ?>" class = "foto_perfil">
         </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
