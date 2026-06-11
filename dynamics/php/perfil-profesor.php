@@ -1,17 +1,8 @@
 <?php
     session_start();
-    const DBHOST = "127.0.0.1";
-    const DBUSER = "root";
-    const PASSWORD = "";
-    const DB = "sec_ete_db";
 
-    function connect()
-    {
-        $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB); 
-        //var_dump($conexion);
-        return $conexion;
-    }
-    $con = connect();
+    include 'conexion.php';
+    
 
     function es_password_es_segura($pass)
     {
@@ -36,16 +27,7 @@
         return $password_hasheada;
     }
 
-    if(!isset($_SESSION["numero_cuenta_profesor"]))
-        $_SESSION["numero_cuenta_profesor"] = "30123456789";
-
-    $buscar_cuenta_profesor = $_SESSION["numero_cuenta_profesor"];
-
-    $nombre_profesor = "No encontrado";
-    $primer_apellido_profesor = "No encontrado";
-    $segundo_apellido_profesor = "No encontrado";
-    $correo_profesor = "No encontrado";
-    $numero_cuenta_profesor = "$buscar_cuenta_profesor";
+    $buscar_cuenta_profesor = $_SESSION["id_profesor"];
 
     $ruta_imagen_profesor = "../../uploads/fotos-perfil/foto-default.png";
     if(isset($_FILES["foto-perfil"]))
@@ -57,14 +39,14 @@
 
             if(move_uploaded_file($ruta_temporal_profesor, $ruta_destino_profesor))
             {
-                $querry_foto = "UPDATE profesor SET imagen_profesor = '$ruta_destino_profesor' WHERE id_profesor = '$buscar_cuenta_profesor'";
+                $querry_foto = "UPDATE profesor SET imagen_profesor = '$ruta_destino_profesor' WHERE id_profesor = $buscar_cuenta_profesor";
             }
         }
     
-    if($con)
+    if($conexion)
     {
-        $query = "SELECT id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, imagen_profesor FROM profesor WHERE id_profesor = '$buscar_cuenta_profesor'";
-        $resultado_profesor  = mysqli_query($con, $query);
+        $query = "SELECT id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, imagen_profesor FROM profesor WHERE id_profesor = $buscar_cuenta_profesor";
+        $resultado_profesor  = mysqli_query($conexion, $query);
         $datos_profesor = mysqli_fetch_assoc($resultado_profesor);
         if($datos_profesor)
         {
@@ -94,18 +76,12 @@
         <meta name = "author" content ="Git Pushers">
         <meta name = "description" content = "Información acerca de tu perfil">
         <link rel="stylesheet" href="../../statics/css/perfil.css">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
 
-        <nav class = "menu">
-            <button class = "boton_menu"> MIEMBROS </button>
-            <br>
-            <button class = "boton_menu"> MATERIALES </button>
-            <br>
-            <button class = "boton_menu"> ESTADÍSTICAS GRUPALES </button>
-            <br>
-            <button class = "boton_menu"> ALUMNOS INSCRITOS </button>
-        </nav>
+        <?php include 'header.php'; ?>  
 
         <main class = "contenido_principal">
             <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
@@ -123,5 +99,6 @@
             </div>
                 <img src = "<?php echo $ruta_destino_profesor; ?>" class = "foto_perfil">
         </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
