@@ -1,51 +1,127 @@
+<?php
+    session_start();
+
+    if ($_SESSION['rol'] != "alumno")
+    {
+        header("Location: inicio-sesion.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <title>Estadisticas</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Página para consultar actividades generales de los estudiantes">
-        <title>Estadisticas</title>
-        <link rel="stylesheet" href="./../../statics/css/graficas.css">
-
+        <meta name="description" content="Pagina para la consulta de actividades">
+        <meta name="author" content="git pushers (Equipo 7)">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/estilo-formularios.css">
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
-        <header> 
-            <?php ?>
-        </header>
-        
-        <nav>
-            <?php ?>
-        </nav>
-       
-        
-        <main class="contenido-principal">
-            
-            <h1>Actividades</h1>
-            <div id="sesion">
-                <a href="index.php"><img src="https://static.vecteezy.com/system/resources/previews/022/457/896/original/door-icon-adobe-x1-free-vector.jpg" alt=""></a>
-                <a href=""><img src="https://wallpapers.com/images/hd/blank-white-landscape-7sn5o1woonmklx1h.jpg" alt=""></a>
-            </div>
-            <br>
-            <br>
-            <br>
-            <figure>
-                <!--Gráfica de ejemplo, se agregaran según la base de datos-->
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXSAJWC0ds2FLkOksXks8QSNdi8NLjsMq7Ew&s" alt="Gráfica de actividades" class="graficas">
-                <ul class="descripcion-graficas">
-                    <li>Descripción 1</li>
-                    <li>Descripción 2</li>
-                    <li>Descripción 3</li>
-                </ul>
-            </figure>
-            <br>
-            <br>
-            <br>
-            <br>
-            
-        </main>
+        <?php //include 'header.php'; ?>
+        <h1>Formularios</h1>
+        <div id="gran-contenedor">
 
-        <footer>
-            <?php ?>
-        </footer>
+            <div id="modulos">
+
+                <div class="modulo">
+                    <details>
+
+                        <summary>Modulo 1</summary>
+                        <!--aqui va u while para los formularios -->
+                        <div class="formulario">
+                            <div class="arriba">
+                                <p class="fecha-publicacion">Fecha de publicación: 2026-05-24</p>
+                            </div>
+                            <p class="titulo-formulario">Cuestionario de arreglos</p>
+                            <!-- Pasar por post el id del cuestionario -->
+                            <div class="abajo">
+                                <a class="ver-mas" href="./formulario.php">Ver más</a>
+                            </div>
+                        </div>
+
+                    </details>
+
+                </div>
+                <div class="modulo">
+                    <details>
+
+                        <summary>Modulo 2</summary>
+                        <!--aqui va u while para los formularios -->
+                        <div class="formulario">
+                            <div class="arriba">
+                                <p class="fecha-publicacion">Fecha de publicación: 2026-05-24</p>
+                            </div>
+                            <p class="titulo-formulario">Cuestionario de arreglos</p>
+                            <!-- Pasar por post el id del cuestionario -->
+                            <div class="abajo">
+                                <a class="ver-mas" href="./formulario.php">Ver más</a>
+                            </div>
+                        </div>
+
+                    </details>
+
+                </div>
+                <div class="modulo">
+                    <details>
+
+                        <summary>Modulo 3</summary>
+                        <!--aqui va u while para los formularios -->
+                        <div class="formulario">
+                            <div class="arriba">
+                                <p class="fecha-publicacion">Fecha de publicación: 2026-05-24</p>
+                            </div>
+                            <p class="titulo-formulario">Cuestionario de arreglos</p>
+                            <!-- Pasar por post el id del cuestionario -->
+                            <div class="abajo">
+                                <a class="ver-mas" href="./formulario.php">Ver más</a>
+                            </div>
+                        </div>
+
+                    </details>
+
+                </div>
+                <div class="modulo">
+                    <details>
+
+                        <summary>Modulo 4</summary>
+                        <!--aqui va u while para los formularios -->
+                        <div class="formulario">
+                            <div class="arriba">
+                                <p class="fecha-publicacion">Fecha de publicación: 2026-05-24</p>
+                            </div>
+                            <p class="titulo-formulario">Cuestionario de arreglos</p>
+                            <!-- Pasar por post el id del cuestionario -->
+                            <div class="abajo">
+                                <a class="ver-mas" href="./formulario.php">Ver más</a>
+                            </div>
+                        </div>
+
+                    </details>
+
+                </div>
+                <div class="modulo">
+                    <details>
+
+                        <summary>Modulo 5</summary>
+                        <!--aqui va u while para los formularios -->
+                        <div class="formulario">
+                            <div class="arriba">
+                                <p class="fecha-publicacion">Fecha de publicación: 2026-05-24</p>
+                            </div>
+                            <p class="titulo-formulario">Cuestionario de arreglos</p>
+                            <!-- Pasar por post el id del cuestionario -->
+                            <div class="abajo">
+                                <a class="ver-mas" href="./formulario.php">Ver más</a>
+                            </div>
+                        </div>
+
+                    </details>
+
+                </div>
+            </div>
+        </div>
     </body>
+    <?php include 'footer.php'; ?>
 </html>
