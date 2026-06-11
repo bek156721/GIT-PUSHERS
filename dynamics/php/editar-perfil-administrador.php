@@ -1,18 +1,12 @@
 <?php
     session_start();
-    $_SESSION["numero_cuenta_administrador"] = "20123456789";
-    const DBHOST = "127.0.0.1";
-    const DBUSER = "root";
-    const PASSWORD = "";
-    const DB = "sec_ete_db";
 
-    function connect()
+    if ($_SESSION['rol'] != "alumno")
     {
-        $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB); 
-        //var_dump($conexion);
-        return $conexion;
+            header("Location: inicio-sesion.php");
     }
-    $con = connect();
+
+    include 'conexion.php';
 
     function es_password_es_segura($pass)
     {
@@ -36,27 +30,22 @@
         $password_hasheada = password_hash($pass, PASSWORD_DEFAULT);
         return $password_hasheada;
     }
-
-    if(!isset($_SESSION["numero_cuenta_administrador"]))
-        $_SESSION["numero_cuenta_administrador"] = "20123456789";
-
-    $buscar_cuenta_administrador = $_SESSION["numero_cuenta_administrador"];
+    
+    $buscar_cuenta_administrador = $_SESSION["id_admanistrador"];
 
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contrasenia_actual"]) && isset($_POST["nueva_contrasenia"]) && isset($_POST["validacion_nueva_contrasenia"]))
     {
         $contra_actual = $_POST["contrasenia_actual"];
         $nueva_contra = $_POST["nueva_contrasenia"];
         $val_nueva_contra = $_POST["validacion_nueva_contrasenia"];
-        if ($con)
+        if ($conexion)
         {
-            $query_contra = "SELECT contra_administrador FROM administrador WHERE id_administrador = '$buscar_cuenta_administrador'";
-            $res_contra = mysqli_query($con, $query_contra);
+            $query_contra = "SELECT contra_administrador FROM administrador WHERE id_administrador = $buscar_cuenta_administrador";
+            $res_contra = mysqli_query($conexion, $query_contra);
             $contra_admin= mysqli_fetch_assoc($res_contra);
-            //var_dump ($contra_alumno);
             if($contra_admin)
             {
                 $password_hasheada_bd = $contra_admin["contra_administrador"];
-                
                 if(password_verify($contra_actual, $password_hasheada_bd))
                 {
                     if($nueva_contra == $val_nueva_contra)
@@ -64,15 +53,7 @@
                         if(es_password_es_segura($nueva_contra))
                         {
                             $nueva_contra_encriptada = hashea_password($nueva_contra);
-                            $query_update = "UPDATE administrador SET contra_administrador = '$nueva_contra_encriptada' WHERE id_administrador = '$buscar_cuenta_administrador'";
-                            if(!mysqli_query($con, $query_update))
-                            {
-                                $mensaje_alerta = "Error";
-                            }
-                            else
-                            {
-                                echo "CONTRASEÑA CAMBIADA";
-                            }
+                            $query_update = "UPDATE administrador SET contra_administrador = '$nueva_contra_encriptada' WHERE id_administrador = $buscar_cuenta_administrador";
                         }
                     }   
                 }
@@ -80,10 +61,6 @@
         }
     }
 
-    $nombre_administrador = "No encontrado";
-    $primer_apellido_administrador = "No encontrado";
-    $segundo_apellido_administrador = "No encontrado";
-    $correo_administrador = "No encontrado";
     $numero_cuenta_administrador = "$buscar_cuenta_administrador";
 
     $ruta_destino_administrador = "../../uploads/fotos-perfil/foto-default.png";
@@ -92,19 +69,20 @@
     {
         $archivo = $_FILES["foto-perfil"];
         $ruta_temporal_administrador = $archivo["tmp_name"];
-        $ruta_destino_administrador = "../../uploads/fotos-perfil/foto-perfil.png" . $buscar_cuenta_administrador . ".jpg";
+        $nombre_archivo =  "foto-perfil-" . $buscar_cuenta_alumno . ".jpg";
+        $ruta_destino_administrador = "../../uploads/fotos-perfil/" . $nombre_archivo;
 
         if(move_uploaded_file($ruta_temporal_administrador, $ruta_destino_administrador))
         {
-            $querry_foto = "UPDATE administrador SET imagen_administrador = '$ruta_destino_administrador' WHERE id_administrador = '$buscar_cuenta_administrador'";
-            mysqli_query($con, $querry_foto);
+            $querry_foto = "UPDATE administrador SET imagen_administrador = '$ruta_destino_administrador' WHERE id_administrador = $buscar_cuenta_administrador";
+            mysqli_query($conexion, $querry_foto);
         }
     }
 
-        if($con)
+        if($conexion)
     {
-        $query = "SELECT id_administrador, nombre_administrador, primer_apellido_administrador, segundo_apellido_administrador, correo_administrador, imagen_administrador FROM administrador WHERE id_administrador = '$buscar_cuenta_administrador'";
-        $resultado_administrador  = mysqli_query($con, $query);
+        $query = "SELECT id_administrador, nombre_administrador, primer_apellido_administrador, segundo_apellido_administrador, correo_administrador, imagen_administrador FROM administrador WHERE id_administrador = $buscar_cuenta_administrador";
+        $resultado_administrador  = mysqli_query($conexion, $query);
         $datos_administrador= mysqli_fetch_assoc($resultado_administrador);
         if($datos_administrador)
         {
@@ -133,20 +111,12 @@
         <meta name = "author" content ="Git Pushers">
         <meta name = "description" content = "Edición de correo y foto de perfil">
         <link rel="stylesheet" href="../../statics/css/perfil.css">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
+        <?php include 'header.php'; ?> 
 
-            <nav class = "menu">
-            <button class = "boton_menu"> MIEMBROS </button>
-            <br>
-            <button class = "boton_menu"> MATERIALES </button>
-            <br>
-            <button class = "boton_menu"> ESTADÍSTICAS GRUPALES </button>
-            <br>
-            <button class = "boton_menu"> ALUMNOS INSCRITOS </button>
-        </nav>
-
-        <h1 class = "encabezado"> Sec ETE </h1>
         <main class = "contenido_principal">
         <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
         <div class = "bloqueo_datos">
@@ -193,6 +163,7 @@
         <br>
         <img src = "<?php echo $ruta_destino_administrador; ?>" class = "foto_perfil">
         </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
     
