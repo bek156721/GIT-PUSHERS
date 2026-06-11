@@ -1,8 +1,12 @@
 <?php
     session_start();
 
-    include 'conexion.php';
+    if ($_SESSION['rol'] != "profesor")
+    {
+            header("Location: inicio-sesion.php");
+    }
 
+    include 'conexion.php';
     function es_password_es_segura($pass)
     {
         if(strlen($pass) < 6)
@@ -78,7 +82,7 @@
         if($conexion)
     {
         $query = "SELECT id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, imagen_profesor FROM profesor WHERE id_profesor = $buscar_cuenta_profesor";
-        $resultado_profesor  = mysqli_query($con, $query);
+        $resultado_profesor  = mysqli_query($conexion, $query);
         $datos_profesor = mysqli_fetch_assoc($resultado_profesor);
         if($datos_profesor)
         {
@@ -161,4 +165,3 @@
         <?php include 'footer.php'; ?>
     </body>
 </html>
-    
