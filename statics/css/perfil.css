@@ -1,0 +1,56 @@
+body
+{
+    background-color: #C4DAFA;
+}
+.menu
+{
+    position: fixed;
+    background-color: #4D82BC;
+    color: white;
+    border-right: none;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+}
+.boton_menu
+{
+    background-color: #2A395885;
+    color: white;
+    padding: 10px;
+}
+.boton_menu:hover
+{
+    background-color: #2A3958;
+}
+.boton
+{
+    background-color: #2A3958;
+    color: white;
+    font-size: 1em;
+}
+.boton_edicion_datos
+{
+    background-color: #97B8FE;     
+    padding: 15px;
+    border-radius: 8px;
+}
+.desplegable 
+{
+    background-color: #B5CDFE;
+}
+.foto_perfil
+{
+    width: 15em;
+    height: auto;
+    align-self: flex-start;
+}
+.contenido_principal
+{
+    margin-left: 200px;
+    margin-top: 85px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
