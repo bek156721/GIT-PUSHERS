@@ -1,18 +1,7 @@
 <?php
     session_start();
-    $_SESSION["numero_cuenta_profesor"] = "30123456789";
-    const DBHOST = "127.0.0.1";
-    const DBUSER = "root";
-    const PASSWORD = "";
-    const DB = "sec_ete_db";
 
-    function connect()
-    {
-        $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB); 
-        //var_dump($conexion);
-        return $conexion;
-    }
-    $con = connect();
+    include 'conexion.php';
 
     function es_password_es_segura($pass)
     {
@@ -37,22 +26,19 @@
         return $password_hasheada;
     }
 
-    if(!isset($_SESSION["numero_cuenta_profesor"]))
-        $_SESSION["numero_cuenta_profesor"] = "30123456789";
-
-    $buscar_cuenta_profesor = $_SESSION["numero_cuenta_profesor"];
+    $buscar_cuenta_profesor = $_SESSION["id_profesor"];
 
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contrasenia_actual"]) && isset($_POST["nueva_contrasenia"]) && isset($_POST["validacion_nueva_contrasenia"]))
     {
         $contra_actual = $_POST["contrasenia_actual"];
         $nueva_contra = $_POST["nueva_contrasenia"];
         $val_nueva_contra = $_POST["validacion_nueva_contrasenia"];
-        if ($con)
+        if ($conexion)
         {
-            $query_contra = "SELECT contra_profesor FROM profesor WHERE id_profesor = '$buscar_cuenta_profesor'";
+            $query_contra = "SELECT contra_profesor FROM profesor WHERE id_profesor = $buscar_cuenta_profesor";
             $res_contra = mysqli_query($con, $query_contra);
             $contra_profesor = mysqli_fetch_assoc($res_contra);
-            //var_dump ($contra_alumno);
+
             if($contra_profesor)
             {
                 $password_hasheada_bd = $contra_profesor["contra_profesor"];
@@ -64,10 +50,6 @@
                         {
                             $nueva_contra_encriptada = hashea_password($nueva_contra);
                             $query_update = "UPDATE profesor SET contra_profesor = '$nueva_contra_encriptada' WHERE id_profesor = '$buscar_cuenta_profesor'";
-                            if(!mysqli_query($con, $query_update))
-                            {
-                                $mensaje_alerta = "Error";
-                            }
                         }
                     }   
                 }
@@ -75,10 +57,6 @@
         }
     }
 
-    $nombre_profesor = "No encontrado";
-    $primer_apellido_profesor = "No encontrado";
-    $segundo_apellido_profesor = "No encontrado";
-    $correo_profesor = "No encontrado";
     $numero_cuenta_profesor = "$buscar_cuenta_profesor";
 
     $ruta_destino_profesor = "../../uploads/fotos-perfil/foto-default.png";
@@ -87,18 +65,19 @@
     {
         $archivo = $_FILES["foto-perfil"];
         $ruta_temporal_profesor = $archivo["tmp_name"];
-        $ruta_destino_profesor = "../../uploads/fotos-perfil/foto-perfil.png" . $buscar_cuenta_profesor . ".jpg";
+        $nombre_archivo =  "foto-perfil-" . $buscar_cuenta_alumno . ".jpg";
+        $ruta_destino_profesor = "../../uploads/fotos-perfil/" . $nombre_archivo;
 
         if(move_uploaded_file($ruta_temporal_profesor, $ruta_destino_profesor))
         {
-            $querry_foto = "UPDATE profesor SET imagen_profesor = '$ruta_destino_profesor' WHERE id_profesor = '$buscar_cuenta_profesor'";
-            mysqli_query($con, $querry_foto);
+            $querry_foto = "UPDATE profesor SET imagen_profesor = '$ruta_destino_profesor' WHERE id_profesor = $buscar_cuenta_profesor";
+            mysqli_query($conexion, $querry_foto);
         }
     }
 
-        if($con)
+        if($conexion)
     {
-        $query = "SELECT id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, imagen_profesor FROM profesor WHERE id_profesor = '$buscar_cuenta_profesor'";
+        $query = "SELECT id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, imagen_profesor FROM profesor WHERE id_profesor = $buscar_cuenta_profesor";
         $resultado_profesor  = mysqli_query($con, $query);
         $datos_profesor = mysqli_fetch_assoc($resultado_profesor);
         if($datos_profesor)
@@ -128,20 +107,11 @@
         <meta name = "author" content ="Git Pushers">
         <meta name = "description" content = "Edición de correo y foto de perfil">
         <link rel="stylesheet" href="../../statics/css/perfil.css">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
-
-        <nav class = "menu">
-            <button class = "boton_menu"> MIEMBROS </button>
-            <br>
-            <button class = "boton_menu"> MATERIALES </button>
-            <br>
-            <button class = "boton_menu"> ESTADÍSTICAS GRUPALES </button>
-            <br>
-            <button class = "boton_menu"> ALUMNOS INSCRITOS </button>
-        </nav>
-
-        <h1 class = "encabezado"> Sec ETE </h1>
+        <?php include 'header.php'; ?> 
         <main class = "contenido_principal">
         <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
         <div class = "bloqueo_datos">
@@ -188,6 +158,7 @@
         <br>
         <img src = "<?php echo $ruta_destino_profesor; ?>" class = "foto_perfil">
         </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
     
