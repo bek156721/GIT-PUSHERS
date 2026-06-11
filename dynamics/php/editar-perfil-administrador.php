@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if ($_SESSION['rol'] != "alumno")
+    if ($_SESSION['rol'] != "administrador")
     {
             header("Location: inicio-sesion.php");
     }
@@ -31,7 +31,7 @@
         return $password_hasheada;
     }
     
-    $buscar_cuenta_administrador = $_SESSION["id_admanistrador"];
+    $buscar_cuenta_administrador = $_SESSION["id_administrador"];
 
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contrasenia_actual"]) && isset($_POST["nueva_contrasenia"]) && isset($_POST["validacion_nueva_contrasenia"]))
     {
