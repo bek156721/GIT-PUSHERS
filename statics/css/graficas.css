@@ -1,9 +1,4 @@
-*
-{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 img /*Regula tamaño de imagenes, se puede modificar despues*/
 {
     width: 75px;
@@ -24,7 +19,7 @@ nav
 
 
 }    
-header
+/*header
 {
     position: fixed;
     top: 0;
@@ -48,7 +43,7 @@ h1
 {
     font-size:200%;
     display: block;
-}
+}*/
 
 /*Contiene el contenido principal de todas las páginas de consulta
 ==================================================================
