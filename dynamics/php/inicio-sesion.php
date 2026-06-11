@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Vridiana Castro">
-    <link rel="stylesheet" href="/GIT-PUSHERS/statics/css/header.css"> <!-- css de Encabezado -->
-    <link rel="stylesheet" href="/GIT-PUSHERS/statics/css/inicio-sesion.css"> 
-    <link rel="stylesheet" href="/GIT-PUSHERS/statics/css/footer.css"> <!-- css de Pie de página -->
+    <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+    <link rel="stylesheet" href="../../statics/css/inicio-sesion.css"> 
+    <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -16,8 +16,8 @@
         <h2>Bienvenid@<br></h2>
         <section id="tarjeta-loging">
             <h3>Iniciar Sesión</h3>
-            <img id="icono-perfil" src="/GIT-PUSHERS/statics/media/img/perfil.png" alt="imagen perfil">
-            <form action="login.php" method="post"> <!--Formulario -->
+            <img id="icono-perfil" src="../../statics/media/img/perfil.png" alt="imagen perfil">
+            <form action="./login.php" method="POST"> <!--Formulario -->
                 <label for="usuario">Nombre de Usuario:</label>
                 <input id="usuario" name="usuario" type="text" placeholder="Ingresa tu número de cuenta">
                 <label for="contraseña"><br>Contraseña<br></label>
@@ -39,3 +39,4 @@
 
 </body>
 </html>
+

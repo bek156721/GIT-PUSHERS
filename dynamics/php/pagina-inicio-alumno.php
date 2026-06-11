@@ -1,3 +1,12 @@
+<?php
+    session_start();
+
+    if ($_SESSION['rol'] != "alumno")
+    {
+        header("Location: inicio-sesion.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,14 +16,15 @@
     <meta name="description" content="Pagina de inicio de sec ETE">
     <meta name="author" content="git pushers (Equipo 7)">
     <link rel="stylesheet" href="../../statics/css/estilo-inicio.css">
+    <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+    <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     <title>Pagina de inicio</title>
 
 </head>
-<header>
-    <p>sec ETE xd</p>
-</header>
-<body>
 
+    
+<body>
+    <?php include 'header.php'; ?>
     <h1>Inicio</h1>
     <!-- Carrusel de imagenes -->
     <div id="imagen">
@@ -46,7 +56,7 @@
     </div>
 </body>
 <footer>
-    <p>Pie de página</p>
+    <?php include'footer.php';?>
 </footer>
 
 

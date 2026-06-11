@@ -2,6 +2,10 @@
     session_start();
     include 'conexion.php'; 
 
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
     function validate($data) //Limpiar datos 
         {
             $data = trim($data); //Elimina espacios en extremos
@@ -48,7 +52,7 @@
                 $_SESSION['id_alumno'] = $row['id_alumno']; //Guardar datos en servidor
                 $_SESSION['nombre_alumno'] = $row['nombre_alumno'];
                 $_SESSION['rol']='alumno';
-                header("Location: hola_alumno.php");
+                header("Location: ./pagina-inicio-alumno.php");
                 exit();
         }
 
@@ -66,7 +70,7 @@
                 header("Location: hola_profesor.php");
                 exit();
         }
-        // Ver si es Porfesor
+        // Ver si es Administrador
         
         $sql = "SELECT * FROM administrador WHERE id_administrador = '$usuario' AND contra_administrador = '$contrasenia'";
         $result = mysqli_query($conexion, $sql);
