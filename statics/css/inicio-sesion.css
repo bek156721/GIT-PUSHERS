@@ -1,0 +1,117 @@
+html, body
+{
+    min-height: 100vh;
+}
+
+body
+{
+    display: flex;
+    flex-direction: column;
+    background-color: #CEDEFE;
+}
+
+main
+{
+    flex: 1;
+    margin-top: 20vh;
+    padding: 3%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/*----------------LOGING-----------------------------------*/ 
+#tarjeta-loging
+{
+    width: 90%;
+    max-width: 460px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #97B8FE; 
+    border-radius: 10%; 
+}
+
+#icono-perfil 
+{ 
+    width: 30%;
+    max-width: 100px;
+    min-width: 60px;
+    height: auto;
+}
+
+form 
+{ 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    width: 80%; 
+} 
+/*-----------------TEXTO-----------------*/ 
+h2, h3 
+{ 
+    text-align: center; 
+    color: black; 
+} p 
+{ 
+    font-size: smaller;
+} 
+#ayuda 
+{ 
+    color: blue; 
+} 
+#ayuda:visited 
+{ 
+    color:purple; 
+} 
+::placeholder 
+{ 
+    font-size: xx-small; 
+} 
+/*-----------------------INPUTS-------------------------*/ 
+#usuario, #contrasenia 
+{
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #CEDEFE; 
+}
+#boton_inicio_sesion 
+{ 
+    border-radius: 8px; 
+    background-color: #2A3958; 
+    color: white; 
+    padding-top: 5px;
+}
+
+/*-----------------------Media queries -------*/
+
+@media (max-width: 768px)
+{
+
+    .logo-header
+    {
+        height: 40px;
+    }
+
+    #titulo-plataforma
+    {
+        font-size: 1.2rem;
+    }
+
+    #tarjeta-loging
+    {
+        width: 95%;
+    }
+
+    form
+    {
+        width: 90%;
+    }
+}
