@@ -81,7 +81,7 @@
 
         if($conexion)
     {
-        $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
+        $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno, id_grupo FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
         $resultado_alumno  = mysqli_query($conexion, $query);
         $datos_alumno = mysqli_fetch_assoc($resultado_alumno);
         if($datos_alumno)
@@ -91,6 +91,7 @@
             $primer_apellido_alumno = $datos_alumno["primer_apellido_alumno"];
             $segundo_apellido_alumno = $datos_alumno["segundo_apellido_alumno"];
             $correo_alumno = $datos_alumno["correo_alumno"];
+            $grupo_alumno = $datos_alumno["id_grupo"];
             if($datos_alumno["imagen_alumno"] && file_exists($datos_alumno["imagen_alumno"]))
             {
                 $ruta_destino_alumno = $datos_alumno["imagen_alumno"];
@@ -126,6 +127,7 @@
             <p> PRIMER APELLIDO: <?php echo $primer_apellido_alumno ?></p>
             <p> SEGUNDO APELLIDO: <?php echo $segundo_apellido_alumno ?></p>
             <p> NÚMERO DE CUENTA: <?php echo $numero_cuenta_alumno ?></p>
+            <p> GRUPO: <?php echo $grupo_alumno ?> </p>
             <p> CORREO: <?php echo $correo_alumno ?></p>
 
 
@@ -166,4 +168,6 @@
         <?php include 'footer.php'; ?>
     </body>
 </html>
+    
+
     
