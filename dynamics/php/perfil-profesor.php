@@ -45,6 +45,10 @@
     
     if($conexion)
     {
+        $query_grupo = "SELECT id_grupo FROM grupo WHERE id_profesor = $buscar_cuenta_profesor";
+        $res_grupo = mysqli_query($conexion, $query_grupo);
+        $datos_grupo = mysqli_fetch_assoc($res_grupo);
+
         $query = "SELECT id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, imagen_profesor FROM profesor WHERE id_profesor = $buscar_cuenta_profesor";
         $resultado_profesor  = mysqli_query($conexion, $query);
         $datos_profesor = mysqli_fetch_assoc($resultado_profesor);
@@ -55,6 +59,7 @@
             $primer_apellido_profesor = $datos_profesor["primer_apellido_profesor"];
             $segundo_apellido_profesor = $datos_profesor["segundo_apellido_profesor"];
             $correo_profesor = $datos_profesor["correo_profesor"];
+            $grupo_profesor = $datos_grupo["id_grupo"];
             if($datos_profesor["imagen_profesor"] && file_exists($datos_profesor["imagen_profesor"]))
             {
                 $ruta_destino_profesor = $datos_profesor["imagen_profesor"];
@@ -92,6 +97,7 @@
                 <p> PRIMER APELLIDO: <?php echo $primer_apellido_profesor ?></p>
                 <p> SEGUNDO APELLIDO: <?php echo $segundo_apellido_profesor ?></p>
                 <p> NÚMERO DE CUENTA: <?php echo $numero_cuenta_profesor ?></p>
+                <p> GRUPO(S): <?php echo $grupo_profesor ?></p>
                 <p> CORREO: <?php echo $correo_profesor ?></p>
                 <form action = "editar-perfil-profesor.php" method = "POST">
                     <button class = "boton" type="submit" class="boton">Editar perfil</button>
