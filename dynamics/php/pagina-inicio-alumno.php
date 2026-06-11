@@ -26,16 +26,16 @@
 <body>
     <?php include 'header.php'; ?>
     <div id="cont-circul">
-                <aside>
-                     <form action="perfil-alumno.php" method="POST">
-                        <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../uploads/fotos-perfil/foto-default.png" alt="Log Out"></button> 
-                    </form>
-                </aside>
-                <aside >
-                    <form action="cerrar-sesion.php" method="POST">
-                        <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/logout.png" alt="Log Out"></button> 
-                    </form>
-                </aside>
+        <aside>
+            <form action="perfil-alumno.php" method="POST">
+                <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../uploads/fotos-perfil/foto-default.png" alt="Log Out"></button> 
+            </form>
+        </aside>
+        <aside >
+            <form action="cerrar-sesion.php" method="POST">
+                <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/logout.png" alt="Log Out"></button> 
+            </form>
+        </aside>
     </div>          
     <h1>Inicio</h1>
     <!-- Carrusel de imagenes -->

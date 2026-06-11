@@ -16,12 +16,23 @@
         <nav>
             <?php ?>
         </nav>
-       
         
         <main class="contenido-principal">
             <div class="barra-busqueda">
                 <h1>Estadisticas</h1>
                 <br>
+                <div id="cont-circul">
+                    <aside>
+                        <form action="perfil-alumno.php" method="POST">
+                            <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../uploads/fotos-perfil/foto-default.png" alt="Log Out"></button> 
+                        </form>
+                    </aside>
+                    <aside >
+                        <form action="cerrar-sesion.php" method="POST">
+                            <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/logout.png" alt="Log Out"></button> 
+                        </form>
+                    </aside>
+                </div>       
                 <form action="GET" id="form-grupo" >
                     <span>Grupo: </span>
                     <select name="consulta" id="grupos">
@@ -29,10 +40,6 @@
                         <option value="no-seleccionado">Seleccione un grupo</option>
                     </select>
                 </form>
-            </div>
-            <div id="sesion">
-                <a href="index.php"><img src="https://static.vecteezy.com/system/resources/previews/022/457/896/original/door-icon-adobe-x1-free-vector.jpg" alt=""></a>
-                <a href=""><img src="https://wallpapers.com/images/hd/blank-white-landscape-7sn5o1woonmklx1h.jpg" alt=""></a>
             </div>
             <br>
             <br>
