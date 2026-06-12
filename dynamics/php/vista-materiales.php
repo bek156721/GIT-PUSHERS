@@ -5,7 +5,7 @@ session_start();
 
 if ($_SESSION['rol'] != "alumno")
 {
-        header("Location: inicio-sesion.php");
+    header("Location: inicio-sesion.php");
 }
 $id_grupo_usuario = $_SESSION['id_grupo'];
 

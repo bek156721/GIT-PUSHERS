@@ -1,11 +1,6 @@
 <?php
     session_start();
     include 'conexion.php'; 
-
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
     function validate($data) //Limpiar datos 
         {
             $data = trim($data); //Elimina espacios en extremos
@@ -28,7 +23,8 @@
         {
             header("Location: inicio-sesion.php?error=Usuario requerido");
             exit();
-        }elseif(empty($contrasenia))
+        }
+        if(empty($contrasenia))
         {
             header("Location: inicio-sesion.php?error=Contraseña requerida");
             exit();
@@ -53,7 +49,7 @@
                 $_SESSION['nombre_alumno'] = $row['nombre_alumno'];
                 $_SESSION['id_grupo'] = $row['id_grupo'];
                 $_SESSION['rol']='alumno';
-                header("Location: ./pagina-inicio-alumno.php");
+                header("Location: pagina-inicio-alumno.php");
                 exit();
         }
 
@@ -71,7 +67,7 @@
                 header("Location: hola_profesor.php");
                 exit();
         }
-        // Ver si es Administrador
+        // Ver si es administrador
         
         $sql = "SELECT * FROM administrador WHERE id_administrador = '$usuario' AND contra_administrador = '$contrasenia'";
         $result = mysqli_query($conexion, $sql);

@@ -1,0 +1,20 @@
+footer
+{
+    background-color: #2A3958;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content:center;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#sobre-nosotros
+{
+    color: white;
+}
+#copyright
+{
+    color: white;
+
+}
