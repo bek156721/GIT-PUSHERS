@@ -1,3 +1,4 @@
+DROP DATABASE sec_ete_db;
 CREATE DATABASE IF NOT EXISTS sec_ete_db;
 USE sec_ete_db;
 
@@ -78,7 +79,7 @@ CREATE TABLE actividad (
     hora VARCHAR(5),
     id_grupo INT NOT NULL,
     FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo),
-    PRIMARY KEY (id_actividad),
+    PRIMARY KEY (id_actividad)
 );
 
 -- 7. ACTIVIDAD POR ALUMNO: Representa la actividad de cada alumno individualmente, es decir,
@@ -92,7 +93,7 @@ CREATE TABLE actividad_por_alumno (
     id_alumno INTEGER NOT NULL,
     FOREIGN KEY(id_actividad) REFERENCES actividad(id_actividad),
     FOREIGN KEY(id_alumno) REFERENCES alumno(id_alumno),
-    PRIMARY KEY (id_actividad),
+    PRIMARY KEY (id_actividad_por_alumno)
 );
 
 
@@ -155,13 +156,14 @@ CREATE TABLE tipo_pregunta(
     PRIMARY KEY (id_tipo_pregunta)
 );
 
--- 12. PREGUNTA: Reactivos que componen un formulario, cada uno tiene un tipo_pregunta.
+-- 12. PREGUNTA: Reactivos que componen un formulario, cada uno tiene un tipo_pregunta. 
+-- El profesor no asigna el puntaje esperado para esa pregunta, eso lo hacemos nosotros.
 CREATE TABLE pregunta (
     id_pregunta INT NOT NULL AUTO_INCREMENT,
     id_formulario INT NOT NULL, 
     id_tipo_pregunta INT NOT NULL,
     pregunta TEXT NOT NULL,
-    puntaje_rendimiento INTEGER NOT NULL, --El profesor no asigna esto
+    puntaje_rendimiento INTEGER NOT NULL, 
     PRIMARY KEY (id_pregunta), 
     FOREIGN KEY (id_formulario) REFERENCES formulario(id_formulario),
     FOREIGN KEY (id_tipo_pregunta) REFERENCES tipo_pregunta(id_tipo_pregunta)
@@ -194,3 +196,71 @@ CREATE TABLE respuesta_alumno(
     FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta),
     FOREIGN KEY (id_opcion_pregunta) REFERENCES opcion_pregunta(id_opcion_pregunta)
 );
+
+
+-- ========================================================================== --
+--                       IV. POBLAMOS LA BASE DE DATOS                        --
+-- ========================================================================== --
+
+-- Inserción de un administrador --
+
+INSERT INTO administrador (id_administrador, nombre_administrador, primer_apellido_administrador, segundo_apellido_administrador, correo_administrador, contra_administrador)
+VALUES 
+(123456789, 'Angela Eugenia', 'Villanueva', 'Vilchis', 'angela.villanueva@unam.mx', 'hola123456');
+
+-- Insercion de profesores --
+INSERT INTO profesor (id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, contra_profesor)
+VALUES 
+(322157000, 'Luana Sofia', 'Alvarez', 'Molina', 'luana.alvarez@ciencias.unam.mx', 'luanita777'),
+(987654321, 'Luis Adrián', 'González', 'Falcon', 'luis.falcon@ingenieria.unam.mx', 'luillilol');
+
+-- Insercion de grupos --
+INSERT INTO grupo (id_profesor, nombre_grupo)
+VALUES 
+(322157000, '61B'),
+(987654321, '61D');
+
+-- Insercion de alumnos --
+INSERT INTO alumno (id_alumno, id_grupo, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, contra_alumno)
+VALUES
+(000000001, 1, 'Sofía', 'Hernández', 'Pérez', '000000001@alumno.enp.unam.mx', '01Contrasenia'),
+(000000002, 1, 'Diego', 'Martínez', 'Torres', '000000002@alumno.enp.unam.mx', '02Contrasenia'),
+(000000003, 1, 'Jimena', 'Esparza', 'Ruiz', '000000003@alumno.enp.unam.mx', '03Contrasenia'),
+(000000004, 2, 'Mateo', 'Ramírez', 'Vargas', '000000004@alumno.enp.unam.mx', '04Contrasenia'),
+(000000005, 2, 'Valeria', 'Flores', 'Castro', '000000005@alumno.enp.unam.mx', '05Contrasenia');
+
+-- Inserción de actividades --
+INSERT INTO actividad (titulo, descripcion, modulo, fecha, hora, id_grupo)
+VALUES 
+
+('Hola Mundo y Variables', 'Crea un programa que solicite el nombre del usuario por consola y despliegue un saludo personalizado junto con el cálculo de su edad en días.', 1, '2026-06-12', '23:59', 1),
+('Estructuras de Control', 'Desarrolla un script que implemente un menú interactivo (utilizando ciclos y condicionales) para simular un cajero automático básico.', 1, '2026-06-19', '23:59', 1),
+('Mi primera Función', 'Escribe una función que reciba una lista de números y devuelva un diccionario/objeto con el valor máximo, mínimo y el promedio.', 2, '2026-06-26', '23:59', 1),
+
+('Modelado de Clases', 'Crea el diagrama y código de una clase "Vehiculo" y dos subclases ("Coche" y "Motocicleta") aplicando el concepto de herencia.', 1, '2026-06-14', '23:59', 2),
+('Gestor de Archivos CSV', 'Desarrolla un programa capaz de leer un archivo de texto .csv con calificaciones de alumnos, calcular los promedios y exportar los resultados a un nuevo archivo.', 2, '2026-06-21', '23:59', 2),
+('Conexión a Base de Datos', 'Implementar un CRUD básico (Create, Read, Update, Delete) en consola utilizando persistencia de datos local o SQLite.', 3, '2026-06-28', '23:59', 2);
+
+
+-- Inserción de actividades por alumno --
+INSERT INTO actividad_por_alumno (entregado, id_actividad, id_alumno)
+VALUES 
+(TRUE, 1, 000000001),  
+(FALSE, 1, 000000002), 
+(TRUE, 1, 000000003),
+-- Alumnos del Grupo 2 (Mateo 3004, Valeria 3005) asignados a la Actividad 4
+(TRUE, 4, 000000004),  
+(FALSE, 4, 000000005);
+
+
+-- Inserción de materiales --
+INSERT INTO material (id_grupo, titulo, descripcion, fecha, hora, modulo, url)
+VALUES 
+
+(1, 'Guía de Sintaxis Básica', 'Documento de referencia rápida con la sintaxis de variables, tipos de datos y operadores.', '2026-06-12', '08:00', 1, 'https://code-docs.edu/guides/sintaxis_basica.pdf'),
+(1, 'Cheat Sheet: Ciclos y Condicionales', 'Infografía interactiva que explica visualmente el flujo de los ciclos For y While.', '2026-06-15', '09:30', 1, 'https://code-docs.edu/cheatsheets/control_flow.png'),
+(1, 'Introducción a Algoritmos', 'Enlace a un video interactivo que explica cómo desglosar un problema lógico antes de escribir código.', '2026-06-22', '10:00', 2, 'https://youtube.com/watch?v=pensamiento_logico_dev'),
+
+(2, 'Pilares de la POO', 'Artículo técnico detallado sobre Abstracción, Encapsulamiento, Herencia y Polimorfismo.', '2026-06-12', '08:15', 1, 'https://dev-blog.edu/poo/cuatro_pilares_explicados'),
+(2, 'Manejo de Excepciones y Errores', 'Apunte digital sobre cómo utilizar bloques try/except (try/catch) para evitar que el software truene.', '2026-06-18', '11:00', 2, 'https://code-docs.edu/advanced/exception_handling.pdf'),
+(2, 'Repositorio de Plantillas SQL', 'Acceso al repositorio institucional de GitHub con scripts base para conectar tu código a bases de datos.', '2026-06-25', '16:00', 3, 'https://github.com/escuela-dev/db-connection-templates');
