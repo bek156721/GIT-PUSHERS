@@ -115,7 +115,7 @@ CREATE TABLE material (
 --                un grupo.
 CREATE TABLE formulario (
     id_formulario INT NOT NULL AUTO_INCREMENT,
-    id_grupo INT NOT NULL, 
+    id_grupo INT NULL, 
     titulo VARCHAR(50) NOT NULL,
     descripcion TEXT NOT NULL,
     fecha VARCHAR(10),
@@ -133,8 +133,8 @@ CREATE TABLE formulario (
 CREATE TABLE formulario_por_alumno(
     id_formulario_por_alumno INTEGER NOT NULL AUTO_INCREMENT,
     entregado BOOL,
-    calificacion INTEGER CHECK(calificacion BETWEEN 0 AND 10),
-    rendimiento_alumno INT NOT NULL,
+    calificacion DECIMAL NULL,
+    rendimiento_alumno DECIMAL NOT NULL, -- lo calculamos nosotros en base al puntaje que obtenga el alumno
     id_formulario INTEGER NOT NULL,
     id_alumno INTEGER NOT NULL,
     FOREIGN KEY(id_formulario) REFERENCES formulario(id_formulario),
@@ -174,7 +174,7 @@ CREATE TABLE opcion_pregunta(
     id_pregunta INT NOT NULL,
     opcion TEXT NOT NULL,
     correcta BOOLEAN,
-    puntaje_opcion INTEGER NOT NULL CHECK(puntaje_rendimiento BETWEEN 0 AND 3),
+    puntaje_opcion DECIMAL NOT NULL,
     PRIMARY KEY (id_opcion_pregunta),
     FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta)
 );
@@ -188,7 +188,7 @@ CREATE TABLE respuesta_alumno(
     id_pregunta INT NOT NULL,
     id_opcion_pregunta INT NULL, 
     texto_respuesta TEXT,
-    calificacion_por_pregunta INTEGER NOT NULL,
+    calificacion_por_pregunta DECIMAL NULL,
     PRIMARY KEY (id_respuesta_alumno),
     FOREIGN KEY (id_alumno) REFERENCES alumno(id_alumno),
     FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta),
