@@ -138,7 +138,9 @@
             </div>
         </div>
     </div>
-
+<form action = "resolver_formulario.php" method = "POST">
+        <button class = "boton" type="submit" class="boton">Perfil</button>
+    </form>
 </body>
 <?php include 'footer.php'; ?>
 
