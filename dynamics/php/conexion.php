@@ -1,5 +1,5 @@
 <?php
-const DBHOST = "127.0.0.1";
+const DBHOST = "localhost";
 const DBUSER = "root";
 const PASSWORD = "";
 const DB = "sec_ete_db";

@@ -47,9 +47,7 @@ h1
     display: flex;
     justify-content: center;
 }
-#imagen
-{
-}
+
 #menu
 {
     background-color: #4D82BC;
@@ -147,6 +145,8 @@ h3
     background-color: white;
 }
 
+/*Botones de cerrar sesión y perfíl*/
+
 #perfil
 {
     background-color: #4D82BC;
@@ -171,11 +171,12 @@ h3
 #cerrar-sesion:hover
 {
     background-color: #0f5fb5;
-   
 }
 
-#img_logout{
+#img_logout
+{
     width: 3vw;
+    height: 3vW;
 }
 
 #cont-circul

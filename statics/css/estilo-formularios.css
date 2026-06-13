@@ -22,8 +22,6 @@
 body
 {
     background-color: #C4DAFA;
-    display: flex;
-    flex-direction: column;
 }
 h1 
 {
@@ -107,4 +105,46 @@ summary:hover
 .ver-mas:hover
 {
     background-color: white;
+}
+/*Botones de cerrar sesión y perfíl*/
+
+#perfil
+{
+    background-color: #4D82BC;
+    flex: 1;
+    border-radius:100%;
+    margin-right: 1vw;
+    width: 5vw;
+    height: 5vw;
+}
+#cerrar-sesion
+{
+    background-color: #4D82BC;
+    flex: 1;
+    border-radius:100%;
+    margin-left: 1vw;
+    width: 5vw;
+    height: 5vw;
+    border: none;
+    
+}
+
+#cerrar-sesion:hover
+{
+    background-color: #0f5fb5;
+}
+
+#img_logout
+{
+    width: 3vw;
+    height: 3vW;
+}
+
+#cont-circul
+{
+    height: 10vh;
+    width: 12vw;
+    display: flex;
+    flex-direction:row;
+    float: right;
 }
