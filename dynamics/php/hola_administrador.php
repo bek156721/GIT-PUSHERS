@@ -19,5 +19,9 @@
     <form action="cerrar-sesion.php" method="POST">
         <button type="submit">Cerrar sesión</button>
     </form>
+
+    <form action = "perfil-administrador.php" method = "POST">
+        <button class = "boton" type="submit" class="boton">Perfil</button>
+    </form>
 </body>
 </html>

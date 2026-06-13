@@ -30,8 +30,7 @@
         $password_hasheada = password_hash($pass, PASSWORD_DEFAULT);
         return $password_hasheada;
     }
-        
-
+    
     $buscar_cuenta_alumno = $_SESSION["id_alumno"];
 
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contrasenia_actual"]) && isset($_POST["nueva_contrasenia"]) && isset($_POST["validacion_nueva_contrasenia"]))
@@ -41,10 +40,9 @@
         $val_nueva_contra = $_POST["validacion_nueva_contrasenia"];
         if ($conexion)
         {
-            $query_contra = "SELECT contra_alumno FROM alumno WHERE id_alumno = '$buscar_cuenta_alumno'";
+            $query_contra = "SELECT contra_alumno FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
             $res_contra = mysqli_query($conexion, $query_contra);
             $contra_alumno = mysqli_fetch_assoc($res_contra);
-            //var_dump ($contra_alumno);
             if($contra_alumno)
             {
                 $password_hasheada_bd = $contra_alumno["contra_alumno"];
@@ -55,11 +53,7 @@
                         if(es_password_es_segura($nueva_contra))
                         {
                             $nueva_contra_encriptada = hashea_password($nueva_contra);
-                            $query_update = "UPDATE alumno SET contra_alumno = '$nueva_contra_encriptada' WHERE id_alumno = '$buscar_cuenta_alumno'";
-                            if(!mysqli_query($conexion, $query_update))
-                            {
-                                $mensaje_alerta = "Error";
-                            }
+                            $query_update = "UPDATE alumno SET contra_alumno = '$nueva_contra_encriptada' WHERE id_alumno = $buscar_cuenta_alumno";
                         }
                     }   
                 }
@@ -87,9 +81,9 @@
 
         if($conexion)
     {
-        $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
-        $resultado  = mysqli_query($conexion, $query);
-        $datos_alumno = mysqli_fetch_assoc($resultado);
+        $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno, id_grupo FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
+        $resultado_alumno  = mysqli_query($conexion, $query);
+        $datos_alumno = mysqli_fetch_assoc($resultado_alumno);
         if($datos_alumno)
         {
             $numero_cuenta_alumno = $datos_alumno["id_alumno"];
@@ -97,6 +91,7 @@
             $primer_apellido_alumno = $datos_alumno["primer_apellido_alumno"];
             $segundo_apellido_alumno = $datos_alumno["segundo_apellido_alumno"];
             $correo_alumno = $datos_alumno["correo_alumno"];
+            $grupo_alumno = $datos_alumno["id_grupo"];
             if($datos_alumno["imagen_alumno"] && file_exists($datos_alumno["imagen_alumno"]))
             {
                 $ruta_destino_alumno = $datos_alumno["imagen_alumno"];
@@ -117,11 +112,12 @@
         <meta name = "author" content ="Git Pushers">
         <meta name = "description" content = "Edición de correo y foto de perfil">
         <link rel="stylesheet" href="../../statics/css/perfil.css">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
+        <?php include 'header.php'; ?> 
 
-
-        <h1 class = "encabezado"> Sec ETE </h1>
         <main class = "contenido_principal">
         <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
         <div class = "bloqueo_datos">
@@ -131,6 +127,7 @@
             <p> PRIMER APELLIDO: <?php echo $primer_apellido_alumno ?></p>
             <p> SEGUNDO APELLIDO: <?php echo $segundo_apellido_alumno ?></p>
             <p> NÚMERO DE CUENTA: <?php echo $numero_cuenta_alumno ?></p>
+            <p> GRUPO: <?php echo $grupo_alumno ?> </p>
             <p> CORREO: <?php echo $correo_alumno ?></p>
 
 
@@ -168,6 +165,7 @@
         <br>
         <img src = "<?php echo $ruta_destino_alumno; ?>" class = "foto_perfil">
         </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
     
