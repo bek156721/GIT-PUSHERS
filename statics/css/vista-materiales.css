@@ -42,6 +42,9 @@ a:hover
     flex: 1;                  
     padding: 20px;
     min-height: 70vh;
+    display: flex;               
+    align-items:end;       
+    flex-direction: column;
     background: #C4DAFA;
     box-sizing: border-box;
     margin-top: 23vh;
@@ -72,10 +75,11 @@ a:hover
 #cerrar-sesion:hover
 {
     background-color: #0f5fb5;
-   
+
 }
 
-#img_logout{
+#img_logout
+{
     width: 3vw;
 }
 #cont-circul
@@ -193,3 +197,95 @@ a:hover
     font-size: 1.8vh;
 }
 
+#cont-agregar 
+{
+    width: 40%;              
+    max-width: 400px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    height: auto;            
+    overflow: hidden;       
+}
+
+#cont-agregar[open] 
+{
+    width: 80%;              
+    max-width: 900px;
+    padding: 20px;
+    min-height: 30vh;       
+    height: auto;            
+}
+
+#cont-agregar > summary 
+{
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+    padding: 10px;
+    background-color: #0077cc;
+    color: white;
+    border-radius: 6px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#cont-agregar > summary:hover 
+{
+    background-color: #005fa3;
+}
+
+#cont-agregar form 
+{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#cont-agregar label 
+{
+    font-weight: bold;
+}
+
+#cont-agregar input,
+#cont-agregar textarea,
+#cont-agregar select 
+{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 100%;
+}
+
+#cont-agregar button 
+{
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#cont-agregar button:hover 
+{
+    background-color: #218838;
+}
+#but-eliminar
+{
+    background-color:rgb(210, 51, 51);
+    color:white;
+    border:none;
+    padding:5px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    float: right;
+}
