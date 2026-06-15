@@ -32,6 +32,9 @@
 
     $buscar_cuenta_profesor = $_SESSION["id_profesor"];
 
+    $mensaje_error= "";
+    $mensaje_exito = "";
+
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contrasenia_actual"]) && isset($_POST["nueva_contrasenia"]) && isset($_POST["validacion_nueva_contrasenia"]))
     {
         $contra_actual = $_POST["contrasenia_actual"];
@@ -41,24 +44,33 @@
         {
         
             $query_contra = "SELECT contra_profesor FROM profesor WHERE id_profesor = $buscar_cuenta_profesor";
-            $res_contra = mysqli_query($con, $query_contra);
+            $res_contra = mysqli_query($conexion, $query_contra);
             $contra_profesor = mysqli_fetch_assoc($res_contra);
 
             if($contra_profesor)
             {
                 $password_hasheada_bd = $contra_profesor["contra_profesor"];
-                if(password_verify($contra_actual, $password_hasheada_bd))
+
+                if($contra_actual == $password_hasheada_bd)
+                //if(password_verify($contra_actual, $password_hasheada_bd))
                 {
                     if($nueva_contra == $val_nueva_contra)
                     {
                         if(es_password_es_segura($nueva_contra))
                         {
                             $nueva_contra_encriptada = hashea_password($nueva_contra);
-                            $query_update = "UPDATE profesor SET contra_profesor = '$nueva_contra_encriptada' WHERE id_profesor = '$buscar_cuenta_profesor'";
-                            mysqli_query($conexion, $query_update); 
+                            $query_update = "UPDATE profesor SET contra_profesor = '$nueva_contra_encriptada' WHERE id_profesor = $buscar_cuenta_profesor";
+                            if(mysqli_query($conexion, $query_update))
+                                $mensaje_exito = "¡Contraseña actualizada con éxito!"; 
                         }
-                    }   
+                        else
+                            $mensaje_error = "La nueva contraseña debe de tener al menos 6 caracteres, una mayúscula y un número";   
+                    }
+                    else
+                        $mensaje_error = "La nueva contraseña y la confirmación no coinciden";
                 }
+                else
+                    $mensaje_error = "La contraseña actual ingresada es incorreta";
             }
         }
     }
@@ -71,7 +83,7 @@
     {
         $archivo = $_FILES["foto-perfil"];
         $ruta_temporal_profesor = $archivo["tmp_name"];
-        $nombre_archivo =  "foto-perfil-" . $buscar_cuenta_alumno . ".jpg";
+        $nombre_archivo =  "foto-perfil-" . $buscar_cuenta_profesor . ".jpg";
         $ruta_destino_profesor = "../../uploads/fotos-perfil/" . $nombre_archivo;
 
         if(move_uploaded_file($ruta_temporal_profesor, $ruta_destino_profesor))
@@ -127,6 +139,12 @@
         <main class = "contenido_principal">
         <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
         <div class = "bloqueo_datos">
+            <?php 
+                if($mensaje_error != "")
+                    echo "<p class = 'error'> $mensaje_error </p>";
+                if($mensaje_exito != "")
+                    echo "<p class = 'exito'> $mensaje_exito </p>";
+            ?>
             <h1>Edición de perfil</h1>
             <p> TIPO DE USUARIO: Profesor </p>
             <p> NOMBRE: <?php echo $nombre_profesor ?></p>
