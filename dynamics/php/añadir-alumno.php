@@ -12,23 +12,23 @@
             $data =str_replace('*/','',$data);
             return $data;
         }
-    function password_segura($pass)
-    {
-        if(strlen($pass) < 6)
+        function password_segura($pass)
         {
-            return false;
-        }
-        $tiene_mayus = false;
-        $tiene_num = false;
-        for($i = 0; $i < strlen($pass); $i++)
+            if(strlen($pass) < 6)
             {
-                if (ctype_upper($pass[$i]))
-                    $tiene_mayus = true;
-                if (ctype_digit($pass[$i]))
-                    $tiene_num = true;
+                return false;
             }
-        return ($tiene_mayus && $tiene_num);
-    }
+            $tiene_mayus = false;
+            $tiene_num = false;
+            for($i = 0; $i < strlen($pass); $i++)
+                {
+                    if (ctype_upper($pass[$i]))
+                        $tiene_mayus = true;
+                    if (ctype_digit($pass[$i]))
+                        $tiene_num = true;
+                }
+            return ($tiene_mayus && $tiene_num);
+        }
 
     if (isset($_POST["usuario"]) && isset($_POST["contrasenia"]) && isset($_POST["nombre"]) && isset($_POST["primer-apellido"])) //Verificar formulario
     {
@@ -39,6 +39,13 @@
         $nombre = validate($_POST["nombre"]);
         $primer_apellido = validate($_POST["primer-apellido"]);
         $segundo_apellido = validate($_POST["segundo-apellido"]);
+
+        $nombre_grupo = $_POST["grupo"];
+        $query_grupo = "SELECT id_grupo FROM grupo WHERE nombre_grupo = '$nombre_grupo'";
+        $res_grupo = mysqli_query($conexion, $query_grupo);
+        $grupo_row = mysqli_fetch_assoc($res_grupo);
+        $grupo = $grupo_row['id_grupo'];
+
         //Si los datos obligatorios estan vacios, se redirecciona a la misma página y marca error
 
         if(!password_segura($contrasenia))
@@ -74,6 +81,21 @@
             header("Location: añadir-alumno.php?error=EL correo debe ser válido");
             exit();
         }
+
+        $query_insertar_alumno = "INSERT INTO alumno (id_alumno, id_grupo, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, contra_alumno ) 
+        VALUES ('$usuario', '$grupo', '$nombre', '$primer_apellido', '$segundo_apellido', '$correo', '$contrasenia')";
+        if(mysqli_query($conexion, $query_insertar_alumno))
+            {
+                header("Location: añadir-alumno.php?exito=1");
+                exit();
+            }
+            else
+            {
+                header("Location: añadir-alumno.php?exito=0");
+                exit();
+            }
+
+
 
     }
 
@@ -134,7 +156,18 @@
             </form>
             <?php 
                 if(isset($_GET['error']))
-                echo $_GET['error']
+                {
+                echo $_GET['error'];
+                }
+
+                if(isset($_GET['exito']) && $_GET['exito']==1)
+                {
+                    echo "Añadido con éxito";
+                }
+                else
+                {
+                    echo "<br> Error al añadir";
+                }
                 
             ?>
         </section>
