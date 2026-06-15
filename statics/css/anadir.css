@@ -23,7 +23,7 @@ main
 }
 
 /*----------------AÑADIR-----------------------------------*/ 
-#tarjeta-añadir
+#tarjeta-anadir
 {
     width: 90%;
     max-width: 460px;
@@ -76,7 +76,7 @@ h2, h3
     border-radius: 8px;
     background-color: #CEDEFE; 
 }
-#boton-añadir
+#boton-anadir
 { 
     border-radius: 8px; 
     background-color: #2A3958; 
