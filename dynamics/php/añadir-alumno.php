@@ -29,12 +29,17 @@
                 }
             return ($tiene_mayus && $tiene_num);
         }
+        function password_hasheada($pass)
+        {
+            $contrasenia = password_hash($pass, PASSWORD_DEFAULT);
+            return $contrasenia;
+        }
 
     if (isset($_POST["usuario"]) && isset($_POST["contrasenia"]) && isset($_POST["nombre"]) && isset($_POST["primer-apellido"])) //Verificar formulario
     {
         //Guardar
         $usuario = validate($_POST["usuario"]);
-        $contrasenia = validate($_POST["contrasenia"]);
+        $contrasenia_plana = validate($_POST["contrasenia"]);
         $correo = validate($_POST["correo"]);
         $nombre = validate($_POST["nombre"]);
         $primer_apellido = validate($_POST["primer-apellido"]);
@@ -48,7 +53,7 @@
 
         //Si los datos obligatorios estan vacios, se redirecciona a la misma página y marca error
 
-        if(!password_segura($contrasenia))
+        if(!password_segura($contrasenia_plana))
         {
             header("Location: añadir-alumno.php?error=La contraseña debe tener mayúsculas y números");
             exit();
@@ -82,6 +87,7 @@
             exit();
         }
 
+        $contrasenia = password_hasheada($contrasenia_plana);
         $query_insertar_alumno = "INSERT INTO alumno (id_alumno, id_grupo, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, contra_alumno ) 
         VALUES ('$usuario', '$grupo', '$nombre', '$primer_apellido', '$segundo_apellido', '$correo', '$contrasenia')";
         if(mysqli_query($conexion, $query_insertar_alumno))
@@ -94,6 +100,7 @@
                 header("Location: añadir-alumno.php?exito=0");
                 exit();
             }
+        
 
 
 
