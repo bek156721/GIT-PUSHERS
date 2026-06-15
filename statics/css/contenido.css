@@ -1,0 +1,18 @@
+
+.actividad, .formulario
+{
+    width: 90%;
+    /*height: 30%;
+    /*border: solid 1px black;*/
+    background-color:#CEDEFE ;
+    border-radius: 2vh;
+}
+
+.formulario>a
+{
+    background: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 2vh;
+    font-size: 65%;
+}
