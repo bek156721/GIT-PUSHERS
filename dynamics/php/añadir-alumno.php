@@ -2,6 +2,81 @@
     session_start();
     include 'conexion.php'; 
 
+    function validate($data) //Limpiar datos
+        {
+            $data = trim($data); //Elimina espacios en extremos
+            $data = stripslashes($data); // Eliminar barras invertidas
+            $data = htmlspecialchars($data); //Convierte carácteres especiales en entidades seguras de html
+            $data =str_replace('--','',$data);
+            $data =str_replace('/*','',$data);
+            $data =str_replace('*/','',$data);
+            return $data;
+        }
+    function password_segura($pass)
+    {
+        if(strlen($pass) < 6)
+        {
+            return false;
+        }
+        $tiene_mayus = false;
+        $tiene_num = false;
+        for($i = 0; $i < strlen($pass); $i++)
+            {
+                if (ctype_upper($pass[$i]))
+                    $tiene_mayus = true;
+                if (ctype_digit($pass[$i]))
+                    $tiene_num = true;
+            }
+        return ($tiene_mayus && $tiene_num);
+    }
+
+    if (isset($_POST["usuario"]) && isset($_POST["contrasenia"]) && isset($_POST["nombre"]) && isset($_POST["primer-apellido"])) //Verificar formulario
+    {
+        //Guardar
+        $usuario = validate($_POST["usuario"]);
+        $contrasenia = validate($_POST["contrasenia"]);
+        $correo = validate($_POST["correo"]);
+        $nombre = validate($_POST["nombre"]);
+        $primer_apellido = validate($_POST["primer-apellido"]);
+        $segundo_apellido = validate($_POST["segundo-apellido"]);
+        //Si los datos obligatorios estan vacios, se redirecciona a la misma página y marca error
+
+        if(!password_segura($contrasenia))
+        {
+            header("Location: añadir-alumno.php?error=La contraseña debe tener mayúsculas y números");
+            exit();
+        }
+        if(empty($usuario))
+        {
+            header("Location: añadir-alumno.php?error=Usuario requerido");
+            exit();
+        }
+        
+        if(empty($nombre))
+        {
+            header("Location: añadir-alumno.php?error=Nombre requerido");
+            exit();
+        }
+        if(empty($primer_apellido))
+        {
+            header("Location: añadir-alumno.php?error=Primer apellido requerido");
+            exit();
+        }
+
+        //Validar
+        if(!filter_var($usuario, FILTER_VALIDATE_INT))
+        {
+            header("Location: añadir-alumno.php?error=El usuario debe ser numérico");
+            exit();
+        }
+        if(!filter_var($correo, FILTER_VALIDATE_EMAIL))
+        {
+            header("Location: añadir-alumno.php?error=EL correo debe ser válido");
+            exit();
+        }
+
+    }
+
 
 ?>
 
@@ -60,6 +135,7 @@
             <?php 
                 if(isset($_GET['error']))
                 echo $_GET['error']
+                
             ?>
         </section>
 
