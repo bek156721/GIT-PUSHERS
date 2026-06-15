@@ -6,7 +6,7 @@ body
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
+    background-color: #CEDEFE;
 }
 
 main
@@ -16,8 +16,10 @@ main
     border-radius: 8px;
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: space-between;
+    align-items: center;
     flex: 1; /*elemento hijo ocupa todo el espacio sobrante disponible ajustándose automáticamente*/
 }
 form
@@ -26,13 +28,21 @@ form
     background-color: #97B8FE;
     border-radius: 10px;
     font-size: 20px;
-    width: 80vw;
+    width: 65vw;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
 }
 .pregunta
 {
-    padding: 1rem;
+    padding: 2rem;
     background-color: #CEDEFE;
     border-radius: 8px;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
 }
 .opciones_respuestas 
 {
@@ -50,6 +60,7 @@ form
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    background-color: #CEDEFE;
 }
 
 .envio_formulario 
