@@ -162,19 +162,15 @@
             </form>
             <?php 
                 if(isset($_GET['error']))
-                {
-                echo $_GET['error'];
-                }
+                    echo "<p class='mensaje-error'>" . $_GET['error'] . "</p>";
 
-                if(isset($_GET['exito']) && $_GET['exito']==1)
+                if(isset($_GET['exito']))
                 {
-                    echo "Añadido con éxito";
+                    if($_GET['exito'] === "1")
+                        echo "<p class = 'mensaje_exito'> Añadido con éxito </p>";
+                    elseif($_GET['exito'] === "0")
+                        echo "<p class = 'mensaje_error'> Error al añadir </p>";
                 }
-                else
-                {
-                    echo "<br> Error al añadir";
-                }
-                
             ?>
         </section>
 
