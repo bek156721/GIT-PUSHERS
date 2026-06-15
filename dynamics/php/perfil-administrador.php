@@ -1,17 +1,12 @@
 <?php
     session_start();
-    const DBHOST = "127.0.0.1";
-    const DBUSER = "root";
-    const PASSWORD = "";
-    const DB = "sec_ete_db";
 
-    function connect()
+    include 'conexion.php';
+
+    if ($_SESSION['rol'] != "administrador")
     {
-        $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB); 
-        //var_dump($conexion);
-        return $conexion;
+            header("Location: inicio-sesion.php");
     }
-    $con = connect();
 
     function es_password_es_segura($pass)
     {
@@ -36,36 +31,16 @@
         return $password_hasheada;
     }
     
-        $password_hasheada_bd = "";
-    if(!isset($_SESSION["numero_cuenta_administrador"]))
-        $_SESSION["numero_cuenta_administrador"] = "20123456789";
+    $password_hasheada_bd = "";
 
-    $buscar_cuenta_administrador = $_SESSION["numero_cuenta_administrador"];
+    $buscar_cuenta_administrador = $_SESSION["id_administrador"];
 
-    $nombre_administrador = "No encontrado";
-    $primer_apellido_administrador = "No encontrado";
-    $segundo_apellido_administrador = "No encontrado";
-    $correo_administrador = "No encontrado";
-    $numero_cuenta_administrador = "$buscar_cuenta_administrador";
-
-    $ruta_imagen_administrador = "../../uploads/fotos-perfil/foto-default.png";
-    if(isset($_FILES["foto-perfil"]))
-        {
-            $archivo = $_FILES["foto-perfil"];
-            $ruta_temporal_administrador = $archivo["tmp_name"];
-
-            $ruta_destino_administrador = "../../uploads/fotos-perfil/foto-perfil" . $buscar_cuenta_administrador . ".jpg";
-
-            if(move_uploaded_file($ruta_temporal_administrador, $ruta_destino_administrador))
-            {
-                $querry_foto = "UPDATE administrador SET imagen_administrador = '$ruta_destino_administrador' WHERE id_administrador = '$buscar_cuenta_administrador'";
-            }
-        }
+    $ruta_destino_administrador = "../../uploads/fotos-perfil/foto-default.png";
     
-    if($con)
+    if($conexion)
     {
         $query = "SELECT id_administrador, nombre_administrador, primer_apellido_administrador, segundo_apellido_administrador, correo_administrador, imagen_administrador FROM administrador WHERE id_administrador = '$buscar_cuenta_administrador'";
-        $resultado_administrador  = mysqli_query($con, $query);
+        $resultado_administrador  = mysqli_query($conexion, $query);
         $datos_administrador = mysqli_fetch_assoc($resultado_administrador);
         if($datos_administrador)
         {
@@ -94,19 +69,11 @@
         <meta name = "author" content ="Git Pushers">
         <meta name = "description" content = "Información acerca de tu perfil">
         <link rel="stylesheet" href="../../statics/css/perfil.css">
+        <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
+        <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
-
-        <nav class = "menu">
-            <button class = "boton_menu"> MIEMBROS </button>
-            <br>
-            <button class = "boton_menu"> MATERIALES </button>
-            <br>
-            <button class = "boton_menu"> ESTADÍSTICAS GRUPALES </button>
-            <br>
-            <button class = "boton_menu"> ALUMNOS INSCRITOS </button>
-        </nav>
-
+        <?php include 'header.php'; ?>  
         <main class = "contenido_principal">
             <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
             <div class = "bloqueo_datos">
@@ -123,5 +90,6 @@
             </div>
                 <img src = "<?php echo $ruta_destino_administrador; ?>" class = "foto_perfil">
         </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
