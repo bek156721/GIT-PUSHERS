@@ -42,18 +42,10 @@
 </head>
 <body>
     <?php include 'header.php'; ?>
+
     <main>
         <h2> Mis compañeros </h2>
-        <?php 
-
-            echo "<h3> Grupo:" . $nombre_grupo . "</h3>";
-            while($nombres = mysqli_fetch_assoc($res_nombres))
-            {
-                echo "<p class='miembros'>" . $nombres['nombre_alumno'] . " " . $nombres['primer_apellido_alumno'] . " " . $nombres['segundo_apellido_alumno'] . "</p>";
-            }
-        ?>
-    </main>
-    <div id="cont-circul">
+        <div id="cont-circul">
         <aside>
             <form action="perfil-alumno.php" method="POST">
                 <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../uploads/fotos-perfil/foto-default.png" alt="Log Out"></button> 
@@ -64,7 +56,16 @@
                 <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/logout.png" alt="Log Out"></button> 
             </form>
         </aside>
-    </div>   
+    </div>  
+        <?php 
+
+            echo "<h3> Grupo:" . $nombre_grupo . "</h3>";
+            while($nombres = mysqli_fetch_assoc($res_nombres))
+            {
+                echo "<p class='miembros'>" . $nombres['nombre_alumno'] . " " . $nombres['primer_apellido_alumno'] . " " . $nombres['segundo_apellido_alumno'] . "</p>";
+            }
+        ?>
+    </main>
 </body>
     <?php include'footer.php';?>    
 </html>
