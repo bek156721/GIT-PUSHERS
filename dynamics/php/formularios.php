@@ -172,7 +172,7 @@
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
                                     echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
+                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";
                                 echo "</div>";
