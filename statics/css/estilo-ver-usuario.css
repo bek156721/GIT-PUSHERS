@@ -1,0 +1,42 @@
+@font-face
+{
+    font-family: "inter";
+    src: url("./../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face 
+{
+    font-family: "inria-serif";
+    src: url("./../fonts/InriaSerif-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+#titulo-pagina
+{
+    margin-top: 20vh;
+    font-size: 10vh;
+    font-family: "inter";
+}
+.mini-titulo
+{
+    margin-left: 2vh;
+    font-size: 6vh;
+}
+.datos-alumno
+{
+    margin-left: 4vh;
+    font-size: 4vh;
+    font-family: "inter";
+}
+.pregunta-formulario
+{
+    margin-left: 4vh;
+    font-size: 4vh;
+    font-family: "inter";
+}
+.respuesta-formulario
+{
+    margin-left: 6vh;
+    font-size: 3vh;
+}

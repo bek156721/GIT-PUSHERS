@@ -1,0 +1,39 @@
+@font-face
+{
+    font-family: "inter";
+    src: url("./../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face 
+{
+    font-family: "inria-serif";
+    src: url("./../fonts/InriaSerif-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+#titulo-pagina
+{
+    margin-top: 20vh;
+    font-size: 10vh;
+    font-family: "inter";
+}
+
+table, th, td
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+table
+{
+    display: flex;
+    justify-content: center;
+}
+th
+{
+    font-size: 4vh;
+}
+td
+{
+    font-size: 2vh;
+}
