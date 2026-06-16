@@ -33,7 +33,7 @@
             $actividades[$incremento][6] = $fila['hora'];
 
             if($actividades[$incremento][2]==0)
-               $num_actividades[5]++; 
+            $num_actividades[5]++; 
             $num_actividades[$actividades[$incremento][0] - 1]++;
 
             $incremento++;            
