@@ -74,7 +74,7 @@
                 $_SESSION['id_profesor'] = $row['id_profesor']; //Guardar datos en servidor
                 $_SESSION['nombre_profesor'] = $row['nombre_profesor'];
                 $_SESSION['rol']='profesor';
-                header("Location: hola_profesor.php");
+                header("Location: pagina-inicio-profesor.php");
                 exit();
             }
         }

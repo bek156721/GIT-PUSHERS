@@ -2,6 +2,12 @@
     session_start();
     include 'conexion.php'; 
 
+    if ($_SESSION['rol'] != "profesor")
+    {
+        header("Location: inicio-sesion.php");
+    }
+
+
     function validate($data) //Limpiar datos
     {
         $data = trim($data); //Elimina espacios en extremos
@@ -115,10 +121,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Vridiana Castro">
     <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
     <link rel="stylesheet" href="../../statics/css/anadir.css"> 
     <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
+    <title>Añadir alumno</title>
 </head>
 <body>
     <?php include 'header.php'; ?>

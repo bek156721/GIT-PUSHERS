@@ -1,6 +1,10 @@
 <?php
     session_start();
     include 'conexion.php'; 
+    if ($_SESSION['rol'] != "profesor")
+    {
+        header("Location: inicio-sesion.php");
+    }
 
     function validate($data) //Limpiar datos
         {
@@ -44,12 +48,7 @@
         $nombre = validate($_POST["nombre"]);
         $primer_apellido = validate($_POST["primer-apellido"]);
         $segundo_apellido = validate($_POST["segundo-apellido"]);
-
-        //$nombre_grupo = $_POST["grupo"];
-        //$query_grupo = "SELECT id_grupo FROM grupo WHERE nombre_grupo = '$nombre_grupo'";
-        //$res_grupo = mysqli_query($conexion, $query_grupo);
-        //$grupo_row = mysqli_fetch_assoc($res_grupo);
-        //$grupo = $grupo_row['id_grupo'];
+        $grupo_nuevo = validate($_POST["grupo"]);
 
         //Si los datos obligatorios estan vacios, se redirecciona a la misma página y marca error
 
@@ -91,6 +90,9 @@
         $query_insertar_profesor = "INSERT INTO profesor (id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, contra_profesor ) 
         VALUES ('$usuario', '$nombre', '$primer_apellido', '$segundo_apellido', '$correo', '$contrasenia')";
         if(mysqli_query($conexion, $query_insertar_profesor))
+        {
+            $query_grupo_nuevo = "INSERT INTO grupo (nombre_grupo, id_profesor) VALUES ('$grupo_nuevo', '$usuario')";
+            if(mysqli_query($conexion, $query_grupo_nuevo))
             {
                 header("Location: anadir-profesor.php?exito=1");
                 exit();
@@ -100,7 +102,7 @@
                 header("Location: anadir-profesor.php?exito=0");
                 exit();
             }
-        
+        }
 
 
 
@@ -118,6 +120,7 @@
     <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
     <link rel="stylesheet" href="../../statics/css/anadir.css"> 
     <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
+    <title>Añadir profesor</title>
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -144,18 +147,8 @@
                 <label for="contraseña"><br>Contraseña<br></label>
                 <input id="contrasenia" name="contrasenia" type="password" placeholder="Ingresa la contraseña del profesor">
 
-                <!--<label for="grupo"><br>Grupo:</label>
-                <select id="grupo" name="grupo">
-                    <?php
-                    //$query_buscar_grupos = "SELECT nombre_grupo FROM grupo";
-                    //$res_grupos = mysqli_query($conexion, $query_buscar_grupos);
-
-                    //while ($grupo = mysqli_fetch_assoc($res_grupos))
-                    //{
-                      //  echo '<option value="' . $grupo["nombre_grupo"] . '">' . $grupo["nombre_grupo"] . '</option>';
-                    //}
-                    ?>
-                </select>-->
+                <label for="grupo"><br>Nombre del nuevo grupo:<br></label>
+                <input id="grupo" name="grupo" type="text" placeholder="Ingresa el nombre del nuevo grupo">
 
                 <br>
                 <input id="boton-anadir" type="submit" value="Añadir">
