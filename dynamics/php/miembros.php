@@ -26,7 +26,7 @@
         <h2>Añadir un nuevo miembro<h2>
         <div id="cont-circul">
                         <aside>
-                            <form action="perfil-alumno.php" method="POST">
+                            <form action="perfil-profesor.php" method="POST">
                                 <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../uploads/fotos-perfil/foto-default.png" alt="Log Out"></button> 
                             </form>
                         </aside>
