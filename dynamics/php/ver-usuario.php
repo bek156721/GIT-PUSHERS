@@ -71,11 +71,12 @@
 
 
 
-
+<footer>
+    <?php include'footer.php';?>
+</footer>
 
 
 
 </body>
-    <?php include'footer.php';?>
 
 </html>

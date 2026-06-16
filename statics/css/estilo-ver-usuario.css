@@ -12,10 +12,14 @@
     font-weight: normal;
     font-style: normal;
 }
+body
+{
+    background-color: #CEDEFE;
+}
 #titulo-pagina
 {
-    margin-top: 20vh;
-    font-size: 10vh;
+    margin-top: 30vh;
+    font-size: 6vh;
     font-family: "inter";
 }
 .mini-titulo
@@ -26,13 +30,13 @@
 .datos-alumno
 {
     margin-left: 4vh;
-    font-size: 4vh;
+    font-size: 3vh;
     font-family: "inter";
 }
 .pregunta-formulario
 {
     margin-left: 4vh;
-    font-size: 4vh;
+    font-size: 3vh;
     font-family: "inter";
 }
 .respuesta-formulario
