@@ -2,124 +2,6 @@
     include 'conexion.php';
 
     $sql = "";
-    if($_SERVER["REQUEST_METHOD"] == 'POST')
-    {
-        //TABLA formulario
-        if(isset($_POST['subir-grupo']))
-        {   
-            if($_POST['subir-grupo'] == "61B")
-            {
-                $sql = "INSERT INTO formulario (id_grupo, titulo, descripcion, fecha, hora, modulo, rendimiento_esperado) 
-                VALUES (1,'" .$_POST['subir-nombre']. "','".$_POST['subir-descripcion']."',' ".date('Y-m-d')."',' ".date('H:i:s')."', ".$_POST['subir-modulo'].", ".$_POST['subir-rendimiento'].")";
-                mysqli_query($conexion, $sql);
-            }
-            
-            if($_POST['subir-grupo'] == "61D")
-            {
-                $sql = "INSERT INTO formulario (id_grupo, titulo, descripcion, fecha, hora, modulo, rendimiento_esperado) 
-                VALUES (2,'" .$_POST['subir-nombre']. "','".$_POST['subir-descripcion']."', '".date('Y-m-d')."', '".date('H:i:s')."', ".$_POST['subir-modulo'].", ".$_POST['subir-rendimiento'].")";
-                mysqli_query($conexion, $sql);
-            }
-
-            if(empty($_POST['subir-grupo']))
-            {
-                $sql = "INSERT INTO formulario (titulo, descripcion, fecha, hora, modulo, rendimiento_esperado) 
-                VALUES ('".$_POST['subir-nombre']. "','".$_POST['subir-descripcion']."', '".date('Y-m-d')."', '".date('H:i:s')."', ".$_POST['subir-modulo'].", ".$_POST['subir-rendimiento'].")";
-                mysqli_query($conexion, $sql);
-            }
-        }
-        if(isset($_POST['subir-nombre']))
-        {
-            $nombre = $_POST['subir-nombre'];
-            //obtenemos el id del formulario que acabamos de hacer
-            $id_formulario = mysqli_insert_id($conexion);
-        }
-        //decodificamos las preguntas
-        if(isset($_POST['subir-preguntas']))
-        {
-            $json_sin_decodificar = trim($_POST['subir-preguntas']);
-            $preguntas_decodificadas = json_decode($json_sin_decodificar, true);
-            $preguntas = $preguntas_decodificadas;
-        }
-        //preguntas
-        if(isset($preguntas))
-        {
-            foreach ($preguntas as $pregunta) 
-            {
-                //tabla pregunta
-                if($pregunta['tipo'] == "opcion-multiple")
-                    $tipo = 1;
-                if($pregunta['tipo'] == "opcion-multiple-multiseleccion")
-                    $tipo = 2;
-                if($pregunta['tipo'] == "abierta")
-                    $tipo = 3;
-                $sql = "INSERT INTO pregunta (id_formulario, id_tipo_pregunta, pregunta, puntaje_rendimiento) 
-                VALUES (".$id_formulario.", ".$tipo.", '".$pregunta['pregunta']."', ".$pregunta['rendimiento_pregunta'].")";
-                mysqli_query($conexion, $sql);
-                $id_pregunta = mysqli_insert_id($conexion);
-                //obtenemos el id de la pregunta que acabamos de hacer
-                //tablaa de opcion pregunta
-                if(!empty($pregunta['respuesta_1']))
-                {
-                    if ($pregunta['respuesta_correcta_1'] == "correcta")
-                        $correcta = 1;
-                    else
-                        $correcta = 0;
-                    if(empty($pregunta['rendimiento_1']))
-                        $rendimiento_respuesta = 0;
-                    else
-                        $rendimiento_respuesta = $pregunta['rendimiento_1'];
-
-                    $sql = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) 
-                    VALUES (".$id_pregunta.", '".$pregunta['respuesta_1']."', ".$correcta.", ".$rendimiento_respuesta.")";
-                    mysqli_query($conexion, $sql);
-                }
-                if(!empty($pregunta['respuesta_2']))
-                {
-                    if ($pregunta['respuesta_correcta_2'] == "correcta")
-                        $correcta = 1;
-                    else
-                        $correcta = 0;
-                    if(empty($pregunta['rendimiento_2']))
-                        $rendimiento_respuesta = 0;
-                    else
-                        $rendimiento_respuesta = $pregunta['rendimiento_2'];
-                    $sql = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) 
-                    VALUES (".$id_pregunta.", '".$pregunta['respuesta_2']."', ".$correcta.", ".$rendimiento_respuesta.")";
-                    mysqli_query($conexion, $sql);
-                }
-                if(!empty($pregunta['respuesta_3']))
-                {
-                    if ($pregunta['respuesta_correcta_3'] == "correcta")
-                        $correcta = 1;
-                    else
-                        $correcta = 0;
-                    if(empty($pregunta['rendimiento_3']))
-                        $rendimiento_respuesta = 0;
-                    else
-                        $rendimiento_respuesta = $pregunta['rendimiento_3'];
-                    $sql = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) 
-                    VALUES (".$id_pregunta.", '".$pregunta['respuesta_3']."', ".$correcta.", ".$rendimiento_respuesta.")";
-                    mysqli_query($conexion, $sql);
-                }
-                if(!empty($pregunta['respuesta_4']))
-                {
-                    if ($pregunta['respuesta_correcta_4'] == "correcta")
-                        $correcta = 1;
-                    else
-                        $correcta = 0;
-                    if(empty($pregunta['rendimiento_4']))
-                        $rendimiento_respuesta = 0;
-                    else
-                        $rendimiento_respuesta = $pregunta['rendimiento_4'];
-                    $sql = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) 
-                    VALUES (".$id_pregunta.", '".$pregunta['respuesta_4']."',". $correcta.", ".$rendimiento_respuesta.")";
-                    mysqli_query($conexion, $sql);
-                }
-            }
-        }
-
-    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -201,7 +83,7 @@
                                 echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
-                                    echo "<form action='./formulario.php' method='get'>";
+                                    echo "<form action='./resolver-formulario.php' method='get'>";
                                         echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";
@@ -230,7 +112,7 @@
                                 echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
-                                    echo "<form action='./formulario.php' method='get'>";
+                                    echo "<form action='./resolver-formulario.php' method='get'>";
                                         echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";
@@ -259,7 +141,7 @@
                                 echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
-                                    echo "<form action='./formulario.php' method='get'>";
+                                    echo "<form action='./resolver-formulario.php' method='get'>";
                                         echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";
@@ -289,7 +171,7 @@
                                 echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
-                                    echo "<form action='./formulario.php' method='get'>";
+                                    echo "<form action='./resolver-formulario.php' method='get'>";
                                         echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";

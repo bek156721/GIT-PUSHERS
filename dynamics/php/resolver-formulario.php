@@ -1,11 +1,11 @@
 <?php
     session_start();
 
-    if ($_SESSION['rol'] != "alumno")
+    /*if ($_SESSION['rol'] != "alumno")
     {
         header("Location: inicio-sesion.php");
         exit();
-    }
+    }*/
     include 'conexion.php';
 
     function validar ($data) //Limpiar datos 
@@ -29,8 +29,10 @@
         header("Location: inicio-sesion.php?error=Contraseña requerida");
         exit();
     }*/
-
-    $id_formulario = $_GET['id_formulario'];
+    if(isset($_POST['id_formulario']))
+    {
+        $id_formulario = $_POST['id_formulario'];
+    }
 
 
     // LEER RESPUESTAS DEL FORMULARIO // 
@@ -144,7 +146,7 @@
         exit();
     }
 
-    $query_titulo = "SELECT titulo FROM formulario WHERE id_formulario = $id_formulario";
+    $query_titulo = "SELECT titulo FROM formulario WHERE id_formulario = '".$id_formulario."'";
     $res_titulo = mysqli_query($conexion, $query_titulo);
     $titulos_formulario = mysqli_fetch_assoc($res_titulo);
     $titulo = $titulos_formulario['titulo'];
@@ -165,13 +167,15 @@
 <main>
     <h1> FORMULARIO: <?php echo $titulo; ?> </h1>
     <?php
+        echo "<p>holalalalallala</p>";
+        var_dump($id_formulario);
         if(isset($_GET['exito']))
         {
             echo " <p class = 'envio_formulario'> ¡Formulario enviado con éxito! </p>";
         }
         else 
         {
-                $query_verificacion_envio = "SELECT entregado FROM formulario_por_alumno WHERE id_alumno = " . $_SESSION['id_alumno'] . " AND id_formulario = " . $id_formulario . "";
+                $query_verificacion_envio = "SELECT entregado FROM formulario_por_alumno WHERE id_alumno = " . $_SESSION['id_alumno'] . " AND id_formulario = " .$id_formulario . "";
                 $res_envio_respuestas = mysqli_query($conexion, $query_verificacion_envio);
                 $enviar_respuestas = mysqli_fetch_assoc($res_envio_respuestas);
 
