@@ -1,6 +1,10 @@
 <?php
     session_start();
     include 'conexion.php'; 
+    if ($_SESSION['rol'] != "profesor")
+    {
+        header("Location: inicio-sesion.php");
+    }
 
     function validate($data) //Limpiar datos
         {
