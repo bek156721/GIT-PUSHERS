@@ -31,7 +31,8 @@ CREATE TABLE administrador
 );
 
 -- 3. GRUPO: Depende directamente de profesor asignado.
-CREATE TABLE grupo (
+CREATE TABLE grupo 
+(
     id_grupo INT NOT NULL AUTO_INCREMENT,
     id_profesor INT NOT NULL, 
     nombre_grupo VARCHAR(3),
