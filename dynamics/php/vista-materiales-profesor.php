@@ -2,7 +2,12 @@
 include 'conexion.php';
 session_start();
 
-$id_profesor_usuario = 1;
+if ($_SESSION['rol'] != "profesor")
+    {
+        header("Location: inicio-sesion.php");
+    }
+
+$id_profesor_usuario = $_SESSION['id_profesor'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
