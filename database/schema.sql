@@ -14,7 +14,8 @@ CREATE TABLE profesor
     primer_apellido_profesor VARCHAR(50) NOT NULL,  
     segundo_apellido_profesor VARCHAR(50), 
     correo_profesor VARCHAR(50), 
-    contra_profesor VARCHAR(255), 
+    contra_profesor VARCHAR(255),
+    imagen_profesor TEXT,
     PRIMARY KEY (id_profesor) 
 );
 
@@ -27,6 +28,7 @@ CREATE TABLE administrador
     segundo_apellido_administrador VARCHAR(50), 
     correo_administrador VARCHAR(50), 
     contra_administrador VARCHAR(255), 
+    imagen_aministrador TEXT,
     PRIMARY KEY (id_administrador) 
 );
 
@@ -50,6 +52,7 @@ CREATE TABLE alumno
     segundo_apellido_alumno VARCHAR(50), 
     correo_alumno VARCHAR(50), 
     contra_alumno VARCHAR(255),
+    imagen_alumno TEXT,
     PRIMARY KEY (id_alumno),
     FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo)
 );
@@ -135,8 +138,8 @@ CREATE TABLE formulario (
 CREATE TABLE formulario_por_alumno(
     id_formulario_por_alumno INTEGER NOT NULL AUTO_INCREMENT,
     entregado BOOL,
-    calificacion DECIMAL NULL,
-    rendimiento_alumno DECIMAL NOT NULL, -- lo calculamos nosotros en base al puntaje que obtenga el alumno
+    calificacion DECIMAL(5,2) NULL,
+    rendimiento_alumno DECIMAL(5,2) NOT NULL, -- lo calculamos nosotros en base al puntaje que obtenga el alumno
     id_formulario INTEGER NOT NULL,
     id_alumno INTEGER NOT NULL,
     FOREIGN KEY(id_formulario) REFERENCES formulario(id_formulario),
@@ -265,3 +268,59 @@ VALUES
 (2, 'Pilares de la POO', 'Artículo técnico detallado sobre Abstracción, Encapsulamiento, Herencia y Polimorfismo.', '2026-06-12', '08:15', 1, 'https://dev-blog.edu/poo/cuatro_pilares_explicados'),
 (2, 'Manejo de Excepciones y Errores', 'Apunte digital sobre cómo utilizar bloques try/except (try/catch) para evitar que el software truene.', '2026-06-18', '11:00', 2, 'https://code-docs.edu/advanced/exception_handling.pdf'),
 (2, 'Repositorio de Plantillas SQL', 'Acceso al repositorio institucional de GitHub con scripts base para conectar tu código a bases de datos.', '2026-06-25', '16:00', 3, 'https://github.com/escuela-dev/db-connection-templates');
+
+--tipo de pregunta--
+INSERT INTO tipo_pregunta (id_tipo_pregunta, tipo) 
+VALUES
+(1, "radio"),
+(2, "checkbox"),
+(3, "textarea");
+
+
+--Inserta preguntas formulario base--
+
+INSERT INTO pregunta (id_formulario, id_tipo_pregunta, pregunta, puntaje_rendimiento)
+VALUES
+(1, 1, "¿Cuentas con una computadora propia en casa para practicar?", 2),
+(1, 1, "¿Tienes un espacio tranquilo y libre de distracciones para estudiar?", 2),
+(1, 1, "¿Tus horarios de clases curriculares se traslapan con los horarios de la ETE?", 3),
+(1, 1, "¿Tienes alguna otra clase o actividades extracurriculares que compliquen o impidan tu asistencia a clase?", 3),
+(1, 1, "¿Tienes algún método de estudio?", 2),
+(1, 1, "¿Estás dispuesto a trabajar/estudiar fuera del horario de clase?", 3),
+(1, 1, "¿Estás dispuesto a trabajar/estudiar fuera del horario de clase?", 3),
+(1, 2, "¿De qué manera describirías tu manera de aprender?",3),
+(1, 1, "Cuando estás en clase sueles…",3),
+(1, 1, "¿Tienes facilidad para resolver problemas?",2),
+(1, 1, "¿Estás dispuesto a trabajar en equipo?",3),
+(1, 1, "Si te estancas con algún tema o proyecto, ¿a quién sueles recurrir primero?",3);
+
+--Inserta opción pregunta--
+INSERT INTO opcion_pregunta (id_pregunta, opcion, puntaje_opcion, correcta)
+VALUES
+(1, "Sí", 3, 1),
+(1, "No", 0, NULL),
+(2, "Sí", 3, 1),
+(2, "No", 0, NULL),
+(3, "Sí", 3, NULL),
+(3, "No", 0, 1),
+(4, "Sí", 3, NULL),
+(4, "No", 0, 1),
+(5, "Sí", 3, 1),
+(5, "No", 0, NULL),
+(6, "Sí", 3, 1, 1), 
+(6, "No", 0, NULL),
+(7, "Visual", 3, 1),
+(7, "Auditivo", 3, 1),
+(7, "Kinestésico", 3, 1),
+(7, "Lectura/Escritura", 3, 1),
+(8, "Tomar notas", 3, 1),
+(8, "Solo escuchar", 3, 1),
+(8, "Hacer diagramas", 3, 1),
+(8, "Ninguna de las anteriores", 3, NULL),
+(9, "Sí", 3, 1),
+(9, "No", 0, NULL),
+(10, "Sí", 3, 1),
+(10, "No", 0, NULL),
+(11, "Profesor", 3, 1),
+(11, "IA", 1, 1), 
+(11, "Compañeros", 2, 1);
