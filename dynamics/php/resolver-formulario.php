@@ -29,9 +29,13 @@
         header("Location: inicio-sesion.php?error=Contraseña requerida");
         exit();
     }*/
-    if(isset($_POST['id_formulario']))
+    $cadena_id = "";
+    $id_formulario = 0;
+    if(isset($_GET['id_formulario']))
     {
-        $id_formulario = $_POST['id_formulario'];
+        $cadena_id = $_GET['id_formulario'];
+        $id_formulario = (int)$cadena_id;
+        var_dump($id_formulario);
     }
 
 
@@ -167,7 +171,6 @@
 <main>
     <h1> FORMULARIO: <?php echo $titulo; ?> </h1>
     <?php
-        echo "<p>holalalalallala</p>";
         var_dump($id_formulario);
         if(isset($_GET['exito']))
         {

@@ -169,9 +169,9 @@
                     <?php
                         
                         $sql = "SELECT * FROM formulario WHERE modulo = 1";
-                        $query = mysqli_query($conexion, $sql);
-                        //foreach($formularios as $formulario)
-                        while($formulario = mysqli_fetch_assoc($query))
+                        $formularios = mysqli_query($conexion, $sql);
+                        //while($formulario = mysqli_fetch_assoc($query))
+                        foreach($formularios as $formulario)
                         {
                             echo "<div class='formulario'>";
                                 echo "<div class='arriba'>";
@@ -180,7 +180,7 @@
                                 echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
-                                    echo "<form action='./resolver-formulario.php' method='post'>";
+                                    echo "<form action='./resolver-formulario.php' method='get'>";
                                         echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
                                         var_dump($formulario['id_formulario']);
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
@@ -211,7 +211,7 @@
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
                                     echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";
                                 echo "</div>";
@@ -240,7 +240,7 @@
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
                                     echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";
                                 echo "</div>";
@@ -269,7 +269,7 @@
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
                                     echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";
                                 echo "</div>";
@@ -299,7 +299,7 @@
                                 //Pasar por post el id del cuestionario
                                 echo "<div class='abajo'>";
                                     echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
                                         echo "<button class='ver-mas type='submit'>Ver mas</button>";
                                     echo "</form>";
                                 echo "</div>";
