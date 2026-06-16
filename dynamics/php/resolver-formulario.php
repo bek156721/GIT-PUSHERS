@@ -1,11 +1,11 @@
 <?php
     session_start();
 
-    /*if ($_SESSION['rol'] != "alumno")
+    if ($_SESSION['rol'] != "alumno")
     {
         header("Location: inicio-sesion.php");
         exit();
-    }*/
+    }
     include 'conexion.php';
 
     function validar ($data) //Limpiar datos 
