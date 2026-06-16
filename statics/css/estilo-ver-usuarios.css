@@ -1,0 +1,87 @@
+@font-face
+{
+    font-family: "inter";
+    src: url("./../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face 
+{
+    font-family: "inria-serif";
+    src: url("./../fonts/InriaSerif-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+body
+{
+    background-color: #CEDEFE;
+}
+#titulo-pagina
+{
+    margin-top: 25vh;
+    font-size: 10vh;
+    font-family: "inter";
+}
+
+table, th, td
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+    
+}
+table
+{
+    display: flex;
+    justify-content: center;
+
+}
+th
+{
+    font-size: 4vh;
+    background-color: #97B8FE;
+}
+td
+{
+    font-size: 2vh;
+    background-color: #97B8FE;
+}
+#perfil
+{
+    background-color: #4D82BC;
+    flex: 1;
+    border-radius:100%;
+    margin-right: 1vw;
+    width: 5vw;
+    height: 5vw;
+}
+#cerrar-sesion
+{
+    background-color: #4D82BC;
+    flex: 1;
+    border-radius:100%;
+    margin-left: 1vw;
+    width: 5vw;
+    height: 5vw;
+    border: none;
+    
+}
+
+#cerrar-sesion:hover
+{
+    background-color: #0f5fb5;
+}
+
+#img_logout
+{
+    width: 3vw;
+    height: 3vW;
+}
+
+#cont-circul
+{
+    height: 10vh;
+    width: 12vw;
+    display: flex;
+    flex-direction:row;
+    float: right;
+}

@@ -30,7 +30,7 @@
         exit();
     }*/
 
-    $id_formulario = 1;
+    $id_formulario = $_GET['id_formulario'];
 
 
     // LEER RESPUESTAS DEL FORMULARIO // 
