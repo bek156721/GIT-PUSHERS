@@ -36,7 +36,6 @@ header
 }
 footer
 {
-    position: fixed;
     bottom: 0;
     left: 15%;
     width: 85%;
@@ -50,17 +49,14 @@ h1
     display: block;
 }
 
-/*Contiene el contenido principal de todas las páginas de consulta
-==================================================================
-*/
 .contenido-principal
 {   
-    display:scroll;
-    position: fixed;
-    top:15%;
-    left: 25%;
-    /*border: solid 1px black;   Se utiliza para comprobar el tamaño del contenedor*/
-    width: 70%;
+    position: absolute;  
+    margin-top: 12%;     
+    margin-left: 15%;   
+    width: 70%;          
+    margin-bottom: 14%;   
+    padding: 1rem;
 }
 .barra-busqueda
 {
@@ -115,7 +111,7 @@ figure
 }
 #cambio-formulario
 {
-   
+
     background-color:rgb(249, 239, 186);
 }
 #cambio-actividades
@@ -128,4 +124,152 @@ figure
     background-color:rgb(151, 184, 254); 
     display: inline;
     padding: 1% 0 1% 0;
+}
+
+/* CSS */
+
+#cont-agregar 
+{
+    width: 40%;              
+    max-width: 400px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    height: auto;            
+    overflow: hidden;       
+}
+
+#cont-agregar[open] 
+{
+    width: 80%;              
+    max-width: 900px;
+    padding: 20px;
+    min-height: 30vh;       
+    height: auto;            
+}
+
+#cont-agregar > summary 
+{
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+    padding: 10px;
+    background-color: #0077cc;
+    color: white;
+    border-radius: 6px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#cont-agregar > summary:hover 
+{
+    background-color: #005fa3;
+}
+
+#cont-agregar form 
+{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#cont-agregar label 
+{
+    font-weight: bold;
+}
+
+#cont-agregar input,
+#cont-agregar textarea,
+#cont-agregar select 
+{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 100%;
+}
+
+#cont-agregar button 
+{
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#cont-agregar button:hover 
+{
+    background-color: #218838;
+}
+#but-eliminar
+{
+    background-color:rgb(210, 51, 51);
+    color:white;
+    border:none;
+    padding:5px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    float: right;
+}
+.tabla-entregas 
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.tabla-entregas th, .tabla-entregas td 
+{
+    border: 1px solid #aaa;
+    padding: 8px;
+    text-align: left;
+}
+
+.tabla-entregas th {
+    background-color: #608bfa;
+    font-weight: bold;
+}
+
+.tabla-entregas tr:nth-child(even) 
+{
+    background-color: #a1bdf6;
+}
+.tabla-entregas tr:nth-child(odd) 
+{
+    background-color: #6c9af4;
+}
+
+.tabla-entregas input[type="checkbox"] 
+{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+button[name="actualizar"] 
+{
+    display: block;
+    margin: 15px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[name="actualizar"]:hover 
+{
+    background-color: #45a049;
 }
