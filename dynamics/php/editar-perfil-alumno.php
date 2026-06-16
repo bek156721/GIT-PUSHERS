@@ -30,6 +30,9 @@
         $password_hasheada = password_hash($pass, PASSWORD_DEFAULT);
         return $password_hasheada;
     }
+
+    $mensaje_error= "";
+    $mensaje_exito = "";
     
     $buscar_cuenta_alumno = $_SESSION["id_alumno"];
 
@@ -47,6 +50,7 @@
             {
                 $password_hasheada_bd = $contra_alumno["contra_alumno"];
                 if(password_verify($contra_actual, $password_hasheada_bd))
+                //if($contra_actual == $password_hasheada_bd)
                 {
                     if($nueva_contra == $val_nueva_contra)
                     {
@@ -54,9 +58,17 @@
                         {
                             $nueva_contra_encriptada = hashea_password($nueva_contra);
                             $query_update = "UPDATE alumno SET contra_alumno = '$nueva_contra_encriptada' WHERE id_alumno = $buscar_cuenta_alumno";
+                            if(mysqli_query($conexion, $query_update))
+                                $mensaje_exito = "¡Contraseña actualizada con éxito!"; 
                         }
-                    }   
+                        else
+                            $mensaje_error = "La nueva contraseña debe de tener al menos 6 caracteres, una mayúscula y un número";   
+                    }
+                    else
+                        $mensaje_error = "La nueva contraseña y la confirmación no coinciden";
                 }
+                else
+                    $mensaje_error = "La contraseña actual ingresada es incorreta";
             }
         }
     }
@@ -121,6 +133,12 @@
         <main class = "contenido_principal">
         <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
         <div class = "bloqueo_datos">
+            <?php 
+                if($mensaje_error != "")
+                    echo "<p class = 'error'> $mensaje_error </p>";
+                if($mensaje_exito != "")
+                    echo "<p class = 'exito'> $mensaje_exito </p>";
+            ?>
             <h1>Edición de perfil</h1>
             <p> TIPO DE USUARIO: Alumno </p>
             <p> NOMBRE: <?php echo $nombre_alumno ?></p>

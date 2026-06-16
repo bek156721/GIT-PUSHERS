@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if ($_SESSION['rol'] != "alumno")
+    if ($_SESSION['rol'] != "profesor")
     {
         header("Location: inicio-sesion.php");
     }
@@ -45,7 +45,7 @@
     <div class="contenedor-grande" id="menu">
         <h2>Menu</h2>
         <div id="botones">
-            <a class="boton-menu" id="boton-miembros" href="./miembros-alumno.php">Miembros</a>
+            <a class="boton-menu" id="boton-miembros" href="./miembros.php">Miembros</a>
             <a class="boton-menu" id="boton-materiales" href="./vista-materiales.php">Materiales</a>
             <a class="boton-menu" id="boton-cuestionarios" href="./formularios.php">Formularios</a>
             <a class="boton-menu" id="boton-actividades" href="./actividades.php">Actividades</a>

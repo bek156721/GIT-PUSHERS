@@ -1,0 +1,71 @@
+
+body
+{
+    padding-top: 23vh;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #CEDEFE;
+}
+
+main
+{
+    padding: 10px;
+    background-color: #CEDEFE;
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1; /*elemento hijo ocupa todo el espacio sobrante disponible ajustándose automáticamente*/
+}
+form
+{
+    padding: 1rem;
+    background-color: #97B8FE;
+    border-radius: 10px;
+    font-size: 20px;
+    width: 65vw;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
+}
+.pregunta
+{
+    padding: 2rem;
+    background-color: #CEDEFE;
+    border-radius: 8px;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+}
+.opciones_respuestas 
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+
+.boton 
+{
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #CEDEFE;
+}
+
+.envio_formulario 
+{
+    color: rgb(154, 241, 154);
+    font-weight: bold;
+}
+

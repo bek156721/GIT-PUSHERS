@@ -1,11 +1,6 @@
 <?php
     session_start();
     include 'conexion.php'; 
-
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
     function validate($data) //Limpiar datos 
         {
             $data = trim($data); //Elimina espacios en extremos
@@ -28,7 +23,8 @@
         {
             header("Location: inicio-sesion.php?error=Usuario requerido");
             exit();
-        }elseif(empty($contrasenia))
+        }
+        if(empty($contrasenia))
         {
             header("Location: inicio-sesion.php?error=Contraseña requerida");
             exit();
@@ -42,49 +38,66 @@
         }
 
         //Ver si es un alumno
-
-        $sql = "SELECT * FROM alumno WHERE id_alumno = '$usuario' AND contra_alumno = '$contrasenia'";
+        $sql = "SELECT * FROM alumno WHERE id_alumno = '$usuario'";
+        //$sql = "SELECT * FROM alumno WHERE id_alumno = '$usuario' AND contra_alumno = '$contrasenia'";
         $result = mysqli_query($conexion, $sql);
+        //$contrasenia = mysqli_fetch_assoc($result);
         
-        if (mysqli_num_rows($result)=== 1)//verifica que solo exista 1 resultado
+        if(mysqli_num_rows($result) == 1)
+        //if (mysqli_num_rows($result)=== 1)//verifica que solo exista 1 resultado
         {
             $row = mysqli_fetch_assoc($result);
+
+            //if($contrasenia == $row['contra_alumno'])
+            if(password_verify($contrasenia, $row['contra_alumno']))
+            {
                 $_SESSION['id_alumno'] = $row['id_alumno']; //Guardar datos en servidor
                 $_SESSION['nombre_alumno'] = $row['nombre_alumno'];
                 $_SESSION['id_grupo'] = $row['id_grupo'];
                 $_SESSION['rol']='alumno';
-                header("Location: ./pagina-inicio-alumno.php");
+                header("Location: pagina-inicio-alumno.php");
                 exit();
+            }
         }
 
         // Ver si es Porfesor
         
-        $sql = "SELECT * FROM profesor WHERE id_profesor= '$usuario' AND contra_profesor = '$contrasenia'";
+        $sql = "SELECT * FROM profesor WHERE id_profesor= '$usuario'";
         $result = mysqli_query($conexion, $sql);
 
         if (mysqli_num_rows($result)=== 1)//verifica que solo exista 1 resultado
         {
             $row = mysqli_fetch_assoc($result);
+            //if($contrasenia == $row['contra_profesor'])
+            if(password_verify($contrasenia, $row['contra_profesor']))
+            {
                 $_SESSION['id_profesor'] = $row['id_profesor']; //Guardar datos en servidor
                 $_SESSION['nombre_profesor'] = $row['nombre_profesor'];
                 $_SESSION['rol']='profesor';
-                header("Location: hola_profesor.php");
+                header("Location: pagina-inicio-profesor.php");
                 exit();
+            }
         }
-        // Ver si es Administrador
+        // Ver si es administrador
         
-        $sql = "SELECT * FROM administrador WHERE id_administrador = '$usuario' AND contra_administrador = '$contrasenia'";
+        $sql = "SELECT * FROM administrador WHERE id_administrador = '$usuario'";
         $result = mysqli_query($conexion, $sql);
 
-        if (mysqli_num_rows($result)=== 1)//verifica que solo exista 1 resultado
+        if (mysqli_num_rows($result)=== 1) //verifica que solo exista 1 resultado
         {
             $row = mysqli_fetch_assoc($result);
+            //if($contrasenia == $row['contra_administrador'])
+            if(password_verify($contrasenia, $row['contra_administrador']))
+            {
                 $_SESSION['id_administrador'] = $row['id_administrador']; //Guardar datos en servidor
                 $_SESSION['nombre_administrador'] = $row['nombre_administrador'];
                 $_SESSION['rol']='administrador';
                 header("Location: hola_administrador.php");
                 exit();
-        }else
+            }
+        }
+        
+        else
         {
             header("Location: inicio-sesion.php?error=Usuario o contraseña incorrectos");
             exit();

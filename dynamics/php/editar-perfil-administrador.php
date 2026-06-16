@@ -33,6 +33,9 @@
     
     $buscar_cuenta_administrador = $_SESSION["id_administrador"];
 
+    $mensaje_error= "";
+    $mensaje_exito = "";
+
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contrasenia_actual"]) && isset($_POST["nueva_contrasenia"]) && isset($_POST["validacion_nueva_contrasenia"]))
     {
         $contra_actual = $_POST["contrasenia_actual"];
@@ -54,9 +57,17 @@
                         {
                             $nueva_contra_encriptada = hashea_password($nueva_contra);
                             $query_update = "UPDATE administrador SET contra_administrador = '$nueva_contra_encriptada' WHERE id_administrador = $buscar_cuenta_administrador";
+                            if(mysqli_query($conexion, $query_update))
+                                $mensaje_exito = "¡Contraseña actualizada con éxito!"; 
                         }
-                    }   
+                        else
+                            $mensaje_error = "La nueva contraseña debe de tener al menos 6 caracteres, una mayúscula y un número";   
+                    }
+                    else
+                        $mensaje_error = "La nueva contraseña y la confirmación no coinciden";
                 }
+                else
+                    $mensaje_error = "La contraseña actual ingresada es incorreta";
             }
         }
     }
@@ -120,6 +131,12 @@
         <main class = "contenido_principal">
         <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
         <div class = "bloqueo_datos">
+            <?php 
+                if($mensaje_error != "")
+                    echo "<p class = 'error'> $mensaje_error </p>";
+                if($mensaje_exito != "")
+                    echo "<p class = 'exito'> $mensaje_exito </p>";
+            ?>
             <h1>Edición de perfil</h1>
             <p> TIPO DE USUARIO: Administrador </p>
             <p> NOMBRE: <?php echo $nombre_administrador ?></p>
@@ -166,4 +183,3 @@
         <?php include 'footer.php'; ?>
     </body>
 </html>
-    

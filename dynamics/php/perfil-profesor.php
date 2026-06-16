@@ -2,7 +2,12 @@
     session_start();
 
     include 'conexion.php';
-    
+
+    if ($_SESSION['rol'] != "profesor")
+    {
+        header("Location: inicio-sesion.php");
+        exit();
+    } 
 
     function es_password_es_segura($pass)
     {
@@ -29,27 +34,11 @@
 
     $buscar_cuenta_profesor = $_SESSION["id_profesor"];
 
-    $ruta_imagen_profesor = "../../uploads/fotos-perfil/foto-default.png";
-    if(isset($_FILES["foto-perfil"]))
-        {
-            $archivo = $_FILES["foto-perfil"];
-            $ruta_temporal_profesor = $archivo["tmp_name"];
-
-            $ruta_destino_profesor = "../../uploads/fotos-perfil/foto-perfil" . $buscar_cuenta_profesor . ".jpg";
-
-            if(move_uploaded_file($ruta_temporal_profesor, $ruta_destino_profesor))
-            {
-                $querry_foto = "UPDATE profesor SET imagen_profesor = '$ruta_destino_profesor' WHERE id_profesor = $buscar_cuenta_profesor";
-            }
-        }
+    $ruta_destino_profesor = "../../uploads/fotos-perfil/foto-default.png";
     
     if($conexion)
     {
-        $query_grupo = "SELECT id_grupo FROM grupo WHERE id_profesor = $buscar_cuenta_profesor";
-        $res_grupo = mysqli_query($conexion, $query_grupo);
-        $datos_grupo = mysqli_fetch_assoc($res_grupo);
-
-        $query = "SELECT id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, imagen_profesor FROM profesor WHERE id_profesor = $buscar_cuenta_profesor";
+        $query = "SELECT id_profesor, nombre_profesor, primer_apellido_profesor, segundo_apellido_profesor, correo_profesor, imagen_profesor FROM profesor WHERE id_profesor = '$buscar_cuenta_profesor'";
         $resultado_profesor  = mysqli_query($conexion, $query);
         $datos_profesor = mysqli_fetch_assoc($resultado_profesor);
         if($datos_profesor)
@@ -85,9 +74,7 @@
         <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
     </head>
     <body>
-
-        <?php include 'header.php'; ?>  
-
+        <?php include 'header.php'; ?> 
         <main class = "contenido_principal">
             <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
             <div class = "bloqueo_datos">

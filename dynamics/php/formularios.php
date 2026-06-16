@@ -53,7 +53,7 @@
                         <p class="titulo-formulario">Cuestionario de arreglos</p>
                         <!-- Pasar por post el id del cuestionario -->
                         <div class="abajo">
-                            <a class="ver-mas" href="./formulario.php">Ver más</a>
+                            <a class="ver-mas" href="./resolver-formulario.php">Ver más</a>
                         </div>
                     </div>
 

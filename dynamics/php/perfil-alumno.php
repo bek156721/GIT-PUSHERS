@@ -3,6 +3,12 @@
 
     include 'conexion.php';
     
+    if ($_SESSION['rol'] != "alumno")
+    {
+        header("Location: inicio-sesion.php");
+        exit();
+    }
+    
     function es_password_es_segura($pass)
     {
         if(strlen($pass) < 6)
@@ -25,23 +31,13 @@
         $password_hasheada = password_hash($pass, PASSWORD_DEFAULT);
         return $password_hasheada;
     }
+    
+    $password_hasheada_bd = "";
 
     $buscar_cuenta_alumno = $_SESSION["id_alumno"];
 
-    $ruta_imagen_alumno = "../../uploads/fotos-perfil/foto-default.png";
-    if(isset($_FILES["foto-perfil"]))
-        {
-            $archivo = $_FILES["foto-perfil"];
-            $ruta_temporal_alumno = $archivo["tmp_name"];
+    $ruta_destino_alumno = "../../uploads/fotos-perfil/foto-default.png";
 
-            $ruta_destino_alumno = "../../uploads/fotos-perfil/foto-perfil" . $buscar_cuenta_alumno . ".jpg";
-
-            if(move_uploaded_file($ruta_temporal_alumno, $ruta_destino_alumno))
-            {
-                $querry_foto = "UPDATE alumno SET imagen_alumno = '$ruta_destino_alumno' WHERE id_alumno = $buscar_cuenta_alumno";
-            }
-        }
-    
     if($conexion)
     {
         $query = "SELECT id_alumno, nombre_alumno, primer_apellido_alumno, segundo_apellido_alumno, correo_alumno, imagen_alumno, id_grupo FROM alumno WHERE id_alumno = $buscar_cuenta_alumno";
