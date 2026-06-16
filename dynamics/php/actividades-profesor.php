@@ -1,6 +1,15 @@
 <?php
 include 'conexion.php';
-$id_profesor_usuario= 1;
+
+/*if ($_SESSION['rol'] != "profesor")
+    {
+        header("Location: inicio-sesion.php");
+    }
+*/
+$id_profesor_usuario =987654321;
+
+var_dump($id_profesor_usuario);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear'])) 
 {
     $id_grupo    = $_POST['id_grupo'];
@@ -20,10 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear']))
     while ($fila = mysqli_fetch_assoc($res_alumnos)) 
     {
         $id_alumno = $fila['id_alumno'];
-        $sql_insert = "INSERT INTO actividad (id_alumno, titulo, descripcion, modulo, fecha, hora, entregado)
-                    VALUES ('$id_alumno', '$titulo', '$descripcion', '$modulo', '$fecha', '$hora', 0)";
+        $sql_insert = "INSERT INTO actividad (titulo, descripcion, modulo, fecha, hora, entregado)
+                    VALUES ('$titulo', '$descripcion', '$modulo', '$fecha', '$hora', 0)";
         mysqli_query($conexion, $sql_insert);
     }
+
+    var_dump ($sql_insert);
+    var_dump ($hora);
 
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['actualizar']))
@@ -89,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['actualizar']))
 
             <details id="cont-agregar">
                 <summary>+ Crear nueva actividad</summary>
-                <form action="actividades.php" method="POST">
+                <form action="actividades-profesor.php" method="POST">
                     <label for="id_grupo">Grupo:</label>
                     <select name="id_grupo" id="id_grupo" required>
                         <?php
@@ -122,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['actualizar']))
             </details>
             <details id="cont-agregar">
                 <summary>+ Revisar entregas</summary>
-                <form method="POST" action="actividades.php">
+                <form method="POST" action="actividades-profesor.php">
                     <?php
                     $sql_grupos = "SELECT id_grupo, nombre_grupo FROM grupo WHERE id_profesor = $id_profesor_usuario";
                     $res_grupos = mysqli_query($conexion, $sql_grupos);

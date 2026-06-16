@@ -48,7 +48,7 @@
             <a class="boton-menu" id="boton-miembros" href="./miembros-alumno.php">Miembros</a>
             <a class="boton-menu" id="boton-materiales" href="./vista-materiales.php">Materiales</a>
             <a class="boton-menu" id="boton-cuestionarios" href="./formularios.php">Formularios</a>
-            <a class="boton-menu" id="boton-actividades" href="./actividades.php">Actividades</a>
+            <a class="boton-menu" id="boton-actividades" href="./vista-actividades-alumno.php">Actividades</a>
         </div>
     </div>
     <div class="contenedor-grande" id="novedades">

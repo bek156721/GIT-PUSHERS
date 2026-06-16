@@ -2,12 +2,6 @@
     session_start();
     include 'conexion.php'; 
 
-    if ($_SESSION['rol'] != "profesor")
-    {
-        header("Location: inicio-sesion.php");
-    }
-
-
     function validate($data) //Limpiar datos
     {
         $data = trim($data); //Elimina espacios en extremos
@@ -53,7 +47,6 @@
         $primer_apellido = validate($_POST["primer-apellido"]);
         $segundo_apellido = validate($_POST["segundo-apellido"]);
         //$grupo = validate($_POST["grupo"]);
-
         $nombre_grupo = $_POST["grupo"];
         $query_grupo = "SELECT id_grupo FROM grupo WHERE id_profesor =" .  $_SESSION['id_profesor'] . "";
         $res_grupo = mysqli_query($conexion, $query_grupo);
@@ -121,10 +114,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Vridiana Castro">
     <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
     <link rel="stylesheet" href="../../statics/css/anadir.css"> 
     <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
-    <title>Añadir alumno</title>
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -154,7 +147,7 @@
                 <label for="grupo"><br>Grupo:</label>
                 <select id="grupo" name="grupo">
                     <?php
-                    $query_buscar_grupos = "SELECT id_grupo, nombre_grupo FROM grupo";
+                    $query_buscar_grupos = "SELECT id_grupo, nombre_grupo FROM grupo WHERE id_profesor='".$_SESSION['id_profesor']."'";
                     $res_grupos = mysqli_query($conexion, $query_buscar_grupos);
 
                     while ($grupo = mysqli_fetch_assoc($res_grupos))
