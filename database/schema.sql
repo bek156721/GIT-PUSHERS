@@ -15,7 +15,6 @@ CREATE TABLE profesor
     segundo_apellido_profesor VARCHAR(50), 
     correo_profesor VARCHAR(50), 
     contra_profesor VARCHAR(255), 
-    imagen_profesor TEXT,
     PRIMARY KEY (id_profesor) 
 );
 
@@ -28,7 +27,6 @@ CREATE TABLE administrador
     segundo_apellido_administrador VARCHAR(50), 
     correo_administrador VARCHAR(50), 
     contra_administrador VARCHAR(255), 
-    imagen_administrador TEXT,
     PRIMARY KEY (id_administrador) 
 );
 
@@ -51,7 +49,6 @@ CREATE TABLE alumno
     segundo_apellido_alumno VARCHAR(50), 
     correo_alumno VARCHAR(50), 
     contra_alumno VARCHAR(255),
-    imagen_alumno TEXT,
     PRIMARY KEY (id_alumno),
     FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo)
 );

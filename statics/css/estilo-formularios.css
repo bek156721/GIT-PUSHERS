@@ -19,11 +19,11 @@
     margin: 0;
     padding: 0;
 }
-body
+body:not(header *) 
 {
     background-color: #C4DAFA;
 }
-h1 
+h1:not(header *)  
 {
     display: block;
     justify-items: flex-start;
