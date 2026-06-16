@@ -147,7 +147,7 @@
                 <label for="grupo"><br>Grupo:</label>
                 <select id="grupo" name="grupo">
                     <?php
-                    $query_buscar_grupos = "SELECT id_grupo, nombre_grupo FROM grupo";
+                    $query_buscar_grupos = "SELECT id_grupo, nombre_grupo FROM grupo WHERE id_profesor='".$_SESSION['id_profesor']."'";
                     $res_grupos = mysqli_query($conexion, $query_buscar_grupos);
 
                     while ($grupo = mysqli_fetch_assoc($res_grupos))
