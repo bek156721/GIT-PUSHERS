@@ -1,14 +1,14 @@
 <?php
 include 'conexion.php';
-
-/*if ($_SESSION['rol'] != "profesor")
+session_start();
+if ($_SESSION['rol'] != "profesor")
     {
         header("Location: inicio-sesion.php");
     }
-*/
-$id_profesor_usuario =987654321;
 
-var_dump($id_profesor_usuario);
+$id_profesor_usuario = $_SESSION['id_profesor'];
+
+//var_dump($id_profesor_usuario);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear'])) 
 {

@@ -103,7 +103,7 @@
             $primer_apellido_alumno = $datos_alumno["primer_apellido_alumno"];
             $segundo_apellido_alumno = $datos_alumno["segundo_apellido_alumno"];
             $correo_alumno = $datos_alumno["correo_alumno"];
-            $grupo_alumno = $datos_alumno["id_grupo"];
+            $id_grupo_alumno = $datos_alumno["id_grupo"];
             if($datos_alumno["imagen_alumno"] && file_exists($datos_alumno["imagen_alumno"]))
             {
                 $ruta_destino_alumno = $datos_alumno["imagen_alumno"];
@@ -113,6 +113,9 @@
                 $ruta_destino_alumno = "../../uploads/fotos-perfil/foto-default.png";
             }
         }
+        $query_grupo = "SELECT nombre_grupo FROM grupo WHERE id_grupo = $id_grupo_alumno";
+        $res_grupo = mysqli_query($conexion, $query_grupo);
+        $grupo_alumno = mysqli_fetch_assoc($res_grupo)["nombre_grupo"];
     }
 ?>
 <!DOCTYPE html>
@@ -130,6 +133,24 @@
     <body>
         <?php include 'header.php'; ?> 
 
+        <div id="cont-circul">
+            <aside>
+                <form action="perfil-alumno.php" method="POST">
+                    <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../uploads/fotos-perfil/foto-default.png" alt="Perfil"></button> 
+                </form>
+            </aside>
+            <aside>
+                <form action="cerrar-sesion.php" method="POST">
+                    <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/logout.png" alt="Log Out"></button> 
+                </form>
+            </aside>
+            <aside>
+                <form action="pagina-inicio-alumno.php" method="POST">
+                    <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/home.png" alt="Log Out"></button> 
+                </form>
+            </aside>
+        </div>  
+        
         <main class = "contenido_principal">
         <!-- Agrupa los textos para que se queden hacia abajo y la imagen a la derecha -->
         <div class = "bloqueo_datos">
@@ -140,13 +161,13 @@
                     echo "<p class = 'exito'> $mensaje_exito </p>";
             ?>
             <h1>Edición de perfil</h1>
-            <p> TIPO DE USUARIO: Alumno </p>
-            <p> NOMBRE: <?php echo $nombre_alumno ?></p>
-            <p> PRIMER APELLIDO: <?php echo $primer_apellido_alumno ?></p>
-            <p> SEGUNDO APELLIDO: <?php echo $segundo_apellido_alumno ?></p>
-            <p> NÚMERO DE CUENTA: <?php echo $numero_cuenta_alumno ?></p>
-            <p> GRUPO: <?php echo $grupo_alumno ?> </p>
-            <p> CORREO: <?php echo $correo_alumno ?></p>
+            <p> Tipo de usuario: Alumno </p>
+            <p> Nombre: <?php echo $nombre_alumno ?></p>
+            <p> Primer apellido: <?php echo $primer_apellido_alumno ?></p>
+            <p> Segundo apellido: <?php echo $segundo_apellido_alumno ?></p>
+            <p> Número de cuenta: <?php echo $numero_cuenta_alumno ?></p>
+            <p> Grupo: <?php echo $grupo_alumno ?> </p>
+            <p> Correo: <?php echo $correo_alumno ?></p>
 
 
             <details class="boton_edicion_datos">

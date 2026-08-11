@@ -26,8 +26,15 @@ body
 }
 main
 {
-    margin-top: 30vh;
+    padding: 20vh;
+    background-color: #CEDEFE;
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
+
 h1 
 {
     display: block;
@@ -172,7 +179,7 @@ h3
 }
 #btn-añadir:hover
 {
-    background-color: white;
+    background-color: #B5CDFE;
     color: black;
 }
 h4
@@ -261,4 +268,13 @@ h4
     display: flex;
     flex-direction:row;
     float: right;
+}
+#gran-contenedor
+{
+    flex-direction: column;
+    width: 90%;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    background-color: #97B8FE;
 }

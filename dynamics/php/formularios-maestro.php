@@ -1,149 +1,132 @@
 <?php
-    include 'conexion.php';
+include 'conexion.php';
+session_start();
 
-    $sql = "";
-    if($_SERVER["REQUEST_METHOD"] == 'POST')
+if ($_SESSION['rol'] != "profesor")
+{
+    header("Location: inicio-sesion.php");
+    exit();
+}
+
+$id_profesor_usuario = $_SESSION['id_profesor'];
+
+if ($_SERVER["REQUEST_METHOD"] == 'POST')
+{
+    $fin = 0;
+    
+    // Verificar si el título ya existe (sin usar break)
+    $sql = "SELECT titulo FROM formulario";
+    $query = mysqli_query($conexion, $sql);
+    while ($fin == 0 && ($nombre_duplicado = mysqli_fetch_assoc($query)))
     {
-        $fin = 0;
-        $sql = "SELECT titulo FROM formulario";
-        $query = mysqli_query($conexion, $sql);
-        while($nombre_duplicado = mysqli_fetch_assoc($query))
-        {
-            if($nombre_duplicado['titulo'] == $_POST['subir-nombre'] )
-                $fin = 1;
+        if ($nombre_duplicado['titulo'] == $_POST['subir-nombre']) {
+            $fin = 1;
         }
-        if($fin == 0)
+    }
+
+    if ($fin == 0)
+    {
+        $id_grupo = null;
+        if (!empty($_POST['subir-grupo']))
         {
-            //TABLA formulario
-            if(isset($_POST['subir-grupo']))
-            {   
-                if($_POST['subir-grupo'] == "61B")
-                {
-                    $sql = "INSERT INTO formulario (id_grupo, titulo, descripcion, fecha, hora, modulo, rendimiento_esperado) 
-                    VALUES (1,'" .$_POST['subir-nombre']. "','".$_POST['subir-descripcion']."',' ".date('Y-m-d')."',' ".date('H:i:s')."', ".$_POST['subir-modulo'].", ".$_POST['subir-rendimiento'].")";
-                    mysqli_query($conexion, $sql);
-                }
-                
-                if($_POST['subir-grupo'] == "61D")
-                {
-                    $sql = "INSERT INTO formulario (id_grupo, titulo, descripcion, fecha, hora, modulo, rendimiento_esperado) 
-                    VALUES (2,'" .$_POST['subir-nombre']. "','".$_POST['subir-descripcion']."', '".date('Y-m-d')."', '".date('H:i:s')."', ".$_POST['subir-modulo'].", ".$_POST['subir-rendimiento'].")";
-                    mysqli_query($conexion, $sql);
-                }
+            $nombre_grupo = mysqli_real_escape_string($conexion, $_POST['subir-grupo']);
+            $sql_grupo = "SELECT id_grupo FROM grupo WHERE nombre_grupo = '$nombre_grupo'";
+            $res_grupo = mysqli_query($conexion, $sql_grupo);
 
-                if(empty($_POST['subir-grupo']))
+            if ($res_grupo && mysqli_num_rows($res_grupo) > 0)
+            {
+                $row_grupo = mysqli_fetch_assoc($res_grupo);
+                $id_grupo = $row_grupo['id_grupo'];
+            }
+        }
+
+        // Sanitización de entradas del formulario
+        $titulo = mysqli_real_escape_string($conexion, $_POST['subir-nombre']);
+        $descripcion = mysqli_real_escape_string($conexion, $_POST['subir-descripcion']);
+        $fecha = date('dd/mm/aaaa');
+        $hora = date('hh:mm');
+        $modulo = (int)$_POST['subir-modulo'];
+        $rendimiento = (int)$_POST['subir-rendimiento'];
+
+        
+        if ($id_grupo !== null)
+        {
+            $sql_form = "INSERT INTO formulario (id_grupo, titulo, descripcion, fecha, hora, modulo, rendimiento_esperado) VALUES ($id_grupo, '$titulo', '$descripcion', '$fecha', '$hora', $modulo, $rendimiento)";
+        }
+        else
+        {
+            $sql_form = "INSERT INTO formulario (titulo, descripcion, fecha, hora, modulo, rendimiento_esperado) VALUES ('$titulo', '$descripcion', '$fecha', '$hora', $modulo, $rendimiento)";
+        }
+
+        if (mysqli_query($conexion, $sql_form))
+        {
+            $id_formulario = mysqli_insert_id($conexion);
+
+            if ($id_grupo !== null)
+            {
+                $sql_alumnos = "SELECT id_alumno FROM alumno WHERE id_grupo = $id_grupo";
+                $res_alumnos = mysqli_query($conexion, $sql_alumnos);
+
+                if ($res_alumnos)
                 {
-                    $sql = "INSERT INTO formulario (titulo, descripcion, fecha, hora, modulo, rendimiento_esperado) 
-                    VALUES ('".$_POST['subir-nombre']. "','".$_POST['subir-descripcion']."', '".date('Y-m-d')."', '".date('H:i:s')."', ".$_POST['subir-modulo'].", ".$_POST['subir-rendimiento'].")";
-                    mysqli_query($conexion, $sql);
+                    while ($alumno = mysqli_fetch_assoc($res_alumnos))
+                    {
+                        $id_alumno = $alumno['id_alumno'];
+                        $sql_asignar = "INSERT INTO formulario_por_alumno (id_formulario, id_alumno, entregado) VALUES ($id_formulario, $id_alumno, 0)";
+                        mysqli_query($conexion, $sql_asignar);
+                    }
                 }
             }
-            if(isset($_POST['subir-nombre']))
-            {
-                $nombre = $_POST['subir-nombre'];
-                //obtenemos el id del formulario que acabamos de hacer
-                $id_formulario = mysqli_insert_id($conexion);
-            }
-            //decodificamos las preguntas
-            if(isset($_POST['subir-preguntas']))
-            {
-                $json_sin_decodificar = trim($_POST['subir-preguntas']);
-                $preguntas_decodificadas = json_decode($json_sin_decodificar, true);
-                $preguntas = $preguntas_decodificadas;
-            }
-            //preguntas
-            if(isset($preguntas))
-            {
-                foreach ($preguntas as $pregunta) 
-                {
-                    //tabla pregunta
-                    if($pregunta['tipo'] == "opcion-multiple")
-                        $tipo = 1;
-                    if($pregunta['tipo'] == "opcion-multiple-multiseleccion")
-                        $tipo = 2;
-                    if($pregunta['tipo'] == "abierta")
-                        $tipo = 3;
-                    $sql = "INSERT INTO pregunta (id_formulario, id_tipo_pregunta, pregunta, puntaje_rendimiento) 
-                    VALUES (".$id_formulario.", ".$tipo.", '".$pregunta['pregunta']."', ".$pregunta['rendimiento_pregunta'].")";
-                    mysqli_query($conexion, $sql);
-                    $id_pregunta = mysqli_insert_id($conexion);
-                    //obtenemos el id de la pregunta que acabamos de hacer
-                    //tablaa de opcion pregunta
-                    if(!empty($pregunta['respuesta_1']))
-                    {
-                        if ($pregunta['respuesta_correcta_1'] == "correcta")
-                            $correcta = 1;
-                        else
-                            $correcta = 0;
-                        if(empty($pregunta['rendimiento_1']))
-                            $rendimiento_respuesta = 0;
-                        else
-                            $rendimiento_respuesta = $pregunta['rendimiento_1'];
 
-                        $sql = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) 
-                        VALUES (".$id_pregunta.", '".$pregunta['respuesta_1']."', ".$correcta.", ".$rendimiento_respuesta.")";
-                        mysqli_query($conexion, $sql);
-                    }
-                    if(!empty($pregunta['respuesta_2']))
+            if (isset($_POST['subir-preguntas']))
+            {
+                $preguntas = json_decode(trim($_POST['subir-preguntas']), true);
+
+                if (is_array($preguntas))
+                {
+                    foreach ($preguntas as $pregunta) 
                     {
-                        if ($pregunta['respuesta_correcta_2'] == "correcta")
-                            $correcta = 1;
-                        else
-                            $correcta = 0;
-                        if(empty($pregunta['rendimiento_2']))
-                            $rendimiento_respuesta = 0;
-                        else
-                            $rendimiento_respuesta = $pregunta['rendimiento_2'];
-                        $sql = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) 
-                        VALUES (".$id_pregunta.", '".$pregunta['respuesta_2']."', ".$correcta.", ".$rendimiento_respuesta.")";
-                        mysqli_query($conexion, $sql);
-                    }
-                    if(!empty($pregunta['respuesta_3']))
-                    {
-                        if ($pregunta['respuesta_correcta_3'] == "correcta")
-                            $correcta = 1;
-                        else
-                            $correcta = 0;
-                        if(empty($pregunta['rendimiento_3']))
-                            $rendimiento_respuesta = 0;
-                        else
-                            $rendimiento_respuesta = $pregunta['rendimiento_3'];
-                        $sql = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) 
-                        VALUES (".$id_pregunta.", '".$pregunta['respuesta_3']."', ".$correcta.", ".$rendimiento_respuesta.")";
-                        mysqli_query($conexion, $sql);
-                    }
-                    if(!empty($pregunta['respuesta_4']))
-                    {
-                        if ($pregunta['respuesta_correcta_4'] == "correcta")
-                            $correcta = 1;
-                        else
-                            $correcta = 0;
-                        if(empty($pregunta['rendimiento_4']))
-                            $rendimiento_respuesta = 0;
-                        else
-                            $rendimiento_respuesta = $pregunta['rendimiento_4'];
-                        $sql = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) 
-                        VALUES (".$id_pregunta.", '".$pregunta['respuesta_4']."',". $correcta.", ".$rendimiento_respuesta.")";
-                        mysqli_query($conexion, $sql);
+                        $tipo = 3; // Por defecto abierta
+                        if ($pregunta['tipo'] == "opcion-multiple") $tipo = 1;
+                        if ($pregunta['tipo'] == "opcion-multiple-multiseleccion") $tipo = 2;
+
+                        $texto_pregunta = mysqli_real_escape_string($conexion, $pregunta['pregunta']);
+                        $rend_pregunta = (int)$pregunta['rendimiento_pregunta'];
+
+                        $sql_preg = "INSERT INTO pregunta (id_formulario, id_tipo_pregunta, pregunta, puntaje_rendimiento) VALUES ($id_formulario, $tipo, '$texto_pregunta', $rend_pregunta)";
+                        mysqli_query($conexion, $sql_preg);
+                        $id_pregunta = mysqli_insert_id($conexion);
+
+                        for ($i = 1; $i <= 4; $i++)
+                        {
+                            if (!empty($pregunta["respuesta_$i"]))
+                            {
+                                $opcion = mysqli_real_escape_string($conexion, $pregunta["respuesta_$i"]);
+                                $correcta = ($pregunta["respuesta_correcta_$i"] == "correcta") ? 1 : 0;
+                                $rend_resp = empty($pregunta["rendimiento_$i"]) ? 0 : (int)$pregunta["rendimiento_$i"];
+
+                                $sql_opc = "INSERT INTO opcion_pregunta (id_pregunta, opcion, correcta, puntaje_opcion) VALUES ($id_pregunta, '$opcion', $correcta, $rend_resp)";
+                                mysqli_query($conexion, $sql_opc);
+                            }
+                        }
                     }
                 }
             }
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pagina para la consulta de formularios">
+    <meta name="description" content="Página para la consulta de formularios">
     <meta name="author" content="git pushers (Equipo 7)">
     <link rel="stylesheet" href="../../statics/css/estilo-formularios-maestro.css">
     <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
     <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
-    <title>Pagina de inicio</title>
-
+    <title>Formularios</title>
 </head>
 
 <body>
@@ -151,165 +134,248 @@
 <main>
     <h1>Formularios</h1>
     <div id="gran-contenedor">
-        <div id="parte-arriba">    
-            <p id="desc-btn-forms">Crear un nuevo formulario</p>
-            <a href="./crear-formulario.php">
-                <div id="btn-crear">
-                    <img id="simbolo-subir-form" src="../../statics/media/img/btn-crear-form.png" alt="Simbolo de subir">
-                </div>
-            </a> 
+        <div class="modulo"> 
+            <details>
+                <summary onclick="window.location.href='./crear-formulario.php';" style="background-color: #2A3958; color: whitesmoke; cursor: pointer;">
+                    + Agregar formulario
+                </summary>
+            </details>
         </div>
-        <div id="modulos">
-
-            <div class="modulo">
+        <div class="modulo">
                 <details>
-
-                    <summary>Modulo 1</summary>
-                    <!--aqui va un for each para los formularios -->
+                    <summary>Módulo 1</summary>
                     <?php
-                        
                         $sql = "SELECT * FROM formulario WHERE modulo = 1";
                         $formularios = mysqli_query($conexion, $sql);
-                        //while($formulario = mysqli_fetch_assoc($query))
-                        foreach($formularios as $formulario)
+                        if (mysqli_num_rows($formularios) == 0) 
                         {
                             echo "<div class='formulario'>";
-                                echo "<div class='arriba'>";
-                                    echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] ."</p>";
-                                echo "</div>";
-                                echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
-                                //Pasar por post el id del cuestionario
-                                echo "<div class='abajo'>";
-                                    echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
-                                        var_dump($formulario['id_formulario']);
-                                        echo "<button class='ver-mas type='submit'>Ver mas</button>";
-                                    echo "</form>";
-                                echo "</div>";
+                                echo "<p class='titulo-formulario'> No hay formularios de este módulo </p>";
                             echo "</div>";
                         }
-                    ?>
+                        else
+                        {
+                            while ($formulario = mysqli_fetch_assoc($formularios))
+                            {
+                                $sql_grupo = "SELECT nombre_grupo FROM grupo WHERE id_grupo = ".$formulario['id_grupo'];
+                                $res_grupo = mysqli_query($conexion, $sql_grupo);
+                                $datos = mysqli_fetch_assoc($res_grupo);
+                                echo "<div class='formulario'>";
+                                echo "<div class='arriba'>";
+                                    echo "<p class='grupo'> Grupo: ".$datos['nombre_grupo']."</p>";
+                                echo "</div>";
+                                echo "<div class='arriba'>";
+                                                echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] . "</p>"; 
+                                            echo "</div>";
+                                            echo "<div class='arriba'>"; 
+                                                echo "<p class='fecha-publicacion'>Hora de publicación: ". $formulario['hora'] ." </p>";
+                                            echo "</div>";
+                                            
+                                            echo "<p class = 'titulo-formulario'>".$formulario['titulo']."</p>"; // título
+                                            echo "<br>";
+                                            echo "<p class = 'descripcion-formulario'>".$formulario['descripcion']."</p>";   // descripción
+                                            //Pasar por post el id del cuestionario
+                                            echo "<div class='abajo'>";
+                                                echo "<form action='./resolver-formulario.php' method='get'>";
+                                                    echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                                    echo "<button class='ver-mas' type='submit'>Ver formulario</button>";
+                                                echo "</form>";
+                                            echo "</div>";
+                                        echo "</div>";
+                                }
+                            }
+                        ?>
                 </details>
-
             </div>
+
             <div class="modulo">
                 <details>
-
-                    <summary>Modulo 2</summary>
-                    <!--aqui va u while para los formularios -->
+                    <summary>Módulo 2</summary>
                     <?php
-                        
-                        $sql = "SELECT * FROM formulario WHERE modulo ='2'";
+                        $sql = "SELECT * FROM formulario WHERE modulo = 2";
                         $formularios = mysqli_query($conexion, $sql);
-                        foreach($formularios as $formulario)
+                        if (mysqli_num_rows($formularios) == 0) 
                         {
                             echo "<div class='formulario'>";
-                                echo "<div class='arriba'>";
-                                    echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] ."</p>";
-                                echo "</div>";
-                                echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
-                                //Pasar por post el id del cuestionario
-                                echo "<div class='abajo'>";
-                                    echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
-                                        echo "<button class='ver-mas type='submit'>Ver mas</button>";
-                                    echo "</form>";
-                                echo "</div>";
+                                echo "<p class='titulo-formulario'> No hay formularios de este módulo </p>";
                             echo "</div>";
                         }
-                    ?>
+                        else
+                        {
+                            while ($formulario = mysqli_fetch_assoc($formularios))
+                            {
+                                $sql_grupo = "SELECT nombre_grupo FROM grupo WHERE id_grupo = ".$formulario['id_grupo'];
+                                $res_grupo = mysqli_query($conexion, $sql_grupo);
+                                $datos = mysqli_fetch_assoc($res_grupo);
+                                echo "<div class='formulario'>";
+                                echo "<div class='arriba'>";
+                                    echo "<p class='grupo'> Grupo: ".$datos['nombre_grupo']."</p>";
+                                echo "</div>";
+                                echo "<div class='arriba'>";
+                                                echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] . "</p>"; 
+                                            echo "</div>";
+                                            echo "<div class='arriba'>"; 
+                                                echo "<p class='fecha-publicacion'>Hora de publicación: ". $formulario['hora'] ." </p>";
+                                            echo "</div>";
+                                            
+                                            echo "<p class = 'titulo-formulario'>".$formulario['titulo']."</p>"; // título
+                                            echo "<br>";
+                                            echo "<p class = 'descripcion-formulario'>".$formulario['descripcion']."</p>";   // descripción
+                                            //Pasar por post el id del cuestionario
+                                            echo "<div class='abajo'>";
+                                                echo "<form action='./resolver-formulario.php' method='get'>";
+                                                    echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                                    echo "<button class='ver-mas' type='submit'>Ver formulario</button>";
+                                                echo "</form>";
+                                            echo "</div>";
+                                        echo "</div>";
+                                }
+                            }
+                        ?>
                 </details>
-
             </div>
+
             <div class="modulo">
                 <details>
-
-                    <summary>Modulo 3</summary>
-                    <!--aqui va u while para los formularios -->
+                    <summary>Módulo 3</summary>
                     <?php
-                        
-                        $sql = "SELECT * FROM formulario WHERE modulo ='3'";
+                        $$sql = "SELECT * FROM formulario WHERE modulo = 3";
                         $formularios = mysqli_query($conexion, $sql);
-                        foreach($formularios as $formulario)
+                        if (mysqli_num_rows($formularios) == 0) 
                         {
                             echo "<div class='formulario'>";
-                                echo "<div class='arriba'>";
-                                    echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] ."</p>";
-                                echo "</div>";
-                                echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
-                                //Pasar por post el id del cuestionario
-                                echo "<div class='abajo'>";
-                                    echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
-                                        echo "<button class='ver-mas type='submit'>Ver mas</button>";
-                                    echo "</form>";
-                                echo "</div>";
+                                echo "<p class='titulo-formulario'> No hay formularios de este módulo </p>";
                             echo "</div>";
                         }
-                    ?>
+                        else
+                        {
+                            while ($formulario = mysqli_fetch_assoc($formularios))
+                            {
+                                $sql_grupo = "SELECT nombre_grupo FROM grupo WHERE id_grupo = ".$formulario['id_grupo'];
+                                $res_grupo = mysqli_query($conexion, $sql_grupo);
+                                $datos = mysqli_fetch_assoc($res_grupo);
+                                echo "<div class='formulario'>";
+                                echo "<div class='arriba'>";
+                                    echo "<p class='grupo'> Grupo: ".$datos['nombre_grupo']."</p>";
+                                echo "</div>";
+                                echo "<div class='arriba'>";
+                                                echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] . "</p>"; 
+                                            echo "</div>";
+                                            echo "<div class='arriba'>"; 
+                                                echo "<p class='fecha-publicacion'>Hora de publicación: ". $formulario['hora'] ." </p>";
+                                            echo "</div>";
+                                            
+                                            echo "<p class = 'titulo-formulario'>".$formulario['titulo']."</p>"; // título
+                                            echo "<br>";
+                                            echo "<p class = 'descripcion-formulario'>".$formulario['descripcion']."</p>";   // descripción
+                                            //Pasar por post el id del cuestionario
+                                            echo "<div class='abajo'>";
+                                                echo "<form action='./resolver-formulario.php' method='get'>";
+                                                    echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                                    echo "<button class='ver-mas' type='submit'>Ver formulario</button>";
+                                                echo "</form>";
+                                            echo "</div>";
+                                        echo "</div>";
+                                }
+                            }
+                        ?>
                 </details>
-
             </div>
+
             <div class="modulo">
                 <details>
-
-                    <summary>Modulo 4</summary>
-                    <!--aqui va u while para los formularios -->
+                    <summary>Módulo 4</summary>
                     <?php
-                        
-                        $sql = "SELECT * FROM formulario WHERE modulo ='4'";
+                        $sql = "SELECT * FROM formulario WHERE modulo = 4";
                         $formularios = mysqli_query($conexion, $sql);
-                        foreach($formularios as $formulario)
+                        if (mysqli_num_rows($formularios) == 0) 
                         {
                             echo "<div class='formulario'>";
-                                echo "<div class='arriba'>";
-                                    echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] ."</p>";
-                                echo "</div>";
-                                echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
-                                //Pasar por post el id del cuestionario
-                                echo "<div class='abajo'>";
-                                    echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
-                                        echo "<button class='ver-mas type='submit'>Ver mas</button>";
-                                    echo "</form>";
-                                echo "</div>";
+                                echo "<p class='titulo-formulario'> No hay formularios de este módulo </p>";
                             echo "</div>";
                         }
-                    ?>
-
+                        else
+                        {
+                            while ($formulario = mysqli_fetch_assoc($formularios))
+                            {
+                                $sql_grupo = "SELECT nombre_grupo FROM grupo WHERE id_grupo = ".$formulario['id_grupo'];
+                                $res_grupo = mysqli_query($conexion, $sql_grupo);
+                                $datos = mysqli_fetch_assoc($res_grupo);
+                                echo "<div class='formulario'>";
+                                echo "<div class='arriba'>";
+                                    echo "<p class='grupo'> Grupo: ".$datos['nombre_grupo']."</p>";
+                                echo "</div>";
+                                echo "<div class='arriba'>";
+                                                echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] . "</p>"; 
+                                            echo "</div>";
+                                            echo "<div class='arriba'>"; 
+                                                echo "<p class='fecha-publicacion'>Hora de publicación: ". $formulario['hora'] ." </p>";
+                                            echo "</div>";
+                                            
+                                            echo "<p class = 'titulo-formulario'>".$formulario['titulo']."</p>"; // título
+                                            echo "<br>";
+                                            echo "<p class = 'descripcion-formulario'>".$formulario['descripcion']."</p>";   // descripción
+                                            //Pasar por post el id del cuestionario
+                                            echo "<div class='abajo'>";
+                                                echo "<form action='./resolver-formulario.php' method='get'>";
+                                                    echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                                    echo "<button class='ver-mas' type='submit'>Ver formulario</button>";
+                                                echo "</form>";
+                                            echo "</div>";
+                                        echo "</div>";
+                                }
+                            }
+                        ?>
                 </details>
-
             </div>
+
             <div class="modulo">
                 <details>
-
-                    <summary>Modulo 5</summary>
-                    <!--aqui va u while para los formularios -->
+                    <summary>Módulo 5</summary>
                     <?php
-                        
-                        $sql = "SELECT * FROM formulario WHERE modulo ='5'";
+                        $sql = "SELECT * FROM formulario WHERE modulo = 5";
                         $formularios = mysqli_query($conexion, $sql);
-                        foreach($formularios as $formulario)
+                        if (mysqli_num_rows($formularios) == 0) 
                         {
                             echo "<div class='formulario'>";
-                                echo "<div class='arriba'>";
-                                    echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] ."</p>";
-                                echo "</div>";
-                                echo "<p class='titulo-formulario'>". $formulario['titulo'] ."</p>";
-                                //Pasar por post el id del cuestionario
-                                echo "<div class='abajo'>";
-                                    echo "<form action='./resolver-formulario.php' method='get'>";
-                                        echo "<input type='hidden' id='id-formulario' name='id_formulario' value=".$formulario['id_formulario'].">";
-                                        echo "<button class='ver-mas type='submit'>Ver mas</button>";
-                                    echo "</form>";
-                                echo "</div>";
+                                echo "<p class='titulo-formulario'> No hay formularios de este módulo </p>";
                             echo "</div>";
                         }
-                    ?>
-
+                        else
+                        {
+                            while ($formulario = mysqli_fetch_assoc($formularios))
+                            {
+                                $sql_grupo = "SELECT nombre_grupo FROM grupo WHERE id_grupo = ".$formulario['id_grupo'];
+                                $res_grupo = mysqli_query($conexion, $sql_grupo);
+                                $datos = mysqli_fetch_assoc($res_grupo);
+                                echo "<div class='formulario'>";
+                                echo "<div class='arriba'>";
+                                    echo "<p class='grupo'> Grupo: ".$datos['nombre_grupo']."</p>";
+                                echo "</div>";
+                                echo "<div class='arriba'>";
+                                                echo "<p class='fecha-publicacion'>Fecha de publicación: ". $formulario['fecha'] . "</p>"; 
+                                            echo "</div>";
+                                            echo "<div class='arriba'>"; 
+                                                echo "<p class='fecha-publicacion'>Hora de publicación: ". $formulario['hora'] ." </p>";
+                                            echo "</div>";
+                                            
+                                            echo "<p class = 'titulo-formulario'>".$formulario['titulo']."</p>"; // título
+                                            echo "<br>";
+                                            echo "<p class = 'descripcion-formulario'>".$formulario['descripcion']."</p>";   // descripción
+                                            //Pasar por post el id del cuestionario
+                                            echo "<div class='abajo'>";
+                                                echo "<form action='./resolver-formulario.php' method='get'>";
+                                                    echo "<input type='hidden' id='id-formulario' name='id_formulario' value='".$formulario['id_formulario']."'>";
+                                                    echo "<button class='ver-mas' type='submit'>Ver formulario</button>";
+                                                echo "</form>";
+                                            echo "</div>";
+                                        echo "</div>";
+                                }
+                            }
+                        ?>
                 </details>
-
             </div>
+
         </div>
     </div>
 </main>

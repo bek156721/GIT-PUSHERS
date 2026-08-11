@@ -25,11 +25,18 @@ main
     padding: 15px;
     margin-top: 12px;
     border-radius: 6px;
+    font-size: 24px;
 }
 
+h2
+{
+    font-size: 40px;
+}
 h3
 {
-    margin-top: 12px; 
+    margin-top: 12px;
+    font-size: 30px;
+    font-style: italic;
 }
 
 #perfil
@@ -43,6 +50,7 @@ h3
 }
 #cerrar-sesion
 {
+    margin-top: 3vh;
     background-color: #4D82BC;
     flex: 1;
     border-radius:100%;
@@ -50,7 +58,6 @@ h3
     width: 4vw;
     height: 4vw;
     border: none;
-    
 }
 
 #cerrar-sesion:hover
@@ -62,6 +69,7 @@ h3
 {
     width: 3vw;
     height: 3vW;
+    align-items: center;
 }
 
 #cont-circul

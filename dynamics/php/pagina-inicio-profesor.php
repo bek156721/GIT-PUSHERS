@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../../statics/css/estilo-inicio.css">
     <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
     <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
-    <title>Pagina de inicio</title>
+    <title>Página de inicio</title>
 
 </head>
 
@@ -27,7 +27,7 @@
     <?php include 'header.php'; ?>
     <div id="cont-circul">
         <aside>
-            <form action="perfil-alumno.php" method="POST">
+            <form action="perfil-profesor.php" method="POST">
                 <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../uploads/fotos-perfil/foto-default.png" alt="Log Out"></button> 
             </form>
         </aside>
@@ -40,10 +40,10 @@
     <h1>Inicio</h1>
     <!-- Carrusel de imagenes -->
     <div id="imagen">
-        <img src="../../statics/media/img/ete.jpg" alt="Imagen de ETE" width="400px">
+        <img src="../../statics/media/img/ete.jpg" alt="Imagen de ETE" width="1730px" height="370px">
     </div>
     <div class="contenedor-grande" id="menu">
-        <h2>Menu</h2>
+        <h2>Menú</h2>
         <div id="botones">
             <a class="boton-menu" id="boton-miembros" href="./miembros.php">Miembros</a>
             <a class="boton-menu" id="boton-materiales" href="./vista-materiales-profesor.php">Materiales</a>

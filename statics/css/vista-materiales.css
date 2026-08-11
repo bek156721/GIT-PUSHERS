@@ -1,10 +1,14 @@
-body 
+body
 {
-    margin: 0;
+    padding-top: 10vh;
+    height: 100vh;
+    width: 100%;
     display: flex;
+    flex-direction: column;
+    background-color: #CEDEFE;
 }
 
-details[open]
+/*details[open]
 {
     display: flex;
     flex-direction: column;   
@@ -26,7 +30,7 @@ a
 a:hover 
 {
     background-color: #213150;
-}
+}*/
 
 #cont-ventana 
 {
@@ -94,7 +98,6 @@ a:hover
 {
     background-color: #97B8FE;
     padding: 2vw;
-    box-sizing: border-box;
     margin: 3vh;
 }
 .menu-checkbox 
@@ -116,7 +119,7 @@ a:hover
     /* Botón de hamburguesa */
 .btn-hamburguesa 
 {
-    font-size: 30px;
+    font-size: 24px;
     cursor: pointer;
 }
 
@@ -187,14 +190,15 @@ a:hover
 
 #cont-link a 
 {
-    display: inline-block;
-    margin-top: 2vh;
-    padding: 1vh 2vw;
-    background: #007BFF;
+    margin-top: 1vh;
+    background-color: #2A3958;
     color: white;
-    text-decoration: none;
-    border-radius: 0.8vh;
-    font-size: 1.8vh;
+    font-size: 20px;
+    margin-left: 2vw;
+}
+#cont-link a:hover 
+{
+    background-color: #0f5fb5;
 }
 
 /*Botones de cerrar sesión y perfíl*/
@@ -248,7 +252,6 @@ a:hover
     border-radius: 8px;
     padding: 10px;
     background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     height: auto;            
     overflow: hidden;       
 }
@@ -330,4 +333,75 @@ a:hover
     border-radius:4px;
     cursor:pointer;
     float: right;
+}
+#gran-contenedor
+{
+    flex-direction: column;
+    width: 90%;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    background-color: #97B8FE;
+}
+summary
+{
+    padding: 1%;
+    margin-right: 1%;
+}
+summary:hover
+{
+    background-color: #cadcff;
+}
+
+.modulo
+{
+    /*width: 100%;
+    font-size: 24px;
+    margin: 10px;
+    font-family: "inria-serif";*/
+    background-color: #97B8FE;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    font-size: 24px;
+}
+
+#parte-arriba
+{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.formulario
+{
+    background-color: #B5CDFE;
+    margin: 1%;
+}
+.arriba
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.fecha-publicacion
+{
+    margin: 5px;
+    font-size: 20px;
+    font-style: italic;
+    margin-right: 10px;
+}
+.titulo-formulario
+{
+    display: inline;
+    margin: 1%;
+    font-family: "inter";
+    font-size: 24px;
+}
+.abajo
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

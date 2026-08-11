@@ -56,6 +56,11 @@
                 <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/logout.png" alt="Log Out"></button> 
             </form>
         </aside>
+        <aside>
+            <form action="pagina-inicio-alumno.php" method="POST">
+                <button id="cerrar-sesion" type="submit"><img id="img_logout" src="../../statics/media/img/home.png" alt="Log Out"></button> 
+            </form>
+        </aside>
     </div>  
         <?php 
 

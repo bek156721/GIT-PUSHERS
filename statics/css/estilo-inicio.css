@@ -55,9 +55,9 @@ h1
 }
 h2
 {
-    color: black;
+    color: whitesmoke;
     font-family: "inter", sans-serif;
-    font-size: 45px;
+    font-size: 40px;
 }
 #botones
 {
@@ -70,19 +70,20 @@ h2
 {
     display: inline-flex;
     width: 200px;
-    height: 260px;
+    height: 100px;
     margin: 20px;
     align-items: center;
     justify-content: center;
     border-radius: 15px;
-    color: white;
+    color: whitesmoke;
     font-family: "inter", sans-serif;
     background-color: #2A3958;
     text-decoration: none;
+    font-size: 24px;
 }
 .boton-menu:hover
 {
-    background-color: white;
+    background-color: #C4DAFA;
     color: black;
 }
 h3

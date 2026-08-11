@@ -1,7 +1,7 @@
 
 body
 {
-    padding-top: 23vh;
+    padding-top: 26vh;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -13,7 +13,7 @@ main
 {
     padding: 10px;
     background-color: #CEDEFE;
-    border-radius: 8px;
+    /*border-radius: 8px;*/
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -24,24 +24,26 @@ main
 }
 form
 {
-    padding: 1rem;
+    padding: 10px;
     background-color: #97B8FE;
-    border-radius: 10px;
-    font-size: 20px;
+    /*border-radius: 10px;*/
+    font-size: 24px;
     width: 65vw;
     display: flex;
     flex-direction: column;
     /*justify-content: center;*/
     align-items: center;
+    margin-bottom: 33vh;
 }
 .pregunta
 {
     padding: 2rem;
     background-color: #CEDEFE;
-    border-radius: 8px;
-    width: 60vw;
+    /*border-radius: 8px;*/
+    width: 62vw;
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
     /*justify-content: center;*/
 }
 .opciones_respuestas 
@@ -52,20 +54,24 @@ form
     margin: 10px 0;
 }
 
-
 .boton 
 {
-    margin-top: 20px;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #CEDEFE;
+    margin-top: 1vh;
+    background-color: #2A3958;
+    color: whitesmoke;
+    font-size: 20px;
+    margin-right: 10px;
 }
-
+.boton:hover
+{
+    background-color: #0f5fb5;
+}
 .envio_formulario 
 {
-    color: rgb(154, 241, 154);
+    color: rgb(69, 141, 69);
     font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 500px;
 }
+
 

@@ -48,7 +48,7 @@
         while($pregunta_formulario = mysqli_fetch_assoc($query_2))
         {
             echo "<p class='pregunta-formulario'>".htmlspecialchars($pregunta_formulario['pregunta'])." Rendimiento : ".$pregunta_formulario['puntaje_rendimiento']."</p>";
-            $sql_3 = "SELECT id_opcion_pregunta, texto_respuesta FROM respuesta_alumno WHERE id_formulario = '1' and id_pregunta = '".$pregunta_formulario['id_pregunta']."' ";
+            $sql_3 = "SELECT id_opcion_pregunta FROM respuesta_alumno WHERE id_formulario = 1 and id_pregunta = '".$pregunta_formulario['id_pregunta']."' ";
             $query_3 = mysqli_query($conexion, $sql_3);
             while($id_respuesta_pregunta = mysqli_fetch_assoc($query_3))
             {

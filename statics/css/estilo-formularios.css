@@ -22,13 +22,14 @@
 body:not(header *) 
 {
     background-color: #C4DAFA;
+    font-size: 24px;
 }
 h1:not(header *)  
 {
     display: block;
     justify-items: flex-start;
     margin-top: 110px;
-    font-size: 70px;
+    font-size: 90px;
 
 }
 #gran-contenedor
@@ -49,12 +50,12 @@ summary
 }
 summary:hover
 {
-    background-color: white;
+    background-color: #cadcff;
 }
 .modulo
 {
     width: 100%;
-    font-size: 45px;
+    font-size: 24px;
     margin: 10px
 }
 .formulario
@@ -104,7 +105,7 @@ summary:hover
 }
 .ver-mas:hover
 {
-    background-color: white;
+    background-color: #cadcff;
 }
 /*Botones de cerrar sesión y perfíl*/
 

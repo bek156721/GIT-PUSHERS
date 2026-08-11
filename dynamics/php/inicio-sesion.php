@@ -5,10 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Vridiana Castro">
+    <meta name="author" content="git pushers (Equipo 7)">
     <link rel="stylesheet" href="../../statics/css/header.css"> <!-- css de Encabezado -->
     <link rel="stylesheet" href="../../statics/css/inicio-sesion.css"> 
     <link rel="stylesheet" href="../../statics/css/footer.css"> <!-- css de Pie de página -->
+    <title>Inicio de Sesión</title>
+
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -16,7 +18,7 @@
         <h2>Bienvenid@<br></h2>
         <section id="tarjeta-loging">
             <h3>Iniciar Sesión</h3>
-            <img id="icono-perfil" src="../../statics/media/img/perfil.png" alt="imagen perfil">
+            <img id="icono-perfil" src="../../uploads/fotos-perfil/foto-default.png" alt="imagen perfil">
             <form action="./login.php" method="POST"> <!--Formulario -->
                 <label for="usuario">Nombre de Usuario:</label>
                 <input id="usuario" name="usuario" type="text" placeholder="Ingresa tu número de cuenta">

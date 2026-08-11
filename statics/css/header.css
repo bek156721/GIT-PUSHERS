@@ -1,3 +1,17 @@
+@font-face
+{
+    font-family: "inter";
+    src: url("./../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face 
+{
+    font-family: "inria-serif";
+    src: url("./../fonts/InriaSerif-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
 *{
     margin: 0;
     padding: 0;
@@ -35,6 +49,10 @@ header
 {
     color: white;
     font-size: 5vh;
+    margin-top: 4vh;
+    margin-right: 2vh;
+    font-family: "inter, sans-serif";
+    
 }
 
 @media (max-width: 768px)
